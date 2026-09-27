@@ -9,6 +9,7 @@ import { NewsletterForm } from "@/components/store/layout/NewsletterForm";
 import { ProductGrid } from "@/components/store/product/ProductGrid";
 import { publicApi } from "@/lib/api/server";
 import { SITE_URL } from "@/lib/format";
+import { jsonLd } from "@/lib/seo";
 import styles from "./page.module.css";
 
 export const revalidate = 60;
@@ -36,7 +37,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(organization)} />
       <WarpHero strips={strips} />
 
       <Section id="weaves" title="Shop by weave" link={{ href: "/shop", label: "See every style" }}>

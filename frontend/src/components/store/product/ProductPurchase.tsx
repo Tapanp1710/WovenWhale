@@ -33,11 +33,12 @@ export function ProductPurchase({ product, galleryId }: { product: ProductDetail
     recentlyViewed.add(product.id);
   }, [product.id, product.slug]);
 
-  // Sticky mobile bar appears once the main button scrolls out of view.
+  // Sticky mobile purchase bar.
   useEffect(() => {
     const el = addButton.current;
     if (!el) return;
-    const io = new IntersectionObserver(([entry]) => setShowSticky(!entry!.isIntersecting), { rootMargin: "0px 0px -40px 0px" });
+    // Only once the button has scrolled up out of view, not before the shopper reaches it.
+    const io = new IntersectionObserver(([entry]) => setShowSticky(!entry!.isIntersecting && entry!.boundingClientRect.top < 0));
     io.observe(el);
     return () => io.disconnect();
   }, []);

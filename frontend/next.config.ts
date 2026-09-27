@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
   transpilePackages: ["@wovenwhale/backend"],
   poweredByHeader: false,
   agentRules: false,
+  experimental: {
+    // Turbopack's on-disk dev cache speeds restarts but can grow past 1 GB;
+    // set NEXT_DEV_FS_CACHE=false on disk-constrained machines.
+    turbopackFileSystemCacheForDev: process.env.NEXT_DEV_FS_CACHE !== "false",
+  },
   images: {
     qualities: [60, 75, 90],
     formats: ["image/avif", "image/webp"],
