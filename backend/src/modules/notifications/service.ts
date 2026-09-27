@@ -119,7 +119,7 @@ export async function dispatchPendingNotifications(limit = 50) {
         .where(eq(notifications.id, n.id));
     }
   }
-  logger.info("notifications_dispatched", { sent, skipped });
+  if (sent > 0) logger.info("notifications_dispatched", { sent, skipped });
   return { sent, skipped };
 }
 
