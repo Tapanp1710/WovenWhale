@@ -124,3 +124,33 @@ export const whatsappMessages = pgTable(
     uniqueIndex("whatsapp_messages_provider_uq").on(t.providerMessageId),
   ],
 );
+
+export const newsletterSubscribers = pgTable(
+  "newsletter_subscribers",
+  {
+    id: id(),
+    email: varchar("email", { length: 254 }).notNull(),
+    source: varchar("source", { length: 32 }).notNull().default("footer"),
+    unsubscribedAt: timestamp("unsubscribed_at", { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [uniqueIndex("newsletter_email_uq").on(t.email)],
+);
+
+export const supportRequests = pgTable(
+  "support_requests",
+  {
+    id: id(),
+    userId: uuid("user_id").references(() => users.id, { onDelete: "set null" }),
+    name: varchar("name", { length: 120 }).notNull(),
+    email: varchar("email", { length: 254 }),
+    phone: varchar("phone", { length: 16 }),
+    orderNumber: varchar("order_number", { length: 24 }),
+    topic: varchar("topic", { length: 40 }).notNull(),
+    message: text("message").notNull(),
+    status: varchar("status", { length: 16 }).notNull().default("OPEN"),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [index("support_requests_status_idx").on(t.status, t.createdAt)],
+);
