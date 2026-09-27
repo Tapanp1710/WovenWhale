@@ -1,0 +1,44 @@
+.role {
+  text-align: center !important;
+}
+
+.lock {
+  display: inline-block;
+  margin-left: 4px;
+  vertical-align: -1px;
+}
+
+.area {
+  padding-top: var(--space-4) !important;
+  background: var(--surface) !important;
+  color: var(--indigo-800) !important;
+  font-size: var(--text-sm) !important;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.perm {
+  background: var(--surface) !important;
+  color: var(--indigo-900) !important;
+  font-size: var(--text-sm) !important;
+  font-weight: 500 !important;
+  white-space: normal !important;
+  text-align: left;
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-5);
+  border-bottom: 1px solid var(--slate-100);
+}
+
+.check {
+  text-align: center;
+}
+
+.check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--indigo-800);
+  cursor: pointer;
+}
+
+.check input:disabled {
+  cursor: not-allowed;
+}

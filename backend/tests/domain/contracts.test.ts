@@ -71,3 +71,14 @@ describe("place order", () => {
     expect(placeOrderSchema.safeParse({ ...base, idempotencyKey: "a".repeat(20), expectedTotalPaise: 109900 }).success).toBe(true);
   });
 });
+
+describe("admin shipment schema", () => {
+  it("accepts a missing, empty or null tracking link and its own output", async () => {
+    const { shipmentCreateSchema } = await import("../../src/contracts/admin");
+    for (const trackingUrl of [undefined, "", null, "https://track.example/awb"]) {
+      const out = shipmentCreateSchema.parse({ courierName: "Delhivery", awb: "dlv1234", trackingUrl });
+      expect(shipmentCreateSchema.safeParse(out).success).toBe(true);
+    }
+    expect(shipmentCreateSchema.safeParse({ courierName: "Delhivery", awb: "dlv1234", trackingUrl: "nope" }).success).toBe(false);
+  });
+});

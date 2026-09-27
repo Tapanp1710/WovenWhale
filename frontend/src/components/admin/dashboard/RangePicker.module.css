@@ -1,0 +1,26 @@
+.picker {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+}
+
+.option {
+  min-height: 32px;
+  padding: 5px var(--space-3);
+  border-radius: 4px;
+  color: var(--slate-700);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.option:hover {
+  color: var(--indigo-800);
+  background: var(--indigo-50);
+}
+
+.option[aria-current="true"] {
+  background: var(--indigo-800);
+  color: var(--white);
+}

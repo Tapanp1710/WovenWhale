@@ -1,0 +1,19 @@
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+  padding: var(--space-3);
+  border: 1px solid var(--indigo-100);
+  border-radius: var(--radius-panel);
+  background: var(--indigo-50);
+}
+
+.reject {
+  margin-left: auto;
+  color: var(--danger-600);
+}
+
+.reject:hover:not(:disabled) {
+  background: var(--danger-50);
+}

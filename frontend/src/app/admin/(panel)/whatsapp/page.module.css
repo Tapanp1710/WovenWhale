@@ -1,0 +1,9 @@
+.page {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.page > header,
+.page > div {
+  margin-bottom: 0;
+}

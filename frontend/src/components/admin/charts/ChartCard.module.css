@@ -1,0 +1,44 @@
+.card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: var(--space-3);
+  min-width: 0;
+  margin: 0;
+  padding: var(--space-4) var(--space-5) var(--space-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+}
+
+.caption {
+  display: grid;
+  gap: 2px;
+}
+
+.title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--indigo-900);
+}
+
+.summary {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.plot {
+  min-width: 0;
+  font-size: 11px;
+}
+
+/* Recharts: recessive axes, text in ink tokens. */
+.plot :global(.recharts-cartesian-axis-tick-value) {
+  fill: var(--slate-500);
+}
+
+.plot :global(.recharts-default-tooltip) {
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-control);
+  box-shadow: var(--shadow-float);
+  font-size: var(--text-xs);
+}

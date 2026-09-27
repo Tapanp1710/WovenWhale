@@ -1,0 +1,59 @@
+.feed {
+  display: grid;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.item {
+  display: grid;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--slate-100);
+  font-size: var(--text-sm);
+}
+
+.item:last-child {
+  border-bottom: 0;
+}
+
+.type {
+  font-weight: 500;
+}
+
+.meta {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  overflow-wrap: anywhere;
+}
+
+.none {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.chat {
+  display: grid;
+  gap: var(--space-2);
+  max-height: 420px;
+  overflow-y: auto;
+  font-size: var(--text-sm);
+}
+
+.inbound,
+.outbound {
+  max-width: 85%;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-panel);
+  white-space: pre-wrap;
+}
+
+.inbound {
+  justify-self: start;
+  background: var(--slate-100);
+  border-bottom-left-radius: 2px;
+}
+
+.outbound {
+  justify-self: end;
+  background: var(--indigo-50);
+  border-bottom-right-radius: 2px;
+}

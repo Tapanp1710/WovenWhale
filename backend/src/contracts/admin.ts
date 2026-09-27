@@ -178,10 +178,10 @@ export const orderNoteSchema = z.object({ body: requiredText("Note", 2000, 2) })
 export const shipmentCreateSchema = z.object({
   courierName: requiredText("Courier", 80, 2),
   awb: z.string().trim().toUpperCase().min(4).max(64),
+  // Accepts "", null or a URL so client-validated output re-validates on the server.
   trackingUrl: z
-    .url()
+    .union([z.url("Enter a full link starting with https://"), z.literal(""), z.null()])
     .optional()
-    .or(z.literal(""))
     .transform((v) => v || null),
 });
 

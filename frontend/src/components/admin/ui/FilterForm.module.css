@@ -1,0 +1,55 @@
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3) var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--slate-100);
+}
+
+.fields {
+  display: grid;
+  flex: 1 1 520px;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-3);
+}
+
+/* Denser controls than the storefront's; 16px text on touch screens avoids iOS zoom. */
+.fields input:not([type="checkbox"]),
+.fields select {
+  min-height: 38px;
+  padding-inline: var(--space-3);
+}
+
+.fields select {
+  padding-right: var(--space-6);
+  background-position: right var(--space-3) center;
+}
+
+.fields label {
+  font-size: var(--text-xs);
+}
+
+.fields > * {
+  gap: var(--space-1);
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.clear {
+  color: var(--indigo-600);
+  font-size: var(--text-sm);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 1024px) {
+  .fields input,
+  .fields select {
+    font-size: var(--text-sm);
+  }
+}

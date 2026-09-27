@@ -1,0 +1,25 @@
+.row td {
+  vertical-align: top;
+}
+
+.changes {
+  width: 40%;
+  min-width: 280px;
+}
+
+.summary {
+  width: fit-content;
+  color: var(--indigo-600);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.diff {
+  margin-top: var(--space-2);
+}
+
+.history {
+  color: var(--slate-500);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

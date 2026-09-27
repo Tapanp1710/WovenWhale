@@ -1,0 +1,21 @@
+.form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.alert {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--danger-600);
+  border-radius: var(--radius-control);
+  background: var(--danger-50);
+  color: var(--danger-600);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.alert svg {
+  flex: none;
+  margin-top: 2px;
+}

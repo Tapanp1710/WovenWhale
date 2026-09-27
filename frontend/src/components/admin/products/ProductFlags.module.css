@@ -1,0 +1,11 @@
+.flags {
+  display: grid;
+  grid-template-columns: repeat(4, 64px);
+  justify-items: center;
+}
+
+.header {
+  text-align: center;
+  line-height: 1.2;
+  white-space: normal;
+}

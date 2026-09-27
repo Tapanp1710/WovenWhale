@@ -56,7 +56,7 @@ export const TextField = forwardRef<HTMLInputElement, Common & InputHTMLAttribut
 });
 
 export const SelectField = forwardRef<HTMLSelectElement, Common & SelectHTMLAttributes<HTMLSelectElement>>(function SelectField(
-  { label, error, hint, optional, id, children, ...rest },
+  { label, error, hint, optional, id, className, children, ...rest },
   ref,
 ) {
   const auto = useId();
@@ -66,7 +66,7 @@ export const SelectField = forwardRef<HTMLSelectElement, Common & SelectHTMLAttr
       <select
         ref={ref}
         id={fieldId}
-        className={`${styles.control} ${styles.select}`}
+        className={[styles.control, styles.select, className].filter(Boolean).join(" ")}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy(fieldId, error, hint)}
         {...rest}

@@ -1,0 +1,49 @@
+.diff {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: var(--text-xs);
+}
+
+.diff th,
+.diff td {
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--slate-100);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.diff thead th {
+  background: var(--indigo-50);
+  font-weight: 600;
+}
+
+.diff tbody th {
+  width: 28%;
+  font-weight: 600;
+  color: var(--slate-700);
+}
+
+.before {
+  background: var(--danger-50);
+  color: var(--danger-600);
+  text-decoration: line-through;
+  text-decoration-color: rgb(179 55 47 / 0.4);
+}
+
+.after {
+  background: var(--success-50);
+  color: var(--success-600);
+}
+
+.empty {
+  font-style: italic;
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+.none {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}

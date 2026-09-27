@@ -1,0 +1,15 @@
+.select {
+  min-height: 34px;
+  padding: 0 var(--space-6) 0 var(--space-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' fill='none'%3E%3Cpath d='M1 1.5 5 5.5l4-4' stroke='%235E6B78' stroke-width='1.5'/%3E%3C/svg%3E")
+    no-repeat right var(--space-2) center;
+  font-size: var(--text-sm);
+  appearance: none;
+}
+
+.select:focus-visible {
+  border-color: var(--indigo-600);
+}

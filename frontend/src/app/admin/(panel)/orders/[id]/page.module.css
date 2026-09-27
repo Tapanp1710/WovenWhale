@@ -1,0 +1,36 @@
+.layout {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.main,
+.side {
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+}
+
+.address {
+  font-size: var(--text-sm);
+  font-style: normal;
+  line-height: 1.6;
+}
+
+.address a {
+  color: var(--indigo-600);
+}
+
+@media (min-width: 1100px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: start;
+  }
+}

@@ -1,0 +1,98 @@
+.frame {
+  --sidebar-width: 248px;
+  min-height: 100dvh;
+}
+
+.aside {
+  display: none;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: 56px;
+  padding: 0 var(--space-4) 0 var(--space-2);
+  background: var(--indigo-800);
+  color: var(--white);
+}
+
+.menu {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: inherit;
+}
+
+.menu:hover {
+  background: rgb(255 255 255 / 0.1);
+}
+
+.topBrand {
+  flex: 1;
+  font-weight: 600;
+  font-stretch: var(--wide);
+}
+
+.codChip {
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--haldi-500);
+  color: var(--indigo-900);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Fill the sheet body edge to edge with the indigo sidebar. */
+.drawer {
+  min-height: calc(100% + 2 * var(--space-5));
+  margin: calc(var(--space-5) * -1);
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer > * {
+  flex: 1;
+}
+
+.main {
+  min-width: 0;
+  padding: var(--space-5) var(--space-4) var(--space-8);
+  outline: none;
+}
+
+@media (min-width: 1024px) {
+  .frame {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  }
+
+  .aside {
+    display: block;
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+  }
+
+  .topbar {
+    display: none;
+  }
+
+  .main {
+    padding: var(--space-6) var(--space-6) var(--space-8);
+  }
+}
+
+@media (min-width: 1440px) {
+  .main {
+    padding-inline: var(--space-7);
+  }
+}

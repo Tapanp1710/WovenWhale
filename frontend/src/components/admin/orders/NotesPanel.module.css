@@ -1,0 +1,37 @@
+.wrap {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.notes {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.note {
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--indigo-100);
+  background: var(--cotton);
+  font-size: var(--text-sm);
+  white-space: pre-wrap;
+}
+
+.meta {
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.form {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+}
+
+.form > div {
+  width: 100%;
+}
+
+.form textarea {
+  min-height: 72px;
+}

@@ -1,0 +1,117 @@
+"use client";
+
+import { codRejectSchema, type AdminOrderRowDTO } from "@wovenwhale/backend/contracts";
+import { Check, CircleCheck } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import { Button } from "@/components/ui/Button";
+import { api } from "@/lib/api/client";
+import { formatDateTime, formatINR, formatPhone } from "@/lib/format";
+import { useAction, useCan } from "../AdminContext";
+import { riskLabel } from "../labels";
+import { Badge } from "../ui/Badge";
+import { ReasonDialog } from "../ui/ReasonDialog";
+import styles from "./CodQueue.module.css";
+
+/** COD orders waiting for a call-and-confirm decision, oldest first. */
+export function CodQueue({ rows }: { rows: AdminOrderRowDTO[] }) {
+  const canDecide = useCan("orders.approve_cod");
+  const { run } = useAction();
+  const [busy, setBusy] = useState<string | null>(null);
+  const [rejecting, setRejecting] = useState<AdminOrderRowDTO | null>(null);
+
+  async function approve(row: AdminOrderRowDTO) {
+    setBusy(row.id);
+    await run(() => api(`/admin/orders/${row.id}/approve-cod`, { method: "POST", body: {} }), `Order ${row.orderNumber} approved`);
+    setBusy(null);
+  }
+
+  if (!rows.length) {
+    return (
+      <p className={styles.clear}>
+        <CircleCheck size={18} aria-hidden="true" /> No COD orders are waiting for approval.
+      </p>
+    );
+  }
+
+  return (
+    <>
+      <ul className={styles.list}>
+        {rows.map((row) => {
+          const a = row.shippingAddress;
+          return (
+            <li key={row.id} className={styles.row}>
+              <div className={styles.order}>
+                <Link href={`/admin/orders/${row.id}`} className={styles.number}>
+                  {row.orderNumber}
+                </Link>
+                <span className={styles.muted}>{formatDateTime(row.placedAt)}</span>
+              </div>
+              <div className={styles.customer}>
+                <span className={styles.name}>{row.customerName ?? "Guest"}</span>
+                <a href={`tel:${row.customerPhone}`} className={styles.phone}>
+                  {formatPhone(row.customerPhone)}
+                </a>
+              </div>
+              <ul className={styles.items} aria-label="Items">
+                {row.items.map((item, i) => (
+                  <li key={i}>
+                    {item.productName}{" "}
+                    <span className={styles.muted}>
+                      ({item.size}) × {item.quantity}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <div className={styles.place}>
+                <span>
+                  {a?.city ?? row.city} {row.pincode}
+                </span>
+                {a && <span className={styles.muted}>{[a.area, a.state].filter(Boolean).join(", ")}</span>}
+              </div>
+              <div className={styles.flags}>
+                {row.riskFlags.length ? (
+                  row.riskFlags.map((f) => (
+                    <Badge key={f} tone="warning">
+                      {riskLabel(f)}
+                    </Badge>
+                  ))
+                ) : (
+                  <span className={styles.muted}>No risk flags</span>
+                )}
+              </div>
+              <div className={styles.amount}>{formatINR(row.totalPaise)}</div>
+              {canDecide && (
+                <div className={styles.actions}>
+                  <Button size="sm" onClick={() => approve(row)} loading={busy === row.id} icon={<Check size={15} aria-hidden="true" />}>
+                    Approve
+                  </Button>
+                  <Button size="sm" variant="secondary" onClick={() => setRejecting(row)} disabled={busy === row.id}>
+                    Reject
+                  </Button>
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+      <ReasonDialog
+        open={rejecting !== null}
+        onOpenChange={(o) => !o && setRejecting(null)}
+        title={`Reject order ${rejecting?.orderNumber ?? ""}`}
+        description="The customer is told the order couldn't be accepted and reserved stock is released."
+        name="reason"
+        label="Reason"
+        schema={codRejectSchema}
+        confirmLabel="Reject order"
+        danger
+        onConfirm={(values) =>
+          run(
+            () => api(`/admin/orders/${rejecting!.id}/reject-cod`, { method: "POST", body: values }),
+            `Order ${rejecting!.orderNumber} rejected`,
+          )
+        }
+      />
+    </>
+  );
+}

@@ -1,0 +1,57 @@
+.page {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: var(--space-5) var(--space-4);
+  background: repeating-linear-gradient(90deg, rgb(22 50 79 / 0.035) 0 1px, transparent 1px 12px), var(--cotton);
+}
+
+.card {
+  display: grid;
+  gap: var(--space-4);
+  width: min(420px, 100%);
+  padding: var(--space-6) var(--space-5);
+  border-top: 4px solid var(--indigo-800);
+  border-radius: 2px 2px var(--radius-panel) var(--radius-panel);
+  background: var(--surface);
+  box-shadow: var(--shadow-float);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.brand img {
+  border-radius: var(--radius-control);
+}
+
+.wordmark {
+  font-weight: 600;
+  font-stretch: var(--wide);
+  color: var(--indigo-800);
+  line-height: 1.2;
+}
+
+.sub {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.title {
+  margin-top: var(--space-3);
+  font-size: var(--text-xl);
+  font-stretch: var(--wide);
+}
+
+.lede {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+@media (min-width: 480px) {
+  .card {
+    padding: var(--space-7) var(--space-6);
+  }
+}

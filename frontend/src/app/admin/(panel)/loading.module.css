@@ -1,0 +1,8 @@
+.wrap {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.panel {
+  margin-top: var(--space-4);
+}
