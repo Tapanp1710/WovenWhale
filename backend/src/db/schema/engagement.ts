@@ -1,22 +1,5 @@
-import {
-  boolean,
-  index,
-  jsonb,
-  pgTable,
-  text,
-  timestamp,
-  uniqueIndex,
-  uuid,
-  varchar,
-} from "drizzle-orm/pg-core";
-import {
-  createdAt,
-  id,
-  messageDirectionEnum,
-  notificationChannelEnum,
-  notificationStatusEnum,
-  updatedAt,
-} from "./_shared";
+import { boolean, index, jsonb, pgTable, text, timestamp, uniqueIndex, uuid, varchar } from "drizzle-orm/pg-core";
+import { createdAt, id, messageDirectionEnum, notificationChannelEnum, notificationStatusEnum, updatedAt } from "./_shared";
 import { products } from "./catalog";
 import { users } from "./identity";
 

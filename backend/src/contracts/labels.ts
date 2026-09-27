@@ -41,11 +41,4 @@ export const RETURN_TYPE_LABELS: Record<ReturnType, string> = {
 };
 
 /** The customer-visible progression used by order timelines. */
-export const ORDER_PROGRESS: readonly OrderStatus[] = [
-  "CONFIRMED",
-  "PROCESSING",
-  "PACKED",
-  "SHIPPED",
-  "OUT_FOR_DELIVERY",
-  "DELIVERED",
-];
+export const ORDER_PROGRESS: readonly OrderStatus[] = ["CONFIRMED", "PROCESSING", "PACKED", "SHIPPED", "OUT_FOR_DELIVERY", "DELIVERED"];

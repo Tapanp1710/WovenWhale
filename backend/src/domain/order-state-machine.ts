@@ -27,12 +27,7 @@ export const ORDER_TRANSITIONS: Readonly<Record<OrderStatus, readonly OrderStatu
 export const TERMINAL_ORDER_STATUSES: readonly OrderStatus[] = ["DELIVERED", "CANCELLED", "REJECTED"];
 
 /** Statuses from which a customer may self-cancel (still subject to the 12h window). */
-export const CUSTOMER_CANCELLABLE_STATUSES: readonly OrderStatus[] = [
-  "PENDING_PAYMENT",
-  "PENDING_COD_APPROVAL",
-  "CONFIRMED",
-  "PROCESSING",
-];
+export const CUSTOMER_CANCELLABLE_STATUSES: readonly OrderStatus[] = ["PENDING_PAYMENT", "PENDING_COD_APPROVAL", "CONFIRMED", "PROCESSING"];
 
 /** Statuses in which stock is held as a reservation (not yet deducted from on-hand). */
 export const RESERVATION_STATUSES: readonly OrderStatus[] = ["PENDING_PAYMENT", "PENDING_COD_APPROVAL"];

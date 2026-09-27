@@ -1,17 +1,5 @@
 import { sql } from "drizzle-orm";
-import {
-  boolean,
-  check,
-  index,
-  integer,
-  jsonb,
-  pgTable,
-  text,
-  timestamp,
-  uniqueIndex,
-  uuid,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { boolean, check, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex, uuid, varchar } from "drizzle-orm/pg-core";
 import {
   actorTypeEnum,
   createdAt,
@@ -61,13 +49,19 @@ export const orders = pgTable(
     shippingPaise: integer("shipping_paise").notNull().default(0),
     codFeePaise: integer("cod_fee_paise").notNull().default(0),
     totalPaise: integer("total_paise").notNull(),
-    couponCodes: text("coupon_codes").array().notNull().default(sql`'{}'::text[]`),
+    couponCodes: text("coupon_codes")
+      .array()
+      .notNull()
+      .default(sql`'{}'::text[]`),
     shippingAddress: jsonb("shipping_address").$type<AddressSnapshot>().notNull(),
     contactPhone: varchar("contact_phone", { length: 16 }).notNull(),
     contactEmail: varchar("contact_email", { length: 254 }),
     idempotencyKey: varchar("idempotency_key", { length: 64 }).notNull(),
     checkoutSessionId: uuid("checkout_session_id"),
-    riskFlags: jsonb("risk_flags").$type<string[]>().notNull().default(sql`'[]'::jsonb`),
+    riskFlags: jsonb("risk_flags")
+      .$type<string[]>()
+      .notNull()
+      .default(sql`'[]'::jsonb`),
     placedAt: timestamp("placed_at", { withTimezone: true }).notNull().defaultNow(),
     /** Server-computed: placed_at + cancellation window. Customers cannot cancel after this. */
     cancelDeadlineAt: timestamp("cancel_deadline_at", { withTimezone: true }).notNull(),
@@ -234,7 +228,9 @@ export const shipments = pgTable(
   },
   (t) => [
     index("shipments_order_idx").on(t.orderId),
-    uniqueIndex("shipments_awb_uq").on(t.awb).where(sql`${t.awb} is not null`),
+    uniqueIndex("shipments_awb_uq")
+      .on(t.awb)
+      .where(sql`${t.awb} is not null`),
   ],
 );
 

@@ -63,12 +63,7 @@ export function normalizeCouponCode(code: string): string {
  * Validates a coupon's standing rules (dates, limits, customer restrictions,
  * minimum order). Line eligibility is checked by the pricing engine.
  */
-export function validateCoupon(
-  coupon: CouponRule,
-  subtotalPaise: number,
-  customer: CouponCustomerContext,
-  now: Date,
-): Result {
+export function validateCoupon(coupon: CouponRule, subtotalPaise: number, customer: CouponCustomerContext, now: Date): Result {
   const fmt = (p: number) => `₹${Math.round(p / 100).toLocaleString("en-IN")}`;
 
   if (!coupon.isActive) return fail(COUPON_ERRORS.INACTIVE, "This coupon is no longer active.");
@@ -119,7 +114,10 @@ export function validateCouponCombination(coupons: Pick<CouponRule, "code" | "is
 }
 
 /** Line is eligible when the coupon has no restrictions or matches a product/category. */
-export function isLineEligible(coupon: Pick<CouponRule, "productIds" | "categoryIds">, line: { productId: string; categoryIds: string[] }): boolean {
+export function isLineEligible(
+  coupon: Pick<CouponRule, "productIds" | "categoryIds">,
+  line: { productId: string; categoryIds: string[] },
+): boolean {
   if (coupon.productIds.length === 0 && coupon.categoryIds.length === 0) return true;
   if (coupon.productIds.includes(line.productId)) return true;
   return line.categoryIds.some((c) => coupon.categoryIds.includes(c));
@@ -128,8 +126,7 @@ export function isLineEligible(coupon: Pick<CouponRule, "productIds" | "category
 /** Raw discount for a coupon against an eligible base amount (before allocation). */
 export function computeCouponDiscount(coupon: Pick<CouponRule, "type" | "value" | "maxDiscountPaise">, eligiblePaise: number): number {
   if (eligiblePaise <= 0) return 0;
-  let discount =
-    coupon.type === "PERCENTAGE" ? Math.floor((eligiblePaise * coupon.value) / 100) : Math.min(coupon.value, eligiblePaise);
+  let discount = coupon.type === "PERCENTAGE" ? Math.floor((eligiblePaise * coupon.value) / 100) : Math.min(coupon.value, eligiblePaise);
   if (coupon.maxDiscountPaise !== null) discount = Math.min(discount, coupon.maxDiscountPaise);
   return Math.max(0, Math.min(discount, eligiblePaise));
 }

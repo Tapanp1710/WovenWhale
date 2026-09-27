@@ -18,7 +18,8 @@
     "catalog:import": "tsx --env-file-if-exists=../.env scripts/import-catalog.ts",
     "jobs:run": "tsx --env-file-if-exists=../.env src/jobs/run-once.ts",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "db:bootstrap": "tsx --env-file-if-exists=../.env scripts/bootstrap.ts"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.1",

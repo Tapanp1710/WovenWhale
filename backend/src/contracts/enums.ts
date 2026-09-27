@@ -168,13 +168,5 @@ export const PERMISSIONS = [
 ] as const;
 export type Permission = (typeof PERMISSIONS)[number];
 
-export const PRODUCT_SORTS = [
-  "featured",
-  "newest",
-  "best-selling",
-  "price-low",
-  "price-high",
-  "discount",
-  "name",
-] as const;
+export const PRODUCT_SORTS = ["featured", "newest", "best-selling", "price-low", "price-high", "discount", "name"] as const;
 export type ProductSort = (typeof PRODUCT_SORTS)[number];

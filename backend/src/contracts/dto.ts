@@ -507,7 +507,14 @@ export interface AdminProductDetailDTO {
   seoTitle: string | null;
   seoDescription: string | null;
   images: (ImageDTO & { provider: string; sortOrder: number })[];
-  variants: (VariantDTO & { isActive: boolean; onHand: number; reserved: number; pricePaiseOverride: number | null; mrpPaiseOverride: number | null; sortOrder: number })[];
+  variants: (VariantDTO & {
+    isActive: boolean;
+    onHand: number;
+    reserved: number;
+    pricePaiseOverride: number | null;
+    mrpPaiseOverride: number | null;
+    sortOrder: number;
+  })[];
 }
 
 export interface AdminCategoryDTO extends CategoryDTO {
@@ -541,7 +548,13 @@ export interface AdminCustomerDetailDTO extends AdminCustomerRowDTO {
   returns: ReturnSummaryDTO[];
   refunds: RefundDTO[];
   events: { type: string; path: string | null; createdAt: string; metadata: Record<string, unknown> | null }[];
-  whatsappMessages: { direction: "INBOUND" | "OUTBOUND"; body: string | null; status: NotificationStatus; createdAt: string; templateTopic: string | null }[];
+  whatsappMessages: {
+    direction: "INBOUND" | "OUTBOUND";
+    body: string | null;
+    status: NotificationStatus;
+    createdAt: string;
+    templateTopic: string | null;
+  }[];
 }
 
 export interface AdminCouponDTO {

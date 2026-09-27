@@ -1,0 +1,2 @@
+DROP INDEX "product_variants_product_size_color_uq";--> statement-breakpoint
+ALTER TABLE "product_variants" ADD CONSTRAINT "product_variants_product_size_color_uq" UNIQUE NULLS NOT DISTINCT("product_id","size","color");

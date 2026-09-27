@@ -4,11 +4,15 @@ import { z } from "zod";
 export const cleanText = (max: number) =>
   z
     .string()
-    .transform((s) => s.replace(/[\u0000-\u001F\u007F]/g, " ").replace(/\s+/g, " ").trim())
+    .transform((s) =>
+      s
+        .replace(/[\u0000-\u001F\u007F]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim(),
+    )
     .pipe(z.string().max(max));
 
-export const requiredText = (label: string, max: number, min = 1) =>
-  cleanText(max).pipe(z.string().min(min, `${label} is required`));
+export const requiredText = (label: string, max: number, min = 1) => cleanText(max).pipe(z.string().min(min, `${label} is required`));
 
 /**
  * Indian mobile number. Accepts "98765 43210", "+91 98765-43210", "09876543210"
@@ -21,11 +25,7 @@ export const phoneSchema = z
   .pipe(z.string().regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number"))
   .transform((s) => `+91${s}`);
 
-export const emailSchema = z
-  .string()
-  .trim()
-  .toLowerCase()
-  .pipe(z.email("Enter a valid email address").max(254));
+export const emailSchema = z.string().trim().toLowerCase().pipe(z.email("Enter a valid email address").max(254));
 
 export const optionalEmailSchema = z
   .string()
@@ -39,7 +39,10 @@ export const pincodeSchema = z
   .trim()
   .regex(/^[1-9]\d{5}$/, "Enter a valid 6-digit pincode");
 
-export const otpCodeSchema = z.string().trim().regex(/^\d{6}$/, "Enter the 6-digit code");
+export const otpCodeSchema = z
+  .string()
+  .trim()
+  .regex(/^\d{6}$/, "Enter the 6-digit code");
 
 export const uuidSchema = z.uuid();
 

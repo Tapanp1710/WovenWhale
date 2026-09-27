@@ -1,16 +1,5 @@
 import { sql } from "drizzle-orm";
-import {
-  boolean,
-  check,
-  index,
-  integer,
-  pgTable,
-  primaryKey,
-  text,
-  uniqueIndex,
-  uuid,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { boolean, check, index, integer, pgTable, primaryKey, text, unique, uniqueIndex, uuid, varchar } from "drizzle-orm/pg-core";
 import { createdAt, deletedAt, id, updatedAt } from "./_shared";
 
 export const categories = pgTable(
@@ -51,7 +40,10 @@ export const products = pgTable(
     fabric: varchar("fabric", { length: 64 }),
     pattern: varchar("pattern", { length: 64 }),
     color: varchar("color", { length: 48 }),
-    tags: text("tags").array().notNull().default(sql`'{}'::text[]`),
+    tags: text("tags")
+      .array()
+      .notNull()
+      .default(sql`'{}'::text[]`),
     mrpPaise: integer("mrp_paise").notNull(),
     pricePaise: integer("price_paise").notNull(),
     discountPercent: integer("discount_percent").generatedAlwaysAs(
@@ -119,7 +111,7 @@ export const productVariants = pgTable(
   },
   (t) => [
     uniqueIndex("product_variants_sku_uq").on(t.sku),
-    uniqueIndex("product_variants_product_size_color_uq").on(t.productId, t.size, sql`coalesce(${t.color}, '')`),
+    unique("product_variants_product_size_color_uq").on(t.productId, t.size, t.color).nullsNotDistinct(),
     index("product_variants_size_idx").on(t.size),
   ],
 );

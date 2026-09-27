@@ -1,0 +1,4834 @@
+{
+  "source": "store-api:https://wovenwhale.com",
+  "fetchedAt": "2026-09-27T18:00:58.433Z",
+  "products": [
+    {
+      "sourceRef": "woo:10035",
+      "name": "Stone Grey Ikat Shirt",
+      "slug": "stone-grey-ikat-handwoven-shirt",
+      "sku": "WW-M-SHI-STO-079",
+      "shortDescription": "Crafted from breathable handwoven cotton, the Granite Ikat Shirt features authentic Ikat weaving on a sophisticated granite grey base. Lightweight, versatile, and timeless, it’s designed for everyday comfort with premium artisan craftsmanship.",
+      "description": "Introducing our Granite Ikat Shirt — a timeless interpretation of traditional Ikat craftsmanship with a modern monochrome aesthetic. Crafted from breathable handwoven cotton, this shirt showcases authentic Ikat weaving through elegant vertical motifs that create a refined and contemporary look.\n\nThe granite grey tone makes it exceptionally versatile, pairing effortlessly with denim, black trousers, chinos, or linen bottoms. Soft, lightweight, and naturally breathable, it offers lasting comfort while maintaining a polished appearance from morning meetings to evening outings.\n\nDesigned for men who appreciate understated style and artisan craftsmanship, the Granite Ikat Shirt is a wardrobe essential that seamlessly blends heritage weaving with everyday sophistication.\n\nAuthentic Ikat Weaving\n\nTraditional artisan craftsmanship\n\nHandwoven Cotton Fabric\n\nLightweight, breathable and comfortable\n\nModern Monochrome Design\n\nSophisticated everyday styling\n\nVersatile Wardrobe Essential\n\nPerfect from office to weekends\n\n✔ Authentic Handwoven Ikat\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Premium Artisan Craftsmanship",
+      "categories": [
+        {
+          "slug": "ikat",
+          "name": "ikat"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        }
+      ],
+      "tags": [
+        "artisan shirt",
+        "full sleeve shirt",
+        "granite grey shirt",
+        "grey ikat shirt",
+        "handloom cotton shirt",
+        "handwoven shirt",
+        "ikat shirt",
+        "men's fashion",
+        "office wear shirt",
+        "premium cotton shirt",
+        "smart casual shirt",
+        "wovenwhale"
+      ],
+      "mrpPaise": 139900,
+      "pricePaise": 109900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/08/IMG_3670-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/08/IMG_3675-Large.jpeg",
+          "alt": "Man wearing Granite Ikat Handwoven Shirt by WovenWhale",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/08/IMG_3671-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/08/IMG_3677-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/08/IMG_3674-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/08/IMG_3664-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:9903",
+      "name": "Sandstone Handwoven Shirt",
+      "slug": "sandstone-handwoven-cotton-shirt",
+      "sku": "WW-M-SHI-SAN-076",
+      "shortDescription": "Crafted from 100% handwoven cotton, the Sandstone Handwoven Shirt features a naturally textured weave in a soft sand beige tone. Lightweight, breathable, and effortlessly versatile, it’s designed for everyday comfort with a refined handcrafted finish.",
+      "description": "Introducing our Sandstone Handwoven Shirt — a timeless wardrobe essential crafted from 100% handwoven cotton. Designed with a naturally textured weave and a soft sand beige tone, this shirt reflects understated elegance while celebrating the beauty of handcrafted fabrics.\n\nLightweight, breathable, and exceptionally comfortable, it is made for men who appreciate premium quality without excessive detailing. The subtle woven texture adds depth to the fabric, making it effortlessly stylish for everyday wear, office dressing, weekend outings, holidays, and evening gatherings.\n\nIts clean silhouette and versatile neutral colour pair seamlessly with denim, chinos, or linen trousers, making it a dependable choice across seasons and occasions.\n\n100% Handwoven Cotton\n\nSoft, breathable and naturally comfortable\n\nTextured Handwoven Finish\n\nSubtle woven character with timeless appeal\n\nMinimalist Design\n\nElegant styling for every occasion\n\nVersatile Neutral Shade\n\nEasy to pair with any wardrobe\n\n✔ 100% Handwoven Cotton\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Crafted for Everyday Comfort",
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        }
+      ],
+      "tags": [
+        "artisan shirt",
+        "full sleeve shirt",
+        "handwoven cotton shirt",
+        "handwoven shirt",
+        "men's fashion",
+        "minimalist shirt",
+        "premium cotton shirt",
+        "sand beige shirt",
+        "smart casual shirt",
+        "summer shirt",
+        "wovenwhale"
+      ],
+      "mrpPaise": 229900,
+      "pricePaise": 139900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3684.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3687.jpeg",
+          "alt": "South Cotton Shirt",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3685.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3686.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/IMG_2997-scaled.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:9854",
+      "name": "Crimson Suvidha Shirt",
+      "slug": "crimson-suvidha-south-cotton-shirt",
+      "sku": "WW-M-SHI-CRI-075",
+      "shortDescription": "Crafted from premium South Cotton, the Crimson Suvidha Shirt features elegant woven motifs on a rich crimson base. Soft, breathable, and versatile, it’s designed for festive occasions, weekend outings, and elevated everyday wear.",
+      "description": "Introducing our Crimson Suvidha Shirt — a perfect blend of rich color, breathable comfort, and timeless design. Crafted from premium South Cotton, this shirt features elegant woven motifs that add subtle texture and visual interest while maintaining a refined look.\n\nThe deep crimson shade brings warmth and character, making it ideal for festive celebrations, family gatherings, weekend outings, and evening occasions. Lightweight and comfortable, the fabric ensures effortless wear throughout the day while offering a polished appearance.\n\nDesigned for men who appreciate classic styling with distinctive detailing, the Crimson Suvidha Shirt is a versatile wardrobe addition that transitions seamlessly from casual to festive settings.\n\nPremium South Cotton\n\nSoft, breathable and comfortable\n\nElegant Woven Motifs\n\nSubtle detailing with timeless appeal\n\nRich Crimson Tone\n\nPerfect for festive and casual occasions\n\nVersatile Styling\n\nFrom celebrations to weekend outings\n\n✔ Premium South Cotton\n\n✔ COD Available\n\n✔ Fast Shipping",
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        }
+      ],
+      "tags": [
+        "casual shirt",
+        "crimson shirt",
+        "festive shirt",
+        "full sleeve shirt",
+        "men's shirt",
+        "motif shirt",
+        "premium cotton shirt",
+        "smart casual shirt",
+        "south cotton shirt",
+        "wovenwhale"
+      ],
+      "mrpPaise": 229900,
+      "pricePaise": 139900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3693.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3696.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3692.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3694-1.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:9842",
+      "name": "Ivory Jacquard Shirt",
+      "slug": "ivory-jacquard-handwoven-shirt",
+      "sku": "WW-M-SHI-WAR-074",
+      "shortDescription": "Crafted from 100% handwoven cotton, the Ivory Jacquard Shirt features elegant woven jacquard motifs on a warm ivory base. Lightweight, breathable, and effortlessly refined, it’s designed for men who appreciate timeless craftsmanship and understated luxury.",
+      "description": "Introducing our Ivory Jacquard Shirt — a refined celebration of artisan craftsmanship and modern minimalism. Woven from 100% handwoven cotton, this shirt features delicate jacquard motifs that create subtle texture and visual depth while maintaining a clean, sophisticated appearance.\n\nThe warm ivory tone enhances its versatility, making it easy to style with denim, chinos, or linen trousers. Lightweight and breathable, it offers all-day comfort while the woven jacquard detailing adds a premium handcrafted character that stands apart from ordinary printed shirts.\n\nPerfect for festive brunches, destination weddings, vacations, evening gatherings, and elevated everyday wear, this shirt is designed for men who appreciate timeless style, handcrafted fabrics, and understated elegance.\n\nPremium Jacquard Weave\n\nElegant woven motifs with artisan detailing\n\n100% Handwoven Cotton\n\nSoft, breathable and lightweight comfort\n\nMinimalist Luxury\n\nClean design with timeless appeal\n\nVersatile Styling\n\nPerfect for festive and everyday occasions\n\n✔ 100% Handwoven Cotton\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Premium Artisan Finish",
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        }
+      ],
+      "tags": [
+        "artisan shirt",
+        "full sleeve shirt",
+        "handloom cotton shirt",
+        "handwoven shirt",
+        "heritage shirt",
+        "ivory shirt",
+        "jacquard shirt",
+        "men's fashion",
+        "minimalist shirt",
+        "premium shirt",
+        "smart casual shirt",
+        "wovenwhale"
+      ],
+      "mrpPaise": 229900,
+      "pricePaise": 139900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3681-1.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3682-1.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3683-1.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3444.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/IMG_3047-1-scaled.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:9832",
+      "name": "Slate Jamdani Shirt",
+      "slug": "slate-jamdani-handwoven-shirt",
+      "sku": "WW-M-SHI-SLA-073",
+      "shortDescription": "Crafted from 100% handwoven cotton, the Slate Jamdani Shirt features authentic Jamdani motifs woven into a sophisticated slate grey striped base. Designed for breathable comfort, timeless craftsmanship, and versatile styling across festive, casual, and smart everyday occasions.",
+      "description": "Introducing our Slate Jamdani Shirt — where traditional Jamdani craftsmanship meets contemporary design. Woven from 100% handwoven cotton, this shirt combines elegant vertical stripes with authentic Jamdani motifs, creating a refined balance of heritage and modern sophistication.\n\nThe breathable handwoven cotton fabric ensures exceptional comfort throughout the day, while the slate grey palette adds effortless versatility to your wardrobe. Whether paired with denim for a relaxed weekend, chinos for a smart-casual look, or tailored trousers for an evening gathering, this shirt delivers timeless style with artisan character.\n\nDesigned for men who appreciate handcrafted details and understated luxury, the Slate Jamdani Shirt is a wardrobe essential that celebrates India’s rich weaving heritage while fitting seamlessly into modern lifestyles.\n\nAuthentic Jamdani Weaving\n\nInspired by traditional artisan craftsmanship\n\n100% Handwoven Cotton\n\nBreathable, soft and lightweight\n\nRefined Vertical Stripes\n\nTimeless design with modern appeal\n\nVersatile Styling\n\nPerfect for festive, casual and smart occasions\n\n✔ 100% Handwoven Cotton\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Artisan Crafted Premium Feel",
+      "categories": [
+        {
+          "slug": "jamdani",
+          "name": "Jamdani"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        }
+      ],
+      "tags": [
+        "artisan shirt",
+        "full sleeve shirt",
+        "handcrafted shirt",
+        "handloom cotton shirt",
+        "handwoven shirt",
+        "heritage shirt",
+        "jamdani shirt",
+        "men's fashion",
+        "premium casual shirt",
+        "slate grey shirt",
+        "smart casual shirt",
+        "wovenwhale"
+      ],
+      "mrpPaise": 229900,
+      "pricePaise": 109900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3688.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3689.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3690.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3691.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:9567",
+      "name": "Skyloom Handwoven Jamdani Shirt",
+      "slug": "sky-jamdani-handwoven-shirt",
+      "sku": "WW-M-SHI-POW-070",
+      "shortDescription": "Crafted from breathable handwoven cotton, the Sky Jamdani Shirt showcases delicate Jamdani motifs woven into a soothing powder blue base. Designed for men who appreciate timeless craftsmanship, effortless comfort, and understated elegance.",
+      "description": "Introducing our Sky Butta Shirt — a sophisticated handwoven cotton essential designed for effortless everyday elegance. Featuring delicate woven butta motifs across a calming powder blue base, this shirt delivers a perfect balance of craftsmanship, comfort, and versatility.\n\nCrafted from breathable handwoven cotton, it offers lightweight comfort throughout the day while maintaining a clean and polished appearance. The subtle motif detailing adds texture and character without overpowering the design, making it suitable for office wear, weekend outings, travel, brunches, and casual celebrations.\n\nDesigned for men who appreciate understated luxury and artisan craftsmanship, this shirt blends traditional weaving techniques with contemporary styling for year-round wear.\n\nHandwoven Butta Motifs\n\nInspired by timeless artisan craftsmanship\n\nPremium Handwoven Cotton\n\nSoft, breathable and lightweight\n\nVersatile Everyday Styling\n\nPerfect from work to weekends\n\nRefined Powder Blue Tone\n\nFresh, modern and timeless\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Premium Handcrafted Feel",
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [
+        "artisan shirt",
+        "handcrafted shirt",
+        "handloom cotton shirt",
+        "handwoven shirt",
+        "heritage shirt",
+        "jamdani shirt",
+        "men's shirt",
+        "powder blue shirt",
+        "premium casual shirt",
+        "smart casual shirt",
+        "wovenwhale"
+      ],
+      "mrpPaise": 229900,
+      "pricePaise": 139900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/sky-jamdani-handwoven-shirt-A.jpeg",
+          "alt": "Man wearing Sky Color Handwoven Cotton Shirt by WovenWhale",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/sky-jamdani-handwoven-shirt-D.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/sky-jamdani-handwoven-shirt-C.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/sky-jamdani-handwoven-shirt-B.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:9566",
+      "name": "Sand Butta Handwoven Cotton Shirt",
+      "slug": "sand-butta-handwoven-shirt",
+      "sku": "WW-M-SHI-NAT-069",
+      "shortDescription": "Crafted from breathable handwoven cotton, the Sand Butta Shirt features delicate woven motifs and a naturally elegant texture. Designed for men who appreciate timeless craftsmanship, understated luxury, and effortless comfort.",
+      "description": "Introducing our Sand Butta Shirt — a refined expression of traditional craftsmanship and modern simplicity. Woven in a soft natural sand tone, this shirt features delicate butta motifs that add depth, texture, and artisanal character without overwhelming the design.\n\nCrafted from breathable handwoven cotton, it offers exceptional comfort while retaining a clean and sophisticated silhouette. The subtle motif detailing and neutral color palette make it versatile enough for festive gatherings, cultural occasions, destination vacations, brunches, and elevated everyday wear.\n\nDesigned for men who appreciate understated luxury and handcrafted artistry, this shirt blends heritage-inspired weaving techniques with contemporary versatility.\n\nHandwoven Butta Motifs\n\nInspired by traditional artisan weaving\n\nPremium Handwoven Cotton\n\nLightweight and breathable comfort\n\nNatural Textured Finish\n\nSubtle elegance with artisanal appeal\n\nFestive & Everyday Wear\n\nVersatile styling across occasions\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Premium Handcrafted Feel",
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [
+        "artisan shirt",
+        "butta shirt",
+        "cotton shirt",
+        "festive shirt",
+        "handcrafted shirt",
+        "handwoven shirt",
+        "heritage shirt",
+        "men's shirt",
+        "premium casual shirt",
+        "wovenwhale"
+      ],
+      "mrpPaise": 229900,
+      "pricePaise": 129900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/sand-butta-handwoven-shirt-B.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/sand-butta-handwoven-shirt-E.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/sand-butta-handwoven-shirt-C.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/sand-butta-handwoven-shirt-A.jpeg",
+          "alt": "Man wearing Sand Butta Handwoven Cotton Shirt by WovenWhale",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/sand-butta-handwoven-shirt-D.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/sand-butta-handwoven-shirt-F.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:9565",
+      "name": "Mocha Handwoven Cotton Shirt",
+      "slug": "mocha-handwoven-cotton-shirt",
+      "sku": "WW-M-SHI-MOC-072",
+      "shortDescription": "A timeless handwoven cotton shirt crafted in a sophisticated mocha taupe shade. Designed for effortless elegance, breathable comfort, and versatile styling across workdays, weekends, and evening outings.",
+      "description": "Introducing our Mocha Handwoven Shirt — a refined expression of simplicity, craftsmanship, and timeless style. Crafted in an elegant mocha taupe shade, this shirt celebrates the beauty of handwoven cotton through clean lines, understated texture, and effortless versatility.\n\nMade from breathable handwoven cotton, it offers exceptional comfort while maintaining a polished appearance throughout the day. Free from bold prints and excessive detailing, the shirt allows the richness of the fabric and the sophistication of the color to take center stage.\n\nPerfect for office wear, travel, dinner outings, weekend gatherings, and elevated everyday dressing, this is a wardrobe essential designed for men who appreciate understated luxury and timeless craftsmanship.\n\nHandwoven Cotton Fabric\n\nSoft, breathable and comfortable\n\nMinimalist Design\n\nClean and timeless styling\n\nVersatile Wearability\n\nPerfect from office to weekends\n\nQuiet Luxury Appeal\n\nSophisticated and effortless\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Premium Handwoven Feel",
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [
+        "artisan shirt",
+        "cotton shirt",
+        "handwoven shirt",
+        "men's fashion",
+        "minimalist shirt",
+        "mocha shirt",
+        "premium shirt",
+        "smart casual shirt",
+        "solid shirt",
+        "taupe shirt",
+        "wovenwhale"
+      ],
+      "mrpPaise": 229900,
+      "pricePaise": 109900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/mocha-handwoven-cotton-shirt-E.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/mocha-handwoven-cotton-shirt-B.jpeg",
+          "alt": "Man wearing Mocha Handwoven Cotton Shirt by WovenWhale",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/mocha-handwoven-cotton-shirt-C.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/mocha-handwoven-cotton-shirt-D.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/mocha-handwoven-cotton-shirt-F.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:9564",
+      "name": "Ash Grey Handwoven Cotton Shirt",
+      "slug": "ash-grey-handwoven-cotton-shirt",
+      "sku": "WW-M-SHI-ASH-071",
+      "shortDescription": "Crafted from premium handwoven cotton, the Ash Grey Shirt offers timeless style, breathable comfort, and effortless versatility. Designed for men who appreciate understated luxury and modern everyday dressing.",
+      "description": "Introducing our Ash Grey Handwoven Shirt — a timeless essential designed for modern men who value simplicity, comfort, and craftsmanship. Woven in a sophisticated ash grey tone, this shirt delivers a clean and refined aesthetic that effortlessly adapts to every occasion.\n\nCrafted from breathable handwoven cotton, it offers exceptional comfort while maintaining a polished appearance throughout the day. Its minimalist design highlights the beauty of the fabric itself, creating a versatile wardrobe staple that pairs effortlessly with denim, chinos, and tailored trousers.\n\nWhether you’re heading to the office, travelling for the weekend, meeting friends for dinner, or simply dressing well every day, this shirt delivers understated sophistication without trying too hard.\n\nHandwoven Cotton Fabric\n\nSoft, breathable and lightweight\n\nMinimalist Design\n\nClean and timeless styling\n\nEveryday Versatility\n\nPerfect from work to weekends\n\nRefined Grey Tone\n\nModern and sophisticated appeal\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Premium Handwoven Feel",
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [
+        "artisan shirt",
+        "cotton shirt",
+        "grey shirt",
+        "handwoven shirt",
+        "men's fashion",
+        "minimalist shirt",
+        "office wear shirt",
+        "premium shirt",
+        "smart casual shirt",
+        "solid shirt",
+        "wovenwhale"
+      ],
+      "mrpPaise": 229900,
+      "pricePaise": 109900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/ash-grey-handwoven-cotton-shirt-E.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/ash-grey-handwoven-cotton-shirt-B.jpeg",
+          "alt": "premium-shirts-woven-whale",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/ash-grey-handwoven-cotton-shirt-A.jpeg",
+          "alt": "Man wearing Ash Grey Handwoven Cotton Shirt by WovenWhale",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/ash-grey-handwoven-cotton-shirt-C.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/ash-grey-handwoven-cotton-shirt-D.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:9563",
+      "name": "Mauve Handwoven Cotton Stripe Shirt",
+      "slug": "mauve-stripe-handwoven-shirt",
+      "sku": "WW-M-SHI-DUS-068",
+      "shortDescription": "A sophisticated handwoven cotton shirt featuring fine vertical stripes in a refined dusty mauve tone. Designed for effortless elegance, all-day comfort, and versatile smart-casual dressing.",
+      "description": "Introducing our Mauve Stripe Shirt — a timeless handwoven cotton essential designed for men who appreciate understated sophistication. Featuring fine vertical stripes woven into a soft dusty mauve base, this shirt offers a clean and polished look that effortlessly transitions from workdays to weekends.\n\nCrafted from breathable handwoven cotton, it delivers exceptional comfort while maintaining a refined appearance throughout the day. The subtle stripe pattern creates visual depth without overpowering the design, making it suitable for office wear, casual gatherings, travel, dinner outings, and elevated everyday dressing.\n\nIts versatile color palette and timeless silhouette make it a dependable wardrobe staple that pairs effortlessly with denim, chinos, and tailored trousers.\n\nHandwoven Cotton Fabric\n\nSoft, breathable and comfortable\n\nFine Vertical Stripes\n\nClassic and timeless detailing\n\nSmart Casual Versatility\n\nPerfect from office to weekends\n\nRefined Everyday Style\n\nEffortless sophistication\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Premium Handwoven Feel",
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [
+        "artisan shirt",
+        "cotton shirt",
+        "full sleeve shirt",
+        "handwoven shirt",
+        "mauve shirt",
+        "men's fashion",
+        "office wear shirt",
+        "premium casual shirt",
+        "smart casual shirt",
+        "striped shirt",
+        "wovenwhale"
+      ],
+      "mrpPaise": 199900,
+      "pricePaise": 139900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/mauve-stripe-handwoven-shirt-C.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/img_3256.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/mauve-stripe-handwoven-shirt-A.jpeg",
+          "alt": "Man wearing Mauve Stripe Handwoven Cotton Shirt by WovenWhale",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/mauve-stripe-handwoven-shirt-B.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:9557",
+      "name": "Blush Horizon Handwoven Cotton Shirt",
+      "slug": "blush-horizon-handwoven-shirt",
+      "sku": null,
+      "shortDescription": "Crafted from breathable handwoven cotton, the Blush Horizon Shirt combines soft pink hues with refined woven stripes for a fresh, sophisticated look. Perfect for summer outings, vacations, brunches, and relaxed premium dressing.",
+      "description": "Introducing our Blush Horizon Shirt — a modern handwoven cotton essential inspired by slow summer days and effortless sophistication. Featuring delicate woven stripes across a soft blush pink base, this shirt delivers a refreshing balance of comfort, craftsmanship, and contemporary style.\n\nCrafted from breathable handwoven cotton, it feels exceptionally lightweight and comfortable throughout the day. The subtle stripe detailing creates texture without overwhelming the design, making it ideal for vacations, brunch outings, weekend gatherings, resort stays, and elevated everyday wear.\n\nDesigned for men who appreciate relaxed luxury and timeless craftsmanship, this shirt brings together artisan weaving traditions and modern versatility in one refined silhouette.\n\nHandwoven Cotton Fabric\n\nBreathable, soft and lightweight\n\nSubtle Woven Stripes\n\nClean and sophisticated detailing\n\nSummer Ready Comfort\n\nPerfect for warm weather dressing\n\nResort Inspired Styling\n\nRelaxed luxury for everyday wear\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Premium Handwoven Feel",
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [
+        "artisan shirt",
+        "cotton shirt",
+        "handcrafted shirt",
+        "handloom cotton shirt",
+        "handwoven shirt",
+        "heritage shirt",
+        "ikat shirt",
+        "ivory shirt",
+        "lightweight shirt",
+        "men's fashion",
+        "men's shirt",
+        "pink shirt",
+        "premium casual shirt",
+        "resort wear shirt",
+        "smart casual shirt",
+        "summer shirt",
+        "vacation shirt",
+        "wovenwhale"
+      ],
+      "mrpPaise": 199900,
+      "pricePaise": 139900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/blush-horizon-handwoven-shirt-A.jpeg",
+          "alt": "Man wearing Blush Horizon Handwoven Cotton Shirt by WovenWhale",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/blush-horizon-handwoven-shirt-B.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/blush-horizon-handwoven-shirt-C.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/blush-horizon-handwoven-shirt-D.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:9549",
+      "name": "Ivory Handwoven Ikat Shirt",
+      "slug": "ivory-dash-ikat-shirt",
+      "sku": "WW-M-SHI-NAT-066",
+      "shortDescription": "A refined handwoven Ikat shirt crafted from breathable cotton and finished in a timeless ivory tone. Featuring subtle woven motifs and artisanal detailing, it’s designed for effortless sophistication across casual, festive, and elevated everyday occasions.",
+      "description": "Introducing our Ivory Dash Ikat Shirt — a modern interpretation of traditional handwoven craftsmanship. Designed in a versatile natural ivory tone, this shirt features subtle Ikat-inspired woven motifs that create understated texture and character.\n\nCrafted from breathable handloom cotton, it offers exceptional comfort while maintaining a clean and sophisticated silhouette. The minimal Ikat detailing allows the craftsmanship to speak for itself, making it ideal for festive gatherings, cultural occasions, vacations, brunches, and elevated everyday wear.\n\nPerfect for men who appreciate quiet luxury and artisan craftsmanship, this shirt combines heritage weaving traditions with modern versatility.\n\nAuthentic Ikat Weaving\n\nInspired by traditional artisan craftsmanship\n\nHandloom Cotton Fabric\n\nSoft, breathable and lightweight\n\nMinimal Ikat Motifs\n\nClean and sophisticated detailing\n\nVersatile Styling\n\nPerfect for festive and everyday wear\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Premium Handcrafted Feel",
+      "categories": [
+        {
+          "slug": "ikat",
+          "name": "ikat"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [
+        "artisan shirt",
+        "handcrafted shirt",
+        "handloom cotton shirt",
+        "handwoven shirt",
+        "heritage shirt",
+        "ikat shirt",
+        "ivory shirt",
+        "men's shirt",
+        "premium casual shirt",
+        "smart casual shirt",
+        "wovenwhale"
+      ],
+      "mrpPaise": 229900,
+      "pricePaise": 129900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/ivory-dash-ikat-shirt-B.jpeg",
+          "alt": "Man wearing Ivory Dash Ikat Handwoven Shirt by WovenWhale",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/ivory-dash-ikat-shirt-A.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/ivory-dash-ikat-shirt-C.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/07/ivory-dash-ikat-shirt-D.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:9353",
+      "name": "Sage Striped Shirt",
+      "slug": "sage-striped-cotton-shirt",
+      "sku": "WW-M-SHI-SAG-065",
+      "shortDescription": "A clean and contemporary striped shirt in a sophisticated sage green tone. Designed for modern men who appreciate understated style and everyday versatility.",
+      "description": null,
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [
+        "casual shirt",
+        "cotton shirt",
+        "men's fashion",
+        "minimalist shirt",
+        "premium shirt",
+        "sage green shirt",
+        "striped shirt",
+        "summer shirt",
+        "weekend shirt"
+      ],
+      "mrpPaise": 159900,
+      "pricePaise": 109900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2044-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2050-Large-1.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2038-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2043-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:9348",
+      "name": "Emerald Motif Shirt",
+      "slug": "emerald-motif-cotton-shirt",
+      "sku": "WW-M-SHI-EME-064",
+      "shortDescription": "A refreshing green motif shirt crafted for laid-back sophistication. Perfect for vacations, brunches, weekend outings, and effortless summer style.",
+      "description": null,
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [
+        "cotton shirt",
+        "green shirt",
+        "men's fashion",
+        "motif shirt",
+        "premium casual shirt",
+        "resort wear shirt",
+        "summer shirt",
+        "vacation shirt",
+        "weekend shirt"
+      ],
+      "mrpPaise": 159900,
+      "pricePaise": 109900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2055-Large.jpeg",
+          "alt": "Man wearing Emerald Motif Cotton Shirt by WovenWhale",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2061-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2063-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2060-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2065-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:9343",
+      "name": "Midnight Striped Shirt",
+      "slug": "midnight-striped-cotton-shirt",
+      "sku": "WW-M-SHI-MID-063",
+      "shortDescription": "A sophisticated black striped shirt crafted for effortless style. Clean lines, premium comfort, and a versatile silhouette make it perfect for workdays, evenings, and weekend outings",
+      "description": null,
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [
+        "black shirt",
+        "cotton shirt",
+        "dinner shirt",
+        "full sleeve shirt",
+        "men's shirt",
+        "premium shirt",
+        "smart casual shirt",
+        "striped shirt",
+        "weekend shirt",
+        "wovenwhale"
+      ],
+      "mrpPaise": 159900,
+      "pricePaise": 109900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2103-Large.jpeg",
+          "alt": "Man wearing Midnight Striped Cotton Shirt by WovenWhale",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2108-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2110-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2111-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:9334",
+      "name": "Mustard Jamdani Handwoven Shirt",
+      "slug": "mustard-jamdani-handwoven-shirt",
+      "sku": "WW-M-SHI-MUS-062",
+      "shortDescription": "Premium handwoven Jamdani shirt crafted from 100% handloom cotton. Featuring traditional woven motifs, breathable comfort, and timeless artisan craftsmanship for elevated everyday, festive, and cultural styling.",
+      "description": null,
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        }
+      ],
+      "tags": [
+        "artisan shirt",
+        "cotton shirt",
+        "full sleeve shirt",
+        "handcrafted shirt",
+        "handloom shirt",
+        "handwoven shirt",
+        "heritage weave",
+        "jamdani shirt",
+        "men's fashion",
+        "mustard shirt",
+        "premium shirt"
+      ],
+      "mrpPaise": 159900,
+      "pricePaise": 129900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2077-Large-1.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2081-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2086-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/06/IMG_2089-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:8974",
+      "name": "Azure Kantha Thread Short Kurta",
+      "slug": "azure-kantha-thread-short-kurta",
+      "sku": null,
+      "shortDescription": "Fabric\nCotton\n\nFit\nRegular Fit\n\nSleeve\nFull Sleeves\n\nCollar\nMandarin Collar\n\nPattern\nKantha Thread Work\n\nOccasion\nCasual, Festive, Ethnic Wear",
+      "description": "Bring effortless elegance to your wardrobe with the Azure Kantha Thread Short Kurta — a refined blend of traditional craftsmanship and modern minimal styling. Designed in a refreshing azure blue tone with subtle Kantha-inspired thread detailing, this short kurta delivers understated sophistication with everyday versatility.\n\nCrafted from breathable lightweight fabric, it ensures superior comfort while maintaining a clean and structured silhouette. The handcrafted-inspired detailing adds texture and artisanal charm, making it perfect for festive gatherings, brunch outings, vacations, casual evenings, and summer occasions.\n\nFinished with a modern mandarin collar and relaxed short kurta silhouette, this versatile piece pairs effortlessly with denim, chinos, or linen trousers for a polished contemporary ethnic look.\n\nWhy You’ll Love It\n\n• Elegant Kantha-inspired thread detailing\n\n• Refreshing azure blue summer-ready tone\n\n• Lightweight & breathable comfort\n\n• Modern mandarin collar silhouette\n\n• Perfect for casual & festive wear\n\n• Minimal handcrafted aesthetic",
+      "categories": [
+        {
+          "slug": "kurthas",
+          "name": "Kurthas"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        }
+      ],
+      "tags": [
+        "azure blue kurta",
+        "ethnic casual wear",
+        "kantha kurta",
+        "mandarin collar kurta",
+        "premium kurta men",
+        "short kurta men",
+        "summer kurta men"
+      ],
+      "mrpPaise": 129900,
+      "pricePaise": 89900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_1380-Large-1.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_1383-Large-1.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_1402-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_1395-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_1386-Large-1.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:8956",
+      "name": "Sage Green Handwoven Jamdani Shirt",
+      "slug": "sage-green-handwoven-jamdani-shirt",
+      "sku": "WW-M-SHI-SAG-058",
+      "shortDescription": "Fabric\nCotton\n\nFit\nRegular Fit\n\nSleeve\nFull Sleeves\n\nCollar\nRegular Collar\n\nPattern\nHandwoven Jamdani Motif\n\nOccasion\nCasual, Festive, Smart Casual",
+      "description": "Experience understated elegance with the Sage Green Handwoven Jamdani Shirt — a modern interpretation of traditional Indian craftsmanship. Designed with subtle woven Jamdani motifs over a refreshing sage green base, this shirt delivers refined style with everyday comfort.\n\nMade from breathable lightweight fabric, it feels soft against the skin while maintaining a polished silhouette. The minimal woven detailing adds sophistication without overpowering the look, making it ideal for casual outings, festive gatherings, brunches, and vacation styling.\n\nFeaturing a clean regular collar and versatile tailored fit, this shirt pairs effortlessly with denim, chinos, or linen trousers for a premium relaxed aesthetic.\n\nWhy You’ll Love It\n\n• Elegant handwoven Jamdani-inspired detailing\n\n• Soft breathable fabric for all-day comfort\n\n• Refreshing sage green tone with minimal motifs\n\n• Lightweight & summer-friendly feel\n\n• Modern tailored silhouette with regular collar\n\n• Perfect balance of ethnic craftsmanship and contemporary style",
+      "categories": [
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        }
+      ],
+      "tags": [
+        "artisan shirt",
+        "cotton shirt men",
+        "festive shirt men",
+        "handwoven shirt",
+        "jamdani shirt",
+        "minimal shirt",
+        "premium shirt men",
+        "sage green shirt"
+      ],
+      "mrpPaise": 189900,
+      "pricePaise": 129900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/DSC6284-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/DSC6300-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/DSC6289-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/DSC6302-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:8951",
+      "name": "Ivory Blue Kalamkari Shirt",
+      "slug": "ivory-blue-kalamkari-shirt",
+      "sku": "WW-M-SHI-IVO-057",
+      "shortDescription": "Fabric\nCotton\n\nFit\nRegular Fit\n\nSleeve\nFull Sleeves\n\nCollar\nRegular Collar\n\nPattern\nKalamkari Paisley Print\n\nOccasion\nCasual, Vacation, Festive",
+      "description": "Step into effortless style with the Ivory Blue Kalamkari Shirt — a timeless blend of traditional artistry and modern fashion. Designed with intricate Kalamkari-inspired paisley patterns in elegant blue tones over an ivory base, this shirt adds a refined statement to your wardrobe.\n\nCrafted from breathable and lightweight fabric, it offers all-day comfort while maintaining a premium structured look. Whether you’re styling it for casual outings, vacation looks, dinner plans, or festive occasions, this shirt delivers versatility with standout appeal.\n\nThe regular collar and tailored fit give it a polished modern silhouette, making it easy to pair with jeans, trousers, or linen bottoms.\n\nWhy You’ll Love It\n\n• Premium Kalamkari-inspired paisley print\n\n• Soft & breathable fabric for all-day comfort\n\n• Elegant ivory and blue color combination\n\n• Perfect for casual and smart-casual styling\n\n• Modern tailored fit with regular collar\n\n• Lightweight feel ideal for Indian weather",
+      "categories": [
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        }
+      ],
+      "tags": [
+        "blue shirt men",
+        "casual wear men",
+        "ethnic print shirt",
+        "kalamkari shirt",
+        "paisley print shirt",
+        "premium shirt",
+        "printed shirt men",
+        "vacation shirt"
+      ],
+      "mrpPaise": 179900,
+      "pricePaise": 119900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0505-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0503-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0543-Large-2.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:8967",
+      "name": "Shadow Weave Mens Ikat Shirt",
+      "slug": "shadow-weave-mens-ikat-shirt",
+      "sku": "WW-M-SHI-CHA-060",
+      "shortDescription": "Fabric\nCotton\n\nFit\nRegular Fit\n\nSleeve\nFull Sleeves\n\nCollar\nRegular Collar\n\nPattern\nIkat Geometric Pattern\n\nOccasion\nCasual, Evening, Smart Casual",
+      "description": "Elevate your wardrobe with the Charcoal Black Ikat Shirt — a contemporary take on timeless Ikat artistry. Designed with bold woven-inspired geometric Ikat patterns in deep charcoal and black tones, this shirt delivers a clean yet striking aesthetic for modern dressing.\n\nCrafted from breathable lightweight fabric, it offers exceptional comfort while maintaining a structured premium silhouette. The monochrome Ikat design creates a versatile statement piece that transitions effortlessly from casual outings to evening gatherings and vacation styling.\n\nFeaturing a regular collar and modern tailored fit, this shirt pairs perfectly with denim, black trousers, or linen pants for an elevated everyday look.\n\nWhy You’ll Love It\n\n• Premium Ikat-inspired geometric pattern\n\n• Modern monochrome charcoal-black palette\n\n• Lightweight & breathable comfort\n\n• Perfect for casual and evening styling\n\n• Tailored modern silhouette\n\n• Versatile statement shirt for every wardrobe",
+      "categories": [
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        }
+      ],
+      "tags": [
+        "casual evening wear",
+        "ikat shirts",
+        "monochrome shirts",
+        "premium shirts",
+        "statement shirts",
+        "woven shirts"
+      ],
+      "mrpPaise": 189900,
+      "pricePaise": 129900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/DSC6205-1-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/DSC6191-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/DSC6193-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/DSC6189-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:8961",
+      "name": "Midnight Blue Kalamkari Shirt",
+      "slug": "midnight-blue-kalamkari-printed-shirt",
+      "sku": "WW-M-SHI-MID-059",
+      "shortDescription": "Fabric\nCotton\n\nFit\nRegular Fit\n\nSleeve\nFull Sleeves\n\nCollar\nRegular Collar\n\nPattern\nKalamkari Floral Print\n\nOccasion\nCasual, Festive, Smart Casual",
+      "description": "Bring timeless artistry into your wardrobe with the Midnight Blue Kalamkari Shirt — a sophisticated fusion of traditional Indian craftsmanship and modern styling. Featuring detailed floral Kalamkari-inspired motifs on a deep midnight blue base, this shirt delivers a premium statement look while maintaining effortless wearability.\n\nCrafted from lightweight breathable fabric, it offers superior comfort for all-day wear while maintaining a clean structured silhouette. The elegant floral detailing adds depth and richness, making it perfect for dinner outings, festive occasions, vacations, and elevated casual styling.\n\nFinished with a regular collar and modern tailored fit, this versatile shirt pairs seamlessly with denim, trousers, or linen pants for a polished premium look.\n\nWhy You’ll Love It\n\n• Premium Kalamkari-inspired floral print\n\n• Rich midnight blue colorway\n\n• Lightweight & breathable comfort\n\n• Perfect for casual and festive styling\n\n• Modern tailored silhouette with regular collar\n\n• Elegant artisan-inspired detailing",
+      "categories": [],
+      "tags": [
+        "artisan print shirt",
+        "blue printed shirt",
+        "casual festive shirt",
+        "floral print shirt",
+        "indigo shirt men",
+        "kalamkari shirt",
+        "premium shirt men"
+      ],
+      "mrpPaise": 179900,
+      "pricePaise": 119900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/DSC6362-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/DSC6310-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/DSC6318-1-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/DSC6323-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:8944",
+      "name": "Ruby Jamdani Handwoven Shirt",
+      "slug": "ruby-jamdani-handwoven-shirt",
+      "sku": "WW-M-SHI-RUB-056",
+      "shortDescription": "Fabric\nCotton\n\nFit\nRegular Fit\n\nSleeve\nFull Sleeves\n\nCollar\nRegular Collar\n\nPattern\nHandwoven Jamdani Motif\n\nOccasion\nFestive, Evening, Smart Casual",
+      "description": "Introducing our Ruby Jamdani Handwoven Shirt — a perfect blend of timeless craftsmanship and modern everyday style. Inspired by the rich heritage of traditional Jamdani weaving, this shirt features intricate woven motifs that add subtle texture, depth, and artisanal character.\n\nCrafted from breathable lightweight fabric, it offers exceptional comfort while maintaining a clean and sophisticated silhouette. The rich ruby red tone paired with delicate woven detailing makes it ideal for festive gatherings, celebrations, dinner outings, cultural occasions, and elevated casual wear.\n\nDesigned for men who appreciate understated luxury and handcrafted aesthetics, this shirt effortlessly combines heritage-inspired artistry with contemporary styling.\n\nHandwoven Jamdani Design\n\nInspired by timeless artisan weaving\n\nPremium Breathable Fabric\n\nLightweight & comfortable feel\n\nClassic Regular Collar\n\nClean & versatile silhouette\n\nFestive & Casual Styling\n\nPerfect for elevated everyday wear\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Premium Handcrafted Feel",
+      "categories": [
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        }
+      ],
+      "tags": [
+        "artisan shirt",
+        "festive shirt men",
+        "handwoven shirt",
+        "jamdani shirt",
+        "premium shirt men",
+        "red shirt men",
+        "ruby shirt men",
+        "woven motif shirt"
+      ],
+      "mrpPaise": 189900,
+      "pricePaise": 129900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0625-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0653-Large-1.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0658-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0655-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0646-Large.jpeg",
+          "alt": "Jamdani Shirts",
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:8929",
+      "name": "Rosewood Ikat Shirt",
+      "slug": "rosewood-ikat-shirt",
+      "sku": "WW-M-SHI-ROS-055",
+      "shortDescription": "Fabric\nCotton\n\nFit\nRegular Fit\n\nSleeve\nFull Sleeves\n\nCollar\nRegular Collar\n\nPattern\nIkat Inspired Pattern\n\nOccasion\nCasual, Evening, Festive",
+      "description": "Elevate your wardrobe with the Rosewood Ikat Shirt — a refined fusion of traditional Ikat craftsmanship and contemporary menswear styling. Featuring rich rosewood-inspired tones with intricate Ikat-inspired patterns, this shirt delivers a bold yet sophisticated statement look.\n\nCrafted from breathable lightweight fabric, it offers all-day comfort while maintaining a clean premium silhouette. The striking woven-inspired design adds texture and depth, making it ideal for dinner outings, festive gatherings, vacations, and elevated casual wear.\n\nDesigned with a regular collar and tailored fit, this versatile shirt pairs effortlessly with denim, black trousers, or linen pants for a sharp modern aesthetic.\n\nWhy You’ll Love It\n\n• Premium Ikat woven pattern\n\n• Elegant rosewood and maroon tones\n\n• Lightweight & breathable comfort\n\n• Perfect for casual and evening styling\n\n• Modern tailored silhouette with regular collar\n\n• Statement piece with timeless craftsmanship",
+      "categories": [
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        }
+      ],
+      "tags": [
+        "casual evening shirt",
+        "designer shirt men",
+        "festive shirt men",
+        "ikat shirt",
+        "maroon shirt men",
+        "premium shirt men",
+        "statement shirt men",
+        "woven pattern shirt"
+      ],
+      "mrpPaise": 199900,
+      "pricePaise": 129900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0599-Large-1.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0615-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0597-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0602-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:8546",
+      "name": "White Linen Blend Mandarin Collar Shirt",
+      "slug": "white-linen-blend-mandarin-collar-shirt",
+      "sku": "WW-M-SHI-WHI-050",
+      "shortDescription": "Color\nWhite\n\nFabric\nLinen Blend\n\nFit\nRegular\n\nSleeve\nFull Sleeve\n\nPattern\nSolid",
+      "description": "Timeless and versatile, our White Linen Blend Mandarin Collar Shirt, White Linen Blend Shirt for Men is a wardrobe essential.\n\nCrafted from a breathable linen blend, this shirt offers unmatched comfort and a clean, minimal look. The mandarin collar adds a modern twist to a classic piece, making it ideal for both casual and semi-formal occasions.\n\nWhy You’ll Love It:\n\n• Classic and versatile design\n\n• Premium breathable fabric\n\n• Clean & sharp look\n\n• Perfect for any occasion\n\nExplore our WovenWhale’s men collection for more products. Follow us on Instagram for latest updates on the products: woven_whale",
+      "categories": [
+        {
+          "slug": "linen-shirts",
+          "name": "Linen Shirts"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [
+        "linen cotton shirt",
+        "linen cotton shirts",
+        "linen shirt",
+        "linen shirt material",
+        "linen shirt pant",
+        "mandarin collar shirt",
+        "mandarin collar shirt for men",
+        "mandarin collar t shirt"
+      ],
+      "mrpPaise": 199900,
+      "pricePaise": 129900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0252-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0223-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0235-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0216-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0272-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:8497",
+      "name": "Maroon Linen Blend Mandarin Collar Shirt",
+      "slug": "maroon-linen-mandarin-collar-shirt",
+      "sku": "WW-M-SHI-MAR-048",
+      "shortDescription": "Color\nMaroon\n\nFabric\nLinen Blend\n\nFit\nRegular\n\nSleeve\nFull Sleeve\n\nPattern\nSolid",
+      "description": "Upgrade your everyday style with our Maroon Linen Blend Mandarin Collar Shirt, Maroon Linen Shirt for Men, designed for comfort and effortless sophistication.\n\nCrafted from a premium linen blend, this shirt is lightweight, breathable, and perfect for warm weather. The mandarin collar adds a modern touch, making it versatile enough for both casual outings and semi-formal occasions.\n\nWhether you’re heading out for a day event or a relaxed evening, this shirt ensures you stay comfortable and stylish all day long.\n\nWhy You’ll Love It:\n\n• Premium linen blend fabric\n\n• Soft, breathable & skin-friendly\n\n• Minimal & modern design\n\n• Easy to style with jeans or trousers\n\nExplore our WovenWhale’s men collection for more products. Follow us on Instagram for latest updates on the products: woven_whale",
+      "categories": [
+        {
+          "slug": "linen-shirts",
+          "name": "Linen Shirts"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [
+        "linen cotton shirt",
+        "linen cotton shirts",
+        "linen shirt",
+        "linen shirt material",
+        "linen shirt pant",
+        "mandarin collar shirt",
+        "mandarin collar shirt for men",
+        "mandarin collar t shirt"
+      ],
+      "mrpPaise": 199900,
+      "pricePaise": 129900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0386-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0400-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0367-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0370-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:8507",
+      "name": "Mint Blue Linen Blend Mandarin Collar Shirt",
+      "slug": "green-linen-blend-mandarin-collar-shirt",
+      "sku": "WW-M-SHI-GRE-049",
+      "shortDescription": "Color\nMint Blue\n\nFabric\nLinen Blend\n\nFit\nRegular\n\nSleeve\nFull Sleeve\n\nPattern\nSolid",
+      "description": "Stay fresh and stylish with our Mint Blue Linen Blend Mandarin Collar Shirt, Blue Linen Shirt for Men a must-have for your summer wardrobe.\n\nMade from breathable linen blend fabric, this shirt keeps you cool even on the hottest days. Green Linen Shirt for Men, the minimal design with a mandarin collar offers a refined and modern look, suitable for both casual outings and everyday wear.\n\nWhy You’ll Love It:\n\n• Airy & breathable fabric\n\n• Comfortable fit for all-day wear\n\n• Clean, modern aesthetic\n\n• Easy to pair with any bottom\n\nExplore our WovenWhale’s men collection for more products. Follow us on Instagram for latest updates on the products: woven_whale",
+      "categories": [
+        {
+          "slug": "linen-shirts",
+          "name": "Linen Shirts"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [
+        "linen cotton shirt",
+        "linen cotton shirts",
+        "linen shirt",
+        "linen shirt material",
+        "linen shirt pant",
+        "mandarin collar shirt",
+        "mandarin collar shirt for men",
+        "mandarin collar t shirt"
+      ],
+      "mrpPaise": 199900,
+      "pricePaise": 129900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0282-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0302-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0287-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0322-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/05/IMG_0347-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:8154",
+      "name": "Classic Paisley",
+      "slug": "classic-paisley",
+      "sku": null,
+      "shortDescription": "Key Highlights\n\nFabric – 100% Cotton\n\nFit – Slim\n\nNeckline – Spread collar\n\nSleeves – Full Sleeves\n\nOccasion – Casual\n\nWash care – Machine wash in cold water.\n\nDisclaimer: There might be a slight variation in the actual colour of the product due to different screen resolutions.",
+      "description": "100% cotton cambric, a high-quality fabric known for its soft texture and durability for Classic Paisley Shirt for Men. The fabric is intentionally lightweight and thin to provide maximum breathability, making it ideal for warm weather. Despite being thin, it is not low quality—the fineness of the weave ensures comfort, airflow, and long-lasting wear without compromising strength.\n\nExplore our WovenWhale’s men collection for more products. Follow us on Instagram for latest updates on the products: woven_whale",
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        },
+        {
+          "slug": "printed-shirt",
+          "name": "Printed Shirt"
+        }
+      ],
+      "tags": [
+        "cotton shirts for men",
+        "designer shirts for men",
+        "ikat print shirt",
+        "ikat shirt men",
+        "ikat shirts",
+        "ikat shirts for men",
+        "kalamkari shirt for men",
+        "kalamkari shirt men",
+        "kalamkari shirts",
+        "mens ikat shirt",
+        "stylish mens shirts india",
+        "summer shirts for men"
+      ],
+      "mrpPaise": 129900,
+      "pricePaise": 89900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/03/IMG_8999-Large-e1778927339343.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/03/IMG_9003-Large-1.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/03/IMG_9008-Large-1.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:8071",
+      "name": "White Kantha Thread Short Kurta",
+      "slug": "white-kantha-thread-short-kurta",
+      "sku": null,
+      "shortDescription": "Elevate your casual ethnic wear with this white kantha thread short kurta for men. The delicate handcrafted detailing adds depth and refinement, while the breathable cotton ensures all-day comfort—perfect for casual outings and rich celebrations alike.",
+      "description": "White Kantha Thread Short Kurta for Men\n\nA timeless addition to your ethnic wardrobe, this white cotton short kurta features intricate kantha thread work that brings subtle texture and artisanal character to everyday wear. Crafted in breathable fabric with a relaxed fit, it effortlessly blends comfort and classic style.\n\nFabric:\n\n100% Premium Cotton – lightweight, breathable, and easy to wear.\n\nFit:\n\nRegular Fit – relaxed silhouette for everyday comfort.\n\nNeckline:\n\nMandarin Collar – traditional styling with contemporary ease.\n\nSleeves:\n\nFull Sleeves – versatile for warm weather and daily wear.\n\nOccasion:\n\nPerfect for casual ethnic wear, daytime celebrations, and contemporary daily styling.\n\nStyling Tip:\n\nPair with neutral chinos or traditional bottoms like churidar for a clean, effortless look.\n\nDisclaimer:\n\nSlight variation in color may occur due to screen resolution differences.\n\nExplore our WovenWhale’s men collection for more products. Follow us on Instagram for latest updates on the products: woven_whale",
+      "categories": [
+        {
+          "slug": "kurthas",
+          "name": "Kurthas"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "new-arrivals",
+          "name": "New Arrivals"
+        }
+      ],
+      "tags": [
+        "cotton shirts for men",
+        "designer shirts for men",
+        "ikat print shirt",
+        "ikat shirt men",
+        "ikat shirts",
+        "ikat shirts for men",
+        "kalamkari shirt for men",
+        "kalamkari shirt men",
+        "kalamkari shirts",
+        "mens ikat shirt",
+        "stylish mens shirts india",
+        "summer shirts for men"
+      ],
+      "mrpPaise": 129900,
+      "pricePaise": 89900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/White-Kantha-Thread-Short-Kurta2.png",
+          "alt": "White Kantha Thread Short Kurta",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/White-Kantha-Thread-Short-Kurta1.png",
+          "alt": "White Kantha Thread Short Kurta",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/White-Kantha-Thread-Short-Kurta3.png",
+          "alt": "White Kantha Thread Short Kurta",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/White-Kantha-Thread-Short-Kurta4.png",
+          "alt": "White Kantha Thread Short Kurta",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/White-Kantha-Thread-Short-Kurta5.png",
+          "alt": "White Kantha Thread Short Kurta",
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:8059",
+      "name": "Grey Canvas Printed Kurta",
+      "slug": "grey-canvas-printed-kurta",
+      "sku": null,
+      "shortDescription": "Designed for versatile wear, this grey art-print cotton kurta offers comfort and style from day-to-day outings to festive gatherings. Breathable fabric and a relaxed fit make it a perfect choice for contemporary ethnic dressing.",
+      "description": "This printed short kurta in a soothing grey palette blends comfort with striking artistic design for Grey Canvas Printed Kurta for Men. Crafted from breathable cotton with a relaxed fit and mandarin neckline, it’s perfect for everyday ethnic wear, casual outings, and effortless style.\n\nFabric:\n\n100% Premium Cotton — breathable and easy-wear.\n\nFit:\n\nRegular Fit — relaxed and comfortable silhouette.\n\nNeckline:\n\nMandarin Collar — timeless ethnic detail.\n\nSleeves:\n\nHalf Sleeves — perfect blend of style and comfort.\n\nOccasion:\n\nIdeal for casual ethnic wear, social outings, and relaxed celebrations.\n\nStyling Tip:\n\nPair with neutral trousers or traditional bottoms like churidar or pajama for a balanced modern-ethnic look.\n\nDisclaimer:\n\nActual product color may vary slightly due to screen resolution differences.\n\nExplore our WovenWhale’s men collection for more products. Follow us on Instagram for latest updates on the products: woven_whale",
+      "categories": [
+        {
+          "slug": "kurthas",
+          "name": "Kurthas"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [
+        "cotton shirts for men",
+        "designer shirts for men",
+        "ikat print shirt",
+        "ikat shirt men",
+        "ikat shirts",
+        "ikat shirts for men",
+        "kalamkari shirt for men",
+        "kalamkari shirt men",
+        "kalamkari shirts",
+        "mens ikat shirt",
+        "stylish mens shirts india",
+        "summer shirts for men"
+      ],
+      "mrpPaise": 129900,
+      "pricePaise": 79900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/IMG_8212-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/IMG_8236-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/IMG_8215-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/IMG_8221-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:8048",
+      "name": "Peach Noor Mirror Work Kurta",
+      "slug": "peach-noor-mirror-work-kurta",
+      "sku": null,
+      "shortDescription": "Crafted in breathable 100% cotton, this peach kurta features delicate thread and mirror embroidery that adds warmth and elegance to your look. Designed for festive occasions, weddings, and refined everyday wear, it blends comfort with statement detailing.",
+      "description": "Soft peach tones meet intricate mirror work in this cotton kurta designed for celebrations. Perfect for wedding functions, festive gatherings, and special evenings.\n\nFabric:\n\n100% Premium Cotton – breathable and lightweight.\n\nFit:\n\nRegular Fit – relaxed yet structured silhouette.\n\nNeckline:\n\nMandarin Collar – timeless ethnic appeal.\n\nSleeves:\n\nFull Sleeves – versatile styling for formal or casual wear.\n\nOccasion:\n\nIdeal for weddings, festive celebrations, and elevated daily wear.\n\nDisclaimer:\n\nSlight variations in colour may occur due to different screen resolutions and lighting.",
+      "categories": [
+        {
+          "slug": "kurthas",
+          "name": "Kurthas"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 249900,
+      "pricePaise": 119900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/IMG_8379-Large.png",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/IMG_8416-Large-300x400-1.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/IMG_8406-Large.png",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/IMG_8404-Large-282x400-1.png",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/IMG_8385-Large-198x400-1.png",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:8033",
+      "name": "Sage Mirror Embroidered Kurta",
+      "slug": "sage-mirror-embroidered-kurta",
+      "sku": null,
+      "shortDescription": "A refined take on festive dressing, this sage green kurta showcases delicate mirror and thread embroidery on soft 100% cotton fabric. Perfect for wedding celebrations, family occasions, or elevated everyday wear.",
+      "description": "Crafted in breathable 100% cotton, this sage green kurta features intricate thread and mirror embroidery that blends traditional detailing with a modern silhouette. Designed to transition effortlessly from festive gatherings to everyday elegance, it offers comfort without compromising on statement style.\n\nFabric:\n\n100% Premium Cotton – lightweight, breathable, and comfortable for all-day wear.\n\nFit:\n\nRegular Fit – tailored for a relaxed yet structured silhouette.\n\nNeckline:\n\nMandarin Collar – classic ethnic detailing with a contemporary finish.\n\nSleeves:\n\nFull Sleeves – versatile for both formal and casual styling.\n\nOccasion:\n\nIdeal for weddings, festive gatherings, celebrations, and elevated everyday wear.",
+      "categories": [
+        {
+          "slug": "kurthas",
+          "name": "Kurthas"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 249900,
+      "pricePaise": 119900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/IMG_8342-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/IMG_8361-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/IMG_8368-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2026/02/IMG_8350-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:7949",
+      "name": "Neelvara Mens Ikat Shirt",
+      "slug": "neelvara-ikat-shirt",
+      "sku": null,
+      "shortDescription": "Elevate your casual wardrobe with our Ikat full-sleeve shirt, crafted from high-quality ikat for ultimate comfort and breathability. This stylish shirt features a relaxed collar and full sleeves, making it perfect for warm days or laid-back evenings.\n\nThe soft texture of the fabric ensures a comfortable fit, while the versatile design allows for easy pairing with shorts, jeans, or chinos. Whether you’re heading to a beach party or a casual outing, this shirt is a must-have staple.",
+      "description": "Elevate your casual wardrobe with our Ikat full-sleeve shirt, crafted from high-quality ikat for ultimate comfort and breathability. This stylish shirt features a relaxed collar and full sleeves, making it perfect for warm days or laid-back evenings. The soft texture of the fabric ensures a comfortable fit, while the versatile design allows for easy pairing with shorts, jeans, or chinos. Whether you’re heading to a beach party or a casual outing, this shirt is a must-have staple.\n\nKey Features:\n\n• Material: Premium Doby ikat cotton\n\n• Style: collar with full sleeves\n\n• Comfortable and breathable\n\n• Ideal for casual and relaxed settings\n\nExplore our WovenWhale’s men collection for more products. Follow us on Instagram for latest updates on the products: woven_whale\n\nThe delivery timeline for standard sizes is 2–4 working days.\n\nDISCLAIMER\n\nThere might be minor colour variations because of the differences in display output due to lighting, digital photography, camera settings, and brightness of your screen. The visibility of threads in the garment is an inborn feature of a fabric produced on a loom and is proof of authenticity. They are not to be considered as defects",
+      "categories": [
+        {
+          "slug": "handloom",
+          "name": "Handloom"
+        },
+        {
+          "slug": "ikat",
+          "name": "ikat"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 189900,
+      "pricePaise": 109900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2025/03/img_2207.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2025/03/img_2208.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2025/03/DSC8615-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:7781",
+      "name": "Nivi Mens Ikat Shirt",
+      "slug": "nivi-mens-ikat-shirt",
+      "sku": null,
+      "shortDescription": "Elevate your casual wardrobe with our Ikat full-sleeve shirt, crafted from high-quality ikat for ultimate comfort and breathability. This stylish shirt features a relaxed collar and full sleeves, making it perfect for warm days or laid-back evenings.\n\nThe soft texture of the fabric ensures a comfortable fit, while the versatile design allows for easy pairing with shorts, jeans, or chinos. Whether you’re heading to a beach party or a casual outing, this shirt is a must-have staple.",
+      "description": "Elevate your casual wardrobe with our Nivi Ikat Shirt for Men full-sleeve shirt, crafted from high-quality ikat for ultimate comfort and breathability. This stylish shirt features a relaxed collar and full sleeves, making it perfect for warm days or laid-back evenings. The soft texture of the fabric ensures a comfortable fit, while the versatile design allows for easy pairing with shorts, jeans, or chinos. Whether you’re heading to a beach party or a casual outing, this shirt is a must-have staple.\n\nKey Features:\n\n* Material: Premium ikat cotton,\n\n* Style: collar with full sleeves\n\n* Comfortable and breathable\n\n* Ideal for casual and relaxed settings\n\nCustomisation: Available in sizes. After ordering, contact us via WhatsApp to confirm size and preferences for your Nivi Mens Ikat Shirt.\n\nExplore our WovenWhale’s men collection for more products. Follow us on Instagram for latest updates on the products: woven_whale\n\nThe delivery timeline for standard sizes is 2–4 working days.\n\nDISCLAIMER\n\nThere might be minor colour variations because of the differences in display output due to lighting, digital photography, camera settings, and brightness of your screen. The visibility of threads in the garment is an inborn feature of a fabric produced on a loom and is proof of authenticity. They are not to be considered as defects",
+      "categories": [
+        {
+          "slug": "handloom",
+          "name": "Handloom"
+        },
+        {
+          "slug": "ikat",
+          "name": "ikat"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 99900,
+      "pricePaise": 89900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC8539-scaled.jpeg",
+          "alt": "Nivi Mens Ikat Shirt",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC8543-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC8531-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC8554-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:7702",
+      "name": "Ananta Mens Ikat Shirt",
+      "slug": "black-sun-mens-ikat-shirt",
+      "sku": null,
+      "shortDescription": "Stay stylish and comfortable with our full Sleeve ikat Shirt, made from premium cotton. Perfect for casual outings, this shirt features a relaxed fit and breathable fabric, ensuring you look great while feeling cool.",
+      "description": "Elevate your casual wardrobe with our Ikat full-sleeve shirt, crafted from high-quality ikat for ultimate comfort and breathability. This stylish shirt features a relaxed collar and full sleeves, making it perfect for warm days or laid-back evenings. The soft texture of the fabric ensures a comfortable fit, while the versatile design allows for easy pairing with shorts, jeans, or chinos. Whether you’re heading to a beach party or a casual outing, this shirt is a must-have staple.\n\nKey Features:\n\n• Material: Premium ikat cotton\n\n• Style: collar with full sleeves\n\n• Comfortable and breathable\n\n• Ideal for casual and relaxed settings\n\nExplore our WovenWhale’s men collection for more products. Follow us on Instagram for latest updates on the products: woven_whale\n\nThe delivery timeline for standard sizes takes 2–4 working days.\n\nDISCLAIMER\n\nThere might be minor colour variations because of the differences in display output due to lighting, digital photography, camera settings, and brightness of your screen. The visibility of threads in the garment is an inborn feature of a fabric produced on a loom and is proof of authenticity. They are not to be considered defects.",
+      "categories": [
+        {
+          "slug": "handloom",
+          "name": "Handloom"
+        },
+        {
+          "slug": "ikat",
+          "name": "ikat"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [
+        "cotton shirts for men",
+        "designer shirts for men",
+        "ikat print shirt",
+        "ikat shirt men",
+        "ikat shirts",
+        "ikat shirts for men",
+        "kalamkari shirt for men",
+        "kalamkari shirt men",
+        "kalamkari shirts",
+        "mens ikat shirt",
+        "stylish mens shirts india",
+        "summer shirts for men"
+      ],
+      "mrpPaise": 99900,
+      "pricePaise": 89900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/img_2414.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC8633-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/img_2415.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC8681-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:7693",
+      "name": "Lohita kalamkari Shirt men",
+      "slug": "red-kalamkari-shirt-men",
+      "sku": null,
+      "shortDescription": "Stay stylish and comfortable with our Half Sleeve Kalamkari Shirt, Natural Dye made from premium cotton. Perfect for casual outings, this shirt features a relaxed fit and breathable fabric, ensuring you look great while feeling cool.",
+      "description": "Elevate your casual wardrobe with our half-sleeve shirt, crafted from high-quality Kalamkari for ultimate comfort and breathability. This stylish shirt features a relaxed collar and short sleeves, making it perfect for warm days or laid-back evenings.\n\nThe soft texture of the fabric ensures a comfortable fit, while the versatile design allows for easy pairing with shorts, jeans, or chinos. Whether you’re heading to a beach party or a casual outing, this shirt is a must-have staple.\n\nKey Features:\n\n* Material: Premium kalamkari cotton, naturally dyed\n\n* Style: collar with Half sleeves\n\n* Comfortable and breathable\n\n* Ideal for casual and relaxed settings\n\nThe Delivery timeline for standard sizes is 2–4 working days.\n\nDISCLAIMER\n\nThere might be minor colour variations because of the differences in display output due to lighting, digital photography, camera settings, and brightness of your screen.\n\nThe visibility of threads in the garment is an inborn feature of a fabric produced on a loom and is proof of authenticity. They are not to be considered as defects.",
+      "categories": [
+        {
+          "slug": "cotton",
+          "name": "cotton"
+        },
+        {
+          "slug": "kalamkari",
+          "name": "kalamkari"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        },
+        {
+          "slug": "mix-match",
+          "name": "Mix & Match"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 109900,
+      "pricePaise": 89900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC8353-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC8350-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC8358-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC8366-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:7687",
+      "name": "Aadi Kalamkari Shirt Men",
+      "slug": "grey-kalamkari-shirt-men",
+      "sku": null,
+      "shortDescription": "Stay stylish and comfortable with our full Sleeve Kalamkari Shirt, Natural Dye made from premium cotton. Perfect for casual outings, this shirt features a relaxed fit and breathable fabric, ensuring you look great while feeling cool.",
+      "description": "Elevate your casual wardrobe with our full-sleeve shirt, crafted from high-quality Kalamkari for ultimate comfort and breathability. This stylish shirt features a relaxed collar and short sleeves, making it perfect for warm days or laid-back evenings.\n\nThe soft texture of the fabric ensures a comfortable fit, while the versatile design allows for easy pairing with shorts, jeans, or chinos. Whether you’re heading to a beach party or a casual outing, this shirt is a must-have staple.\n\nKey Features:\n\n* Material: Premium kalamkari cotton, naturally dyed\n\n* Style: Chinese collar with full sleeves\n\n* Comfortable and breathable\n\n* Ideal for casual and relaxed settings\n\nThe delivery timeline for standard sizes is 2–4 working days.\n\nDISCLAIMER\n\nThere might be minor colour variations because of the differences in display output due to lighting, digital photography, camera settings, and brightness of your screen.\n\nThe visibility of threads in the garment is an inborn feature of a fabric produced on loom and is a proof of authenticity. They are not to be considered defects.",
+      "categories": [
+        {
+          "slug": "cotton",
+          "name": "cotton"
+        },
+        {
+          "slug": "kalamkari",
+          "name": "kalamkari"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        },
+        {
+          "slug": "mix-match",
+          "name": "Mix & Match"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 109900,
+      "pricePaise": 89900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/IMG_0821.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/IMG_0822.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/IMG_0823.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:7681",
+      "name": "Box kalamkari Shirt men",
+      "slug": "box-kalamkari-shirt-men",
+      "sku": null,
+      "shortDescription": "Stay stylish and comfortable with our Chinese Collar full Sleeve Kalamkari Shirt, Natural Dye made from premium cotton. Perfect for casual outings, this shirt features a relaxed fit and breathable fabric, ensuring you look great while feeling cool.",
+      "description": "Elevate your casual wardrobe with our Chinese Collar Full Sleeve Shirt – Box Kalamkari Shirt for Men, crafted from high-quality Kalamkari for ultimate comfort and breathability. This stylish shirt features a relaxed Chinese collar and short sleeves, making it perfect for warm days or laid-back evenings. The soft texture of the fabric ensures a comfortable fit, while the versatile design allows for easy pairing with shorts, jeans, or chinos. Whether you’re heading to a beach party or a casual outing, this shirt is a must-have staple.\n\nKey Features:\n\n• Material: Premium kalamkari cotton, naturally dyed\n\n• Style: Chinese collar with full sleeves\n\n• Comfortable and breathable\n\n• Ideal for casual and relaxed settings\n\nExplore our WovenWhale’s men collection for more products. Follow us on Instagram for latest updates on the products: woven_whale\n\nThe Delivery timeline for standard sizes is 2–4 working days.\n\nDISCLAIMER\n\nThere might be minor colour variations because of the differences in display output due to lighting, digital photography, camera settings, and brightness of your screen.\n\nThe visibility of threads in the garment is an inborn feature of a fabric produced on loom and is a proof of authenticity. They are not to be considered as defects.",
+      "categories": [
+        {
+          "slug": "cotton",
+          "name": "cotton"
+        },
+        {
+          "slug": "kalamkari",
+          "name": "kalamkari"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        }
+      ],
+      "tags": [
+        "cotton shirts for men",
+        "designer shirts for men",
+        "ikat print shirt",
+        "ikat shirt men",
+        "ikat shirts",
+        "ikat shirts for men",
+        "kalamkari shirt for men",
+        "kalamkari shirt men",
+        "kalamkari shirts",
+        "mens ikat shirt",
+        "stylish mens shirts india",
+        "summer shirts for men"
+      ],
+      "mrpPaise": 109900,
+      "pricePaise": 89900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/IMG_8756-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/IMG_8754-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/IMG_8762-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/IMG_8764-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:7668",
+      "name": "Neer Ikat Shirt men",
+      "slug": "neer-ikat-shirt-men",
+      "sku": null,
+      "shortDescription": "Stay stylish and comfortable with our Chinese Collar full Sleeve Shirt made from ikat cotton. Perfect for casual outings, this shirt features a relaxed fit and breathable fabric, ensuring you look great while feeling cool.",
+      "description": "Elevate your casual wardrobe with our Chinese Collar full-sleeve shirt, crafted from high-quality South cotton for ultimate comfort and breathability. This stylish shirt features a relaxed Cuban collar and short sleeves, making it perfect for warm days or laid-back evenings.\n\nThe soft texture of the fabric ensures a comfortable fit, while the versatile design allows for easy pairing with shorts, jeans, or chinos. Whether you’re heading to a beach party or a casual outing, this shirt is a must-have staple.\n\nKey Features:\n\n• Material: Premium ikat cotton\n\n• Style: Chinese collar with full sleeves\n\n• Comfortable and breathable\n\n• Ideal for casual and relaxed settings\n\nExplore our WovenWhale’s men collection for more products. Follow us on Instagram for latest updates on the products: woven_whale\n\nThe delivery timeline for standard sizes is 2–4 working days.\n\nDISCLAIMER\n\nThere might be minor colour variations because of the differences in display output due to lighting, digital photography, camera settings, and brightness of your screen. The visibility of threads in the garment is an inborn feature of a fabric produced on loom and is a proof of authenticity. They are not to be considered defects.",
+      "categories": [
+        {
+          "slug": "cotton",
+          "name": "cotton"
+        },
+        {
+          "slug": "ikat",
+          "name": "ikat"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        },
+        {
+          "slug": "mix-match",
+          "name": "Mix & Match"
+        }
+      ],
+      "tags": [
+        "cotton shirts for men",
+        "designer shirts for men",
+        "ikat print shirt",
+        "ikat shirt men",
+        "ikat shirts",
+        "ikat shirts for men",
+        "kalamkari shirt for men",
+        "kalamkari shirt men",
+        "kalamkari shirts",
+        "mens ikat shirt",
+        "stylish mens shirts india",
+        "summer shirts for men"
+      ],
+      "mrpPaise": 119900,
+      "pricePaise": 109900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC7699-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC7704-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC7969-scaled.jpeg",
+          "alt": "Blue Lined Summer Shirt",
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:7642",
+      "name": "Kanaka Shirt Men | Blue Gold Designer Shirt for Men",
+      "slug": "blue-gold-shirt-men",
+      "sku": null,
+      "shortDescription": "Stay stylish and comfortable with our Cuban Collar Half Sleeve Shirt made from soft South cotton. Perfect for casual outings, this shirt features a relaxed fit and breathable fabric, ensuring you look great while feeling cool.",
+      "description": "Elevate your casual wardrobe with our Cuban Collar Half Sleeve Shirt, crafted from high-quality South cotton for ultimate comfort and breathability. This stylish shirt features a relaxed Cuban collar and short sleeves, making it perfect for warm days or laid-back evenings. The soft texture of the fabric ensures a comfortable fit, while the versatile design allows for easy pairing with shorts, jeans, or chinos. Whether you’re heading to a beach party or a casual outing, this shirt is a must-have staple.\n\nKey Features:\n\n• Material: Premium South cotton\n\n• Style: Cuban collar with half sleeves\n\n• Comfortable and breathable\n\n• Ideal for casual and relaxed settings\n\nExplore our WovenWhale’s men collection for more products. Follow us on Instagram for latest updates on the products: woven_whale\n\nThe delivery timeline for standard sizes is 2–4 working days.\n\nDISCLAIMER\n\nThere might be minor colour variations because of the differences in display output due to lighting, digital photography, camera settings, and brightness of your screen. The visibility of threads in the garment is an inborn feature of a fabric produced on a loom and is proof of authenticity. They are not to be considered as defects.",
+      "categories": [
+        {
+          "slug": "cotton",
+          "name": "cotton"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        },
+        {
+          "slug": "mix-match",
+          "name": "Mix & Match"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 109900,
+      "pricePaise": 109900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC8516-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC8496-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC8500-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2024/12/DSC8521-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:7387",
+      "name": "Pattachitra Red Artisan Printed Shirt",
+      "slug": "pattachitra-red",
+      "sku": "WW-M-SHI-RED-054",
+      "shortDescription": "Fabric\nCotton\n\nFit\nRegular Fit\n\nSleeve\nFull Sleeves\n\nCollar\nRegular Collar\n\nPattern\nArtisan Inspired Jaipuri Print\n\nColor\nRed\n\nOccasion\nCasual, Festive, Evening Wear\n\nSeason\nAll Season\n\nWash Care\nMachine Wash Cold\n\nUSP\nBreathable, Stylish, Statement Print",
+      "description": "Make a bold statement with our Pattachitra Red Printed Shirt, inspired by timeless artisan-style patterns blended with modern everyday fashion. Featuring intricate traditional-inspired motifs in rich red tones, this shirt brings together heritage aesthetics with effortless contemporary styling.\n\nCrafted from lightweight breathable fabric, it keeps you comfortable throughout the day while maintaining a clean and stylish silhouette. The regular collar design adds versatility, making it perfect for festive gatherings, vacations, casual outings, brunches, and elevated everyday looks.\n\nArtisan Inspired Print\n\nTraditional-inspired detailed motifs\n\nRegular Collar Design\n\nClassic & versatile silhouette\n\nBreathable Comfort\n\nLightweight for all-day wear\n\nFestive Ready Styling\n\nPerfect for casual & occasion wear\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Premium Quality Fabric",
+      "categories": [
+        {
+          "slug": "sale",
+          "name": "Clearance"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        },
+        {
+          "slug": "printed-shirt",
+          "name": "Printed Shirt"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 79900,
+      "pricePaise": 59900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_0453-Large.jpeg",
+          "alt": "Printed Shirts",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_0451-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_0443-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_0448-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:7385",
+      "name": "Ebony Black Printed Shirt",
+      "slug": "ebony-black",
+      "sku": "WW-M-SHI-BLA-053",
+      "shortDescription": "Fabric\nCotton\n\nFit\nRegular Fit\n\nSleeve\nHalf Sleeves\n\nCollar\nRegular Collar\n\nPattern\nJaipuri Print\n\nColor\nBlack\n\nOccasion\nCasual, Evening Wear\n\nSeason\nSummer Wear\n\nWash Care\nMachine Wash Cold\n\nUSP\nBreathable, Stylish, Lightweight",
+      "description": "Upgrade your wardrobe with our Ebony Black Printed Shirt, designed for men who prefer modern statement fashion with all-day comfort. Featuring a bold monochrome-inspired print in rich black tones, this shirt delivers a sleek and effortlessly stylish look.\n\nCrafted from lightweight breathable fabric, it keeps you comfortable throughout the day while maintaining a clean and structured silhouette. The regular collar design adds timeless versatility, making it perfect for casual outings, vacations, brunches, evening gatherings, and smart-casual styling.\n\nPremium Printed Fabric\n\nBold monochrome-inspired print\n\nRegular Collar Design\n\nClassic & versatile silhouette\n\nBreathable Comfort\n\nLightweight for all-day wear\n\nVersatile Styling\n\nPerfect for casual & evening looks\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Premium Quality Fabric",
+      "categories": [
+        {
+          "slug": "sale",
+          "name": "Clearance"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        },
+        {
+          "slug": "printed-shirt",
+          "name": "Printed Shirt"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 79900,
+      "pricePaise": 59900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_0487-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_0493-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_0490-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_0489-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:7381",
+      "name": "Flora Blue Printed Shirt",
+      "slug": "flora-blue",
+      "sku": "WW-M-SHI-BLU-052",
+      "shortDescription": "Fabric\nCotton\n\nFit\nRegular Fit\n\nSleeve\nHalf Sleeves\n\nCollar\nRegular Collar\n\nPattern\nFloral Inspired Jaipuri Print\n\nColor\nFlora Blue\n\nOccasion\nCasual, Vacation, Beach Wear\n\nSeason\nSummer Wear\n\nWash Care\nMachine Wash Cold\n\nUSP\nBreathable, Stylish, Lightweight",
+      "description": "Upgrade your wardrobe with our Flora Blue Printed Shirt, designed for men who like modern statement fashion with all-day comfort. Featuring an eye-catching floral-inspired print in rich blue tones, this shirt delivers a fresh and effortless summer-ready look.\n\nCrafted from lightweight breathable fabric, it keeps you comfortable throughout the day while maintaining a clean and stylish silhouette. The regular collar design adds timeless versatility, making it perfect for vacations, brunches, casual outings, beach days, and relaxed evening looks.\n\nPremium Printed Fabric\n\nBold floral-inspired print\n\nRegular Collar Design\n\nClassic & versatile style\n\nBreathable Comfort\n\nLightweight for everyday wear\n\nSummer Ready\n\nPerfect for vacations & casual looks\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Premium Quality Fabric",
+      "categories": [
+        {
+          "slug": "sale",
+          "name": "Clearance"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        },
+        {
+          "slug": "printed-shirt",
+          "name": "Printed Shirt"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 79900,
+      "pricePaise": 59900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_3465-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_3471-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_3467-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_3473-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:7379",
+      "name": "Abstract Blue Printed Shirt",
+      "slug": "abstract-blue",
+      "sku": "WW-M-SHI-BLU-051",
+      "shortDescription": "Fabric\nCotton\n\nFit\nRegular Fit\n\nSleeve\nFull Sleeves\n\nCollar\nRegular Collar\n\nPattern\nJaipuri Print\n\nColor\nAbstract Blue\n\nOccasion\nCasual, Evening Wear\n\nSeason\nAll Season\n\nWash Care\nMachine Wash Cold\n\nUSP\nStylish Print, Breathable Comfort",
+      "description": "Make a statement with our Abstract Blue Printed Shirt, designed for men who prefer bold modern style with everyday comfort. Featuring an eye-catching abstract-inspired print in rich blue tones, this shirt adds effortless personality to your wardrobe.\n\nCrafted from breathable lightweight fabric, it delivers all-day comfort while maintaining a clean and stylish silhouette. The classic regular collar design makes it versatile for casual outings, vacations, brunches, evening gatherings, and smart-casual looks.\n\nPremium Printed Fabric\n\nBold abstract-inspired pattern\n\nRegular Collar Design\n\nClassic & versatile silhouette\n\nBreathable Comfort\n\nLightweight for all-day wear\n\nVersatile Styling\n\nPerfect for casual & evening looks\n\n✔ COD Available\n\n✔ Fast Shipping\n\n✔ Premium Quality Fabric",
+      "categories": [
+        {
+          "slug": "sale",
+          "name": "Clearance"
+        },
+        {
+          "slug": "kalamkari",
+          "name": "kalamkari"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        },
+        {
+          "slug": "printed-shirt",
+          "name": "Printed Shirt"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 79900,
+      "pricePaise": 59900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_0471-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_0473-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_0475-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_0478-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_0471-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:7354",
+      "name": "IKAT CORE – Kataka Classic",
+      "slug": "ikat-kataka-classic-shirt",
+      "sku": "WW-IK-KAT-CL",
+      "shortDescription": "A versatile Ikat shirt designed for everyday elegance with a clean and classic pattern.",
+      "description": "Designed for everyday elegance, this men’s Ikat shirt – Ikat Kataka Classic Shirt for Men blends minimal design with traditional craftsmanship. Made from soft, breathable handloom cotton, it ensures comfort throughout the day.\n\nThe subtle Ikat pattern makes it a versatile wardrobe essential — perfect for office wear, casual outings, or relaxed weekends.\n\nFabric: Handloom Cotton\n\nBest for: Daily wear, casual styling\n\nStyle Tip: Wear with dark jeans for a clean, minimal look\n\nExplore our WovenWhale’s men collection for more products. Follow us on Instagram for latest updates on the products: woven_whale",
+      "categories": [
+        {
+          "slug": "handloom",
+          "name": "Handloom"
+        },
+        {
+          "slug": "ikat",
+          "name": "ikat"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [
+        "cotton shirts for men",
+        "designer shirts for men",
+        "ikat print shirt",
+        "ikat shirt men",
+        "ikat shirts",
+        "ikat shirts for men",
+        "kalamkari shirt for men",
+        "kalamkari shirt men",
+        "kalamkari shirts",
+        "mens ikat shirt",
+        "stylish mens shirts india",
+        "summer shirts for men"
+      ],
+      "mrpPaise": 199900,
+      "pricePaise": 129900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/img_0825.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_8785-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_8770-Large.jpeg",
+          "alt": "Kataka",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_8772-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_8775-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/IMG_8778-Large.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:7356",
+      "name": "Zaras Mens Ikat shirt",
+      "slug": "zaras-mens-ikat-shirt",
+      "sku": null,
+      "shortDescription": null,
+      "description": null,
+      "categories": [
+        {
+          "slug": "handloom",
+          "name": "Handloom"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "mens-clothing",
+          "name": "Men's Clothing"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 119900,
+      "pricePaise": 119900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/20210930_000603.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/20210930_000552.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/20210930_000541.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:7351",
+      "name": "Narya Mens Shirt",
+      "slug": "narya-mens-shirt",
+      "sku": null,
+      "shortDescription": null,
+      "description": null,
+      "categories": [
+        {
+          "slug": "handloom",
+          "name": "Handloom"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 99900,
+      "pricePaise": 99900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/20210930_000834.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/20210930_000753.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/20210930_000807.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2021/09/20210930_000821.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:6873",
+      "name": "Dhaarana – Stripes Shirt",
+      "slug": "dhaarana-stripes-shirt",
+      "sku": null,
+      "shortDescription": "Dhaarana, means wearing literally, but what we mean with this is owning. Owning yourself, from every way. With amigos of coloured ikkath and the horizontal lines are seamless and makes you feel like it is a part of your dignity.\n\nWhat more? in this time of crisis, we wont let you put a surgical mask to it, so we are including a ikkath mask the first of its kind which goes well with fashion and makes sure you are safe from one tiny virus.",
+      "description": null,
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 149900,
+      "pricePaise": 79900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2020/10/20201019_012558.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:6871",
+      "name": "Shulah",
+      "slug": "shulah",
+      "sku": null,
+      "shortDescription": "Shulah, A dobby black ikkath with a pattern which is Classic yet modern in its own way. We took care for every detail on the shirt to make you feel in control of yourself.\n\nIt drapes the personality so well, and in this time of crisis, we wont let you put a surgical mask to it, so we are including a ikkath mask the first of its kind which goes well with fashion and makes sure you are safe from one tiny virus.",
+      "description": null,
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 189900,
+      "pricePaise": 119900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2020/10/img_3699.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2020/10/img_3701.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2020/10/img_3697.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2020/10/img_3700.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2020/10/20201019_012152.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:6869",
+      "name": "Mudrah",
+      "slug": "mudrah",
+      "sku": null,
+      "shortDescription": "Mudhra Blue Shirt",
+      "description": null,
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 109900,
+      "pricePaise": 79900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XS",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XXL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2020/10/20201019_012000.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2020/10/20201019_011933.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2020/10/20201019_011917.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2020/10/20201019_011944.jpg",
+          "alt": "men",
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:6867",
+      "name": "The Ruby Ojas",
+      "slug": "the-ruby-ojas",
+      "sku": null,
+      "shortDescription": "The Ruby Ojas, our classic red white ikkath, this is the symbol of what we deeply care. YOU. This fits for everyone who wanna look a little vibrant yet subtle.\n\nThe attention for every detail is what we put into our cloths and also you will get a mask with the same ikkath patters, so that you dont have to compromise your fashion to stay away from a virus. We got you.",
+      "description": null,
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 149900,
+      "pricePaise": 79900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2020/10/20201019_011814.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2020/10/20201019_011803.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:6852",
+      "name": "Shuddhah",
+      "slug": "shuddhah",
+      "sku": null,
+      "shortDescription": "Shuddhah , it has the pure and placid expression of human soul,when it dwells in love and peace in this time of crisis, we wont let you put a surgical mask to it, so we are including a ikkath mask the first of its kind which goes well with fashion and makes sure you are safe from one tiny virus.",
+      "description": null,
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        },
+        {
+          "slug": "shirts",
+          "name": "Shirts"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 149900,
+      "pricePaise": 99900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2020/10/20201019_010738-1.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2020/10/20201019_010718.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:3397",
+      "name": "Onyx",
+      "slug": "onyx",
+      "sku": null,
+      "shortDescription": null,
+      "description": null,
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 99900,
+      "pricePaise": 79900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/12/img_0818.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/12/img_9970-scaled.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/12/img_9607.jpeg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:3388",
+      "name": "desire red ikat shirt",
+      "slug": "desire-red-ikat-shirt",
+      "sku": null,
+      "shortDescription": null,
+      "description": null,
+      "categories": [
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 99900,
+      "pricePaise": 79900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/12/20191225_173636.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/12/20191225_173628.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/12/20191225_173612.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:3374",
+      "name": "Nilah Mens Ikat Shirt",
+      "slug": "nilah",
+      "sku": null,
+      "shortDescription": null,
+      "description": "The Nilah ikat shirt for men is made for those who value comfort with character. Designed from breathable cotton, it offers a perfect balance of style and ease for everyday wear. Inspired by traditional ikat patterns, this shirt brings handcrafted detail into a modern silhouette. Lightweight and versatile, it’s designed for both casual outings and relaxed workdays.\n\nKey Features\n\n• Fabric: 100% Cotton\n\n• Design: Handcrafted ikat pattern\n\n• Feel: Lightweight and breathable\n\n• Fit: Modern regular fit\n\n• Occasion: Casual and smart casual\n\nFit & Styling: Designed for a clean, comfortable fit. Pair it with denims or chinos for a relaxed everyday look.\n\nDetails & Care\n\n• Wash: Machine wash cold\n\n• Dry: Dry in shade\n\n• Note: Slight variations may occur due to handcrafted process\n\nShipping & Assurance\n\n• Delivery: 3–5 working days\n\n• Easy returns available\n\n• Quality checked before dispatch\n\nShop premium ikat shirts for men at Woven Whale. Discover breathable cotton shirts and modern short kurtas designed for everyday comfort and style. Explore our WovenWhale’s men collection for more products. Follow us on Instagram for latest updates on the products: woven_whale",
+      "categories": [
+        {
+          "slug": "handloom",
+          "name": "Handloom"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [
+        "cotton shirts for men",
+        "designer shirts for men",
+        "ikat print shirt",
+        "ikat shirt men",
+        "ikat shirts",
+        "ikat shirts for men",
+        "kalamkari shirt for men",
+        "kalamkari shirt men",
+        "kalamkari shirts",
+        "mens ikat shirt",
+        "stylish mens shirts india",
+        "summer shirts for men"
+      ],
+      "mrpPaise": 99900,
+      "pricePaise": 79900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/12/IMG_9999-1.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/12/IMG_0002-1.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/12/IMG_9986-scaled.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/12/IMG_9989-scaled.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/12/IMG_9999-1.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:913",
+      "name": "VIVIFIC",
+      "slug": "men-ikkath-shirt-woven-whale",
+      "sku": null,
+      "shortDescription": "Add a dash of style to your look by wearing this full sleeved shirt.\n\nCrafted in cotton,it features a chineese collar and artsy ikkat designs\n\nthat showcase heritage style in a contemporary way.",
+      "description": "New ikkath shirt which is made by hand, handloom products. Ethinic handloom ikkath shirts for men. New ikkath shirts woven by hand. buy now Men ikkath handloom Shirts woven whale .\n\nIn Ikkath the resist is formed by binding individual yarns or bundles of yarns with a tight wrapping applied in the desired pattern. The yarns are then dyed. The bindings may then be altered to create a new pattern of ikkath and the yarns dyed again with another colour. This process may be repeated multiple times to produce elaborate, multicolored patterns. Men ikkath handloom Shirts woven whale. When the dyeing is finished all the bindings are removed and the yarns are woven into cloth. In other resist-dyeing techniques such as tie-dye and batik the resist is applied to the woven cloth, whereas in ikkath the resist is applied to the yarns before they are woven into cloth. Because the surface design is created in the yarns rather than on the finished cloth, in ikkath both fabric faces are patterned . we woven whale have the best quality of ikkath handloom mens wear buy now at low price.",
+      "categories": [
+        {
+          "slug": "handloom",
+          "name": "Handloom"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 99900,
+      "pricePaise": 99900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/10/PicsArt_10-03-09.44.28-2-scaled.jpg",
+          "alt": "Vivific ikkath shirt 1",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/10/PicsArt_10-03-09.40.15-2-scaled.jpg",
+          "alt": "vivific ikkath shirt 2",
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/10/PicsArt_10-03-09.43.27-scaled.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:907",
+      "name": "PHEONIX STREAK",
+      "slug": "pheonix-streak",
+      "sku": null,
+      "shortDescription": "This full sleeved ikkat shirt with comfort fit gets you easy compliments on your next weekend movie date or lunch out.Crafted from cotton,it features classy ikkat designs",
+      "description": null,
+      "categories": [
+        {
+          "slug": "handloom",
+          "name": "Handloom"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 99900,
+      "pricePaise": 85000,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/10/PicsArt_10-03-09.38.34-scaled.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/10/PicsArt_10-03-09.31.31.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:902",
+      "name": "white butterfly",
+      "slug": "white-butterfly",
+      "sku": null,
+      "shortDescription": "WHITE BUTTERFLY\n\nthis ikkat shirt is all about details.this smart ikkat takes the white butterfly a notch higher in style. wear it for a celebratory occasion or a fun gathering, we guarantee you unlimited compliments.",
+      "description": null,
+      "categories": [
+        {
+          "slug": "handloom",
+          "name": "Handloom"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 99900,
+      "pricePaise": 79900,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/10/PicsArt_10-03-09.52.54-scaled.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/10/PicsArt_10-03-09.51.24-1-scaled.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": true
+    },
+    {
+      "sourceRef": "woo:858",
+      "name": "karken",
+      "slug": "karken",
+      "sku": null,
+      "shortDescription": "Style up with this KARKEN with black jeans on any special occasin.crafted from cotton,it features chineese collar and ikkat design with full sleeves that ushers a classic look.",
+      "description": null,
+      "categories": [
+        {
+          "slug": "handloom",
+          "name": "Handloom"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 99900,
+      "pricePaise": 85000,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/10/PicsArt_10-03-09.48.36-1-scaled.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/10/PicsArt_10-03-09.46.27-scaled.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    },
+    {
+      "sourceRef": "woo:852",
+      "name": "Blue jay",
+      "slug": "blue-jay",
+      "sku": null,
+      "shortDescription": "Blue Jay ikkat shirt is a complete show stealer.the comfort fit ensures you feel good in this ethnic extravaganza.",
+      "description": null,
+      "categories": [
+        {
+          "slug": "handloom",
+          "name": "Handloom"
+        },
+        {
+          "slug": "men",
+          "name": "Men"
+        }
+      ],
+      "tags": [],
+      "mrpPaise": 99900,
+      "pricePaise": 95000,
+      "variants": [
+        {
+          "size": "L",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "M",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "S",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        },
+        {
+          "size": "XL",
+          "sku": null,
+          "stock": null,
+          "sourceRef": null
+        }
+      ],
+      "images": [
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/10/PicsArt_10-03-09.29.51-scaled.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/10/PicsArt_10-03-09.29.33-1-scaled.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        },
+        {
+          "url": "https://wovenwhale.com/wp-content/uploads/2019/10/1F6A9724-scaled.jpg",
+          "alt": null,
+          "width": null,
+          "height": null
+        }
+      ],
+      "inStock": false
+    }
+  ]
+}

@@ -63,10 +63,7 @@ export function evaluateReturnTransition(
 }
 
 /** RULE 6: eligibility is decided server-side from the stored return deadline. */
-export function evaluateReturnEligibility(
-  order: { status: OrderStatus; returnDeadlineAt: Date | null },
-  now: Date,
-): Result {
+export function evaluateReturnEligibility(order: { status: OrderStatus; returnDeadlineAt: Date | null }, now: Date): Result {
   if (order.status !== "DELIVERED" || !order.returnDeadlineAt) {
     return fail("RETURN_NOT_AVAILABLE", "Returns open once your order has been delivered.");
   }

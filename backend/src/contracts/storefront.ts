@@ -17,7 +17,15 @@ import {
 const csv = z
   .string()
   .optional()
-  .transform((s) => (s ? s.split(",").map((v) => v.trim()).filter(Boolean).slice(0, 20) : []));
+  .transform((s) =>
+    s
+      ? s
+          .split(",")
+          .map((v) => v.trim())
+          .filter(Boolean)
+          .slice(0, 20)
+      : [],
+  );
 
 /** Mirrors the storefront URL: /shop?category=ikat&size=L&sort=price-low */
 export const productListQuerySchema = z.object({

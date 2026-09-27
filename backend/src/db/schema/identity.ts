@@ -1,17 +1,5 @@
 import { sql } from "drizzle-orm";
-import {
-  boolean,
-  index,
-  integer,
-  jsonb,
-  pgTable,
-  primaryKey,
-  text,
-  timestamp,
-  uniqueIndex,
-  uuid,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { boolean, index, integer, jsonb, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid, varchar } from "drizzle-orm/pg-core";
 import { addressTypeEnum, createdAt, deletedAt, id, sessionSubjectEnum, updatedAt } from "./_shared";
 
 /** Customer identities. Phone (E.164) is the primary login identifier. */
@@ -31,7 +19,9 @@ export const users = pgTable(
   },
   (t) => [
     uniqueIndex("users_phone_uq").on(t.phone),
-    uniqueIndex("users_email_uq").on(sql`lower(${t.email})`).where(sql`${t.email} is not null`),
+    uniqueIndex("users_email_uq")
+      .on(sql`lower(${t.email})`)
+      .where(sql`${t.email} is not null`),
   ],
 );
 

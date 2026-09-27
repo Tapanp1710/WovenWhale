@@ -1,14 +1,6 @@
 import { sql } from "drizzle-orm";
 import { boolean, check, index, integer, pgTable, text, timestamp, uniqueIndex, uuid, varchar } from "drizzle-orm/pg-core";
-import {
-  createdAt,
-  id,
-  refundMethodEnum,
-  refundStatusEnum,
-  returnStatusEnum,
-  returnTypeEnum,
-  updatedAt,
-} from "./_shared";
+import { createdAt, id, refundMethodEnum, refundStatusEnum, returnStatusEnum, returnTypeEnum, updatedAt } from "./_shared";
 import { productVariants } from "./catalog";
 import { adminUsers, users } from "./identity";
 import { orderItems, orders, payments } from "./orders";
@@ -83,7 +75,9 @@ export const refunds = pgTable(
   (t) => [
     index("refunds_order_idx").on(t.orderId),
     index("refunds_status_idx").on(t.status),
-    uniqueIndex("refunds_provider_uq").on(t.providerRefundId).where(sql`${t.providerRefundId} is not null`),
+    uniqueIndex("refunds_provider_uq")
+      .on(t.providerRefundId)
+      .where(sql`${t.providerRefundId} is not null`),
     check("refunds_amount_ck", sql`${t.amountPaise} > 0`),
   ],
 );

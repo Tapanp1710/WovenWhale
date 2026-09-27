@@ -26,7 +26,11 @@ const skuSchema = z
   .regex(/^[A-Z0-9][A-Z0-9-]{1,62}$/, "SKU may contain letters, numbers and hyphens");
 
 /** Admin forms enter money in rupees; the API stores paise. */
-const rupees = z.coerce.number().min(0).max(1_000_000).transform((r) => Math.round(r * 100));
+const rupees = z.coerce
+  .number()
+  .min(0)
+  .max(1_000_000)
+  .transform((r) => Math.round(r * 100));
 const optionalDate = z
   .union([z.literal(""), z.null(), z.coerce.date()])
   .optional()
@@ -103,6 +107,11 @@ export const productUpsertSchema = z
   .refine((p) => p.mrp >= p.price, { path: ["mrp"], message: "MRP must be at least the selling price" });
 export type ProductUpsertInput = z.input<typeof productUpsertSchema>;
 
+/** Quick merchandising toggles from the product list. */
+export const productFlagsSchema = z
+  .object({ isActive: z.boolean(), isFeatured: z.boolean(), isBestSeller: z.boolean(), isNewArrival: z.boolean() })
+  .partial();
+
 export const variantUpsertSchema = z.object({
   size: z.string().trim().toUpperCase().min(1).max(16),
   color: cleanText(48).optional().nullable(),
@@ -169,7 +178,11 @@ export const orderNoteSchema = z.object({ body: requiredText("Note", 2000, 2) })
 export const shipmentCreateSchema = z.object({
   courierName: requiredText("Courier", 80, 2),
   awb: z.string().trim().toUpperCase().min(4).max(64),
-  trackingUrl: z.url().optional().or(z.literal("")).transform((v) => v || null),
+  trackingUrl: z
+    .url()
+    .optional()
+    .or(z.literal(""))
+    .transform((v) => v || null),
 });
 
 /* ───────────────────────────────── Coupons ───────────────────────────────── */

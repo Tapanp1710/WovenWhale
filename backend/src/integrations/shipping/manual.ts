@@ -2,13 +2,7 @@ import { z } from "zod";
 import { SHIPMENT_STATUSES } from "../../contracts/enums";
 import { hmacSha256Hex, randomToken, safeEqual } from "../../lib/crypto";
 import { InvalidSignatureError } from "../payments/types";
-import {
-  ShippingNotSupportedError,
-  type CreateShipmentInput,
-  type ShipmentInfo,
-  type ShippingProvider,
-  type TrackingEvent,
-} from "./types";
+import { ShippingNotSupportedError, type CreateShipmentInput, type ShipmentInfo, type ShippingProvider, type TrackingEvent } from "./types";
 
 const webhookSchema = z.object({
   events: z.array(

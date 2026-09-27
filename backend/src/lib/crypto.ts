@@ -17,8 +17,7 @@ export function safeEqual(a: string, b: string): boolean {
   return ab.length === bb.length && timingSafeEqual(ab, bb);
 }
 
-export const randomDigits = (length: number) =>
-  Array.from({ length }, () => randomInt(0, 10)).join("");
+export const randomDigits = (length: number) => Array.from({ length }, () => randomInt(0, 10)).join("");
 
 /* Password hashing — scrypt (memory-hard, Node built-in). Format: scrypt$N$r$p$salt$hash */
 const SCRYPT = { N: 16384, r: 8, p: 1, keylen: 64 };

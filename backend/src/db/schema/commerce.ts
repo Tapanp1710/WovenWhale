@@ -1,16 +1,5 @@
 import { sql } from "drizzle-orm";
-import {
-  check,
-  index,
-  integer,
-  jsonb,
-  pgTable,
-  text,
-  timestamp,
-  uniqueIndex,
-  uuid,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { check, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex, uuid, varchar } from "drizzle-orm/pg-core";
 import { checkoutStatusEnum, createdAt, id, recoveryStatusEnum, updatedAt } from "./_shared";
 import { productVariants, products } from "./catalog";
 import { users } from "./identity";
@@ -26,13 +15,20 @@ export const carts = pgTable(
     id: id(),
     userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
     guestTokenHash: varchar("guest_token_hash", { length: 64 }),
-    couponCodes: text("coupon_codes").array().notNull().default(sql`'{}'::text[]`),
+    couponCodes: text("coupon_codes")
+      .array()
+      .notNull()
+      .default(sql`'{}'::text[]`),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
   (t) => [
-    uniqueIndex("carts_user_uq").on(t.userId).where(sql`${t.userId} is not null`),
-    uniqueIndex("carts_guest_uq").on(t.guestTokenHash).where(sql`${t.guestTokenHash} is not null`),
+    uniqueIndex("carts_user_uq")
+      .on(t.userId)
+      .where(sql`${t.userId} is not null`),
+    uniqueIndex("carts_guest_uq")
+      .on(t.guestTokenHash)
+      .where(sql`${t.guestTokenHash} is not null`),
   ],
 );
 

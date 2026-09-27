@@ -45,8 +45,5 @@ export const inventoryTransactions = pgTable(
     note: text("note"),
     createdAt: createdAt(),
   },
-  (t) => [
-    index("inventory_txn_variant_idx").on(t.variantId, t.createdAt),
-    index("inventory_txn_order_idx").on(t.orderId),
-  ],
+  (t) => [index("inventory_txn_variant_idx").on(t.variantId, t.createdAt), index("inventory_txn_order_idx").on(t.orderId)],
 );

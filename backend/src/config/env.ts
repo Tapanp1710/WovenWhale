@@ -35,7 +35,11 @@ const schema = z
     EMAIL_PROVIDER: z.enum(["console", "resend", "ses"]).default("console"),
     STORAGE_PROVIDER: z.enum(["local", "supabase"]).default("local"),
 
-    OTP_DEV_FIXED_CODE: z.string().regex(/^\d{6}$/).or(z.literal("")).default(""),
+    OTP_DEV_FIXED_CODE: z
+      .string()
+      .regex(/^\d{6}$/)
+      .or(z.literal(""))
+      .default(""),
     MOCK_PAYMENT_WEBHOOK_SECRET: z.string().default("dev-mock-gateway-secret"),
 
     WHATSAPP_APP_SECRET: z.string().default(""),
