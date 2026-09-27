@@ -1,4 +1,5 @@
 import type { Context, MiddlewareHandler } from "hono";
+import { env } from "../config/env";
 import { HttpError } from "./http";
 
 /**
@@ -44,7 +45,7 @@ export function clientIp(c: Context): string {
 
 export async function consume(key: string, limit: number, windowMs: number): Promise<void> {
   const { count, resetAt } = await rateLimitStore.hit(key, windowMs);
-  if (count > limit) {
+  if (count > limit * env.RATE_LIMIT_MULTIPLIER) {
     const seconds = Math.ceil((resetAt - Date.now()) / 1000);
     throw new HttpError(429, "RATE_LIMITED", `Too many attempts. Please try again in ${seconds} seconds.`);
   }

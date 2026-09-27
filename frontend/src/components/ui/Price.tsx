@@ -6,7 +6,9 @@ export function Price({ pricePaise, mrpPaise, size = "md" }: { pricePaise: numbe
   const off = mrpPaise > pricePaise ? Math.floor(((mrpPaise - pricePaise) * 100) / mrpPaise) : 0;
   return (
     <p className={`${styles.price} ${styles[size]}`}>
-      <span className={styles.selling}>{formatINR(pricePaise)}</span>
+      <span className={styles.selling} data-price={pricePaise}>
+        {formatINR(pricePaise)}
+      </span>
       {off > 0 && (
         <>
           <s className={styles.mrp}>

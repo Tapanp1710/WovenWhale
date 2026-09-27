@@ -1,0 +1,94 @@
+import { expect, test } from "@playwright/test";
+import { inStockProduct } from "./support/fixtures";
+
+test.describe("storefront browsing", () => {
+  test("browse from the homepage into a collection", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("handlooms");
+    await page.getByRole("link", { name: "Browse everything" }).click();
+    await expect(page).toHaveURL(/\/shop$/);
+    await expect(page.getByRole("heading", { name: "Shop all" })).toBeVisible();
+    await expect(page.locator("article").first()).toBeVisible();
+  });
+
+  test("search with suggestions and results page", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("button", { name: "Search", exact: true }).click();
+    const input = page.getByRole("searchbox", { name: "Search products" });
+    await input.fill("jamdani");
+    await expect(page.getByRole("dialog").getByRole("heading", { name: "Products" })).toBeVisible();
+    await input.press("Enter");
+    await expect(page).toHaveURL(/\/search\?q=jamdani/);
+    await expect(page.getByRole("heading", { name: /Results for “jamdani”/ })).toBeVisible();
+    const names = await page.locator("article h3").allTextContents();
+    expect(names.length).toBeGreaterThan(0);
+    expect(names.every((n) => /jamdani/i.test(n))).toBe(true);
+  });
+
+  test("search with no matches shows a helpful empty state", async ({ page }) => {
+    await page.goto("/search?q=zzqqxx");
+    await expect(page.getByRole("heading", { name: "No styles match these filters" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Browse all styles" })).toBeVisible();
+  });
+
+  test("filters and sort are reflected in a shareable URL", async ({ page }) => {
+    await page.goto("/shop");
+    const sidebar = page.getByRole("complementary", { name: "Filters" });
+    await sidebar.getByRole("button", { name: "L", exact: true }).click();
+    await expect(page).toHaveURL(/size=L/);
+    await page.getByLabel("Sort by").selectOption("price-low");
+    await expect(page).toHaveURL(/sort=price-low/);
+    await expect(page.getByRole("button", { name: "Remove filter Size L" })).toBeVisible();
+
+    // Prices are ascending, sold-out pieces sink to the end, so compare in-stock cards only.
+    const values = await page
+      .locator("article[data-in-stock='true'] [data-price]")
+      .evaluateAll((els) => els.map((e) => Number(e.getAttribute("data-price"))));
+    expect(values.length).toBeGreaterThan(0);
+    expect(values).toEqual([...values].sort((a, b) => a - b));
+
+    // The shared URL reproduces the same view.
+    const url = page.url();
+    const fresh = await page.context().newPage();
+    await fresh.goto(url);
+    await expect(fresh.getByRole("button", { name: "Remove filter Size L" })).toBeVisible();
+    await fresh.close();
+  });
+
+  test("product page: choose a size and add to the bag", async ({ page, request }) => {
+    const { product, variant } = await inStockProduct(request);
+    await page.goto(`/product/${product.slug}`);
+    await expect(page.getByRole("heading", { level: 1, name: product.name })).toBeVisible();
+
+    await page.getByRole("button", { name: "Add to bag" }).click();
+    await expect(page.getByText("Choose a size to continue.")).toBeVisible();
+
+    await page.getByRole("radio", { name: new RegExp(`^${variant.size}(,|$)`) }).click();
+    await page.getByRole("button", { name: "Add to bag" }).click();
+
+    const drawer = page.getByRole("dialog", { name: /Your bag/ });
+    await expect(drawer).toBeVisible();
+    await expect(drawer.getByRole("link", { name: product.name })).toBeVisible();
+    // The modal drawer hides the page behind it from assistive tech, so assert on the drawer itself.
+    await expect(page.getByRole("dialog", { name: "Your bag (1)" })).toBeVisible();
+
+    await drawer.getByRole("button", { name: /Increase quantity/ }).click();
+    await expect(page.getByRole("dialog", { name: "Your bag (2)" })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("link", { name: /Bag, 2 items/ })).toBeVisible();
+  });
+});
+
+test.describe("mobile", () => {
+  test("filter drawer and product page @mobile", async ({ page }) => {
+    await page.goto("/shop");
+    await page.getByRole("button", { name: /^Filter/ }).click();
+    const sheet = page.getByRole("dialog", { name: "Filter" });
+    await sheet.getByRole("button", { name: "M", exact: true }).click();
+    await expect(page).toHaveURL(/size=M/);
+    await sheet.getByRole("button", { name: /^Show \d+ style/ }).click();
+    await expect(sheet).toBeHidden();
+    const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(scrollWidth).toBeLessThanOrEqual(0);
+  });
+});

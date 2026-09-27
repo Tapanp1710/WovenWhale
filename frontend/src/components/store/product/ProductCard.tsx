@@ -25,7 +25,7 @@ export function ProductCard({
   const detail = [product.pattern !== "Handwoven" ? product.pattern : null, product.fabric].filter(Boolean).join(", ");
 
   return (
-    <article className={`${styles.card} ${!product.inStock ? styles.soldOut : ""}`}>
+    <article className={`${styles.card} ${!product.inStock ? styles.soldOut : ""}`} data-in-stock={product.inStock}>
       <div className={styles.media} ref={media}>
         <Link href={`/product/${product.slug}`} className={styles.imageLink} aria-label={product.name}>
           {primary && <Image src={primary.url} alt={primary.alt} fill sizes={sizes} preload={preload} className={styles.primary} />}

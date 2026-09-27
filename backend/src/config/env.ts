@@ -47,6 +47,9 @@ const schema = z
     WHATSAPP_SEND_ENABLED: bool,
     SHIPPING_WEBHOOK_SECRET: z.string().default(""),
 
+    /** Scales every rate limit (local/CI test runs only; must be 1 in production). */
+    RATE_LIMIT_MULTIPLIER: z.coerce.number().int().min(1).max(1000).default(1),
+
     REDIS_URL: z.string().default(""),
     SENTRY_DSN: z.string().default(""),
   })
@@ -61,6 +64,9 @@ const schema = z
       if (env[key] === value) {
         ctx.addIssue({ code: "custom", path: [key], message: `${key}=${value} is not allowed in production` });
       }
+    }
+    if (env.RATE_LIMIT_MULTIPLIER !== 1) {
+      ctx.addIssue({ code: "custom", path: ["RATE_LIMIT_MULTIPLIER"], message: "Rate limits cannot be relaxed in production" });
     }
     if (env.SESSION_SECRET.startsWith("replace-with")) {
       ctx.addIssue({ code: "custom", path: ["SESSION_SECRET"], message: "Set a real SESSION_SECRET in production" });
