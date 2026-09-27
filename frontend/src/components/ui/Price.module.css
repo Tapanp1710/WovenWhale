@@ -1,0 +1,35 @@
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.selling {
+  font-weight: 600;
+  color: var(--indigo-900);
+}
+
+.mrp {
+  color: var(--text-muted);
+  font-size: 0.9em;
+}
+
+.off {
+  color: var(--success-600);
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.sm {
+  font-size: var(--text-sm);
+}
+
+.md {
+  font-size: var(--text-base);
+}
+
+.lg {
+  font-size: var(--text-lg);
+}

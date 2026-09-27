@@ -1,0 +1,151 @@
+.form {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form input {
+  width: 100%;
+  min-height: 54px;
+  padding: 0 var(--space-7) 0 var(--space-7);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  font-size: var(--text-md);
+}
+
+.form input:focus {
+  outline: none;
+  border-color: var(--indigo-600);
+  box-shadow: 0 0 0 3px var(--indigo-100);
+}
+
+.form input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.glass {
+  position: absolute;
+  left: var(--space-4);
+  color: var(--slate-500);
+  pointer-events: none;
+}
+
+.clear {
+  position: absolute;
+  right: var(--space-2);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--slate-500);
+}
+
+.results {
+  display: grid;
+  gap: var(--space-6);
+  margin-top: var(--space-6);
+}
+
+.section {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.section h2 {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.sectionHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sectionHead button {
+  border: 0;
+  background: none;
+  font-size: var(--text-sm);
+  color: var(--indigo-600);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chips a,
+.chips button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 38px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-size: var(--text-sm);
+}
+
+.chips a:hover,
+.chips button:hover {
+  border-color: var(--indigo-600);
+}
+
+.products {
+  display: grid;
+}
+
+.product {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+}
+
+.product:hover .productName {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.thumb {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: var(--slate-100);
+  overflow: hidden;
+}
+
+.thumb img {
+  object-fit: cover;
+}
+
+.productName {
+  font-weight: 500;
+}
+
+.productPrice {
+  font-variant-numeric: tabular-nums;
+  color: var(--slate-700);
+}
+
+.all {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--indigo-600);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.none {
+  color: var(--slate-700);
+}

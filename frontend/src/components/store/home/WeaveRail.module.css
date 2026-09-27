@@ -1,0 +1,74 @@
+.rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(62%, 1fr);
+  gap: var(--space-3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  margin: 0 calc(var(--gutter) * -1);
+  padding: 0 var(--gutter);
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+.rail li {
+  scroll-snap-align: start;
+}
+
+.tile {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--slate-100);
+  margin-bottom: var(--space-2);
+}
+
+.img {
+  object-fit: cover;
+  transition: transform 900ms var(--ease-out);
+}
+
+.tile:hover .img {
+  transform: scale(1.04);
+}
+
+.name {
+  font-size: var(--text-md);
+  font-weight: 600;
+  font-stretch: var(--wide);
+}
+
+.tile:hover .name {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.count {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+@media (min-width: 768px) {
+  .rail {
+    grid-auto-columns: minmax(36%, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .rail {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+  }
+}

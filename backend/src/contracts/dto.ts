@@ -68,7 +68,7 @@ export interface ProductCardDTO {
   mrpPaise: number;
   discountPercent: number;
   images: ImageDTO[];
-  sizes: { size: string; inStock: boolean }[];
+  sizes: { size: string; inStock: boolean; variantId: string }[];
   inStock: boolean;
   isNewArrival: boolean;
   isBestSeller: boolean;

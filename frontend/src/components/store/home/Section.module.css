@@ -1,0 +1,42 @@
+.section {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--gutter) 0;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.text {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.title {
+  font-size: var(--text-2xl);
+  font-stretch: var(--wide);
+  color: var(--indigo-800);
+}
+
+.intro {
+  max-width: 52ch;
+  color: var(--slate-700);
+}
+
+.link {
+  font-weight: 600;
+  color: var(--indigo-600);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.link:hover {
+  text-decoration-thickness: 2px;
+}

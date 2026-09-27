@@ -68,7 +68,7 @@ export async function loadProductCards(ids: string[], opts: { includeInactive?: 
       .where(inArray(productImages.productId, ids))
       .orderBy(asc(productImages.sortOrder), asc(productImages.createdAt)),
     db
-      .select({ productId: productVariants.productId, size: productVariants.size, available: availableExpr })
+      .select({ id: productVariants.id, productId: productVariants.productId, size: productVariants.size, available: availableExpr })
       .from(productVariants)
       .leftJoin(inventory, eq(inventory.variantId, productVariants.id))
       .where(and(inArray(productVariants.productId, ids), eq(productVariants.isActive, true))),
@@ -81,12 +81,13 @@ export async function loadProductCards(ids: string[], opts: { includeInactive?: 
     imagesByProduct.set(img.productId, list);
   }
 
-  const sizesByProduct = new Map<string, { size: string; inStock: boolean }[]>();
+  const sizesByProduct = new Map<string, { size: string; inStock: boolean; variantId: string }[]>();
   for (const v of variantRows) {
     const list = sizesByProduct.get(v.productId) ?? [];
     const existing = list.find((s) => s.size === v.size);
-    if (existing) existing.inStock ||= Number(v.available) > 0;
-    else list.push({ size: v.size, inStock: Number(v.available) > 0 });
+    // Same size in several colours: prefer an in-stock variant for quick add.
+    if (existing && !existing.inStock && Number(v.available) > 0) Object.assign(existing, { inStock: true, variantId: v.id });
+    else if (!existing) list.push({ size: v.size, inStock: Number(v.available) > 0, variantId: v.id });
     sizesByProduct.set(v.productId, list);
   }
 

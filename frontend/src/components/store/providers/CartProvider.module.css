@@ -1,0 +1,7 @@
+.flight {
+  position: fixed;
+  z-index: 90;
+  object-fit: cover;
+  pointer-events: none;
+  box-shadow: var(--shadow-float);
+}

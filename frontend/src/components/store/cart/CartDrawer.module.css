@@ -1,0 +1,16 @@
+.lines {
+  margin-top: calc(var(--space-4) * -1);
+}
+
+.footer {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.viewBag {
+  justify-self: center;
+  font-size: var(--text-sm);
+  color: var(--indigo-600);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

@@ -1,0 +1,82 @@
+.hero {
+  display: grid;
+  gap: var(--space-6);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-6) var(--gutter) var(--space-8);
+}
+
+.copy {
+  display: grid;
+  align-content: center;
+  gap: var(--space-5);
+}
+
+.title {
+  max-width: 15ch;
+  font-size: var(--text-4xl);
+  font-weight: 600;
+  font-stretch: var(--wide);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  color: var(--indigo-800);
+}
+
+.lede {
+  max-width: 42ch;
+  font-size: var(--text-md);
+  color: var(--slate-700);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.warp {
+  display: grid;
+  grid-template-columns: repeat(var(--strips, 4), 1fr);
+  gap: 6px;
+  height: min(64vh, 560px);
+  overflow: hidden;
+}
+
+.strip {
+  position: relative;
+  overflow: hidden;
+  background: var(--slate-100);
+}
+
+/* Stagger the threads so the grid reads as woven, not tiled. */
+.strip:nth-child(even) {
+  margin-top: var(--space-7);
+}
+
+.strip:nth-child(odd) {
+  margin-bottom: var(--space-7);
+}
+
+.strip:nth-child(n + 5) {
+  display: none;
+}
+
+.img {
+  object-fit: cover;
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: stretch;
+    gap: var(--space-8);
+    padding-top: var(--space-7);
+  }
+  .warp {
+    --strips: 6;
+    height: min(78vh, 720px);
+  }
+  .strip:nth-child(n + 5) {
+    display: block;
+  }
+}
