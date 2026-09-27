@@ -5,6 +5,7 @@ import {
   cleanText,
   emailSchema,
   optionalEmailSchema,
+  optionalText,
   otpCodeSchema,
   phoneSchema,
   pincodeSchema,
@@ -55,7 +56,7 @@ export const verifyOtpSchema = z.object({ phone: phoneSchema, code: otpCodeSchem
 
 export const profileUpdateSchema = z.object({
   fullName: requiredText("Name", 120, 2),
-  email: optionalEmailSchema.optional(),
+  email: optionalEmailSchema,
   whatsappOptIn: z.boolean().optional(),
   marketingOptIn: z.boolean().optional(),
 });
@@ -65,16 +66,14 @@ export const profileUpdateSchema = z.object({
 export const addressInputSchema = z.object({
   fullName: requiredText("Full name", 120, 2),
   phone: phoneSchema,
-  email: optionalEmailSchema.optional().default(null),
+  email: optionalEmailSchema,
   line1: requiredText("House / flat", 160),
   line2: requiredText("Street", 160),
   area: requiredText("Area / locality", 120),
   city: requiredText("City", 80, 2),
   state: z.enum(INDIAN_STATES, { error: "Select a state" }),
   pincode: pincodeSchema,
-  landmark: cleanText(120)
-    .optional()
-    .transform((s) => s || null),
+  landmark: optionalText(120),
   addressType: z.enum(ADDRESS_TYPES).default("HOME"),
   isDefault: z.boolean().default(false),
 });
@@ -166,7 +165,7 @@ export const newsletterSchema = z.object({ email: emailSchema, source: z.string(
 export const SUPPORT_TOPICS = ["ORDER", "RETURN", "PRODUCT", "SIZING", "PAYMENT", "OTHER"] as const;
 export const supportRequestSchema = z.object({
   name: requiredText("Name", 120, 2),
-  email: optionalEmailSchema.optional().default(null),
+  email: optionalEmailSchema,
   phone: phoneSchema.optional(),
   orderNumber: cleanText(24).optional(),
   topic: z.enum(SUPPORT_TOPICS),

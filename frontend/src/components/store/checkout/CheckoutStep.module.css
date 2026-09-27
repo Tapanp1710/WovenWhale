@@ -1,0 +1,75 @@
+.step {
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.marker {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1.5px solid var(--slate-300);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--slate-500);
+}
+
+.title {
+  flex: 1;
+  font-size: var(--text-lg);
+  font-stretch: var(--wide);
+}
+
+.upcoming .title {
+  color: var(--slate-500);
+}
+
+.active .marker {
+  border-color: var(--indigo-800);
+  background: var(--indigo-800);
+  color: var(--white);
+}
+
+.done .marker {
+  border-color: var(--success-600);
+  background: var(--success-600);
+  color: var(--white);
+}
+
+.change {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-weight: 600;
+  color: var(--indigo-600);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.summary {
+  margin: var(--space-2) 0 0 calc(30px + var(--space-3));
+  font-size: var(--text-sm);
+  color: var(--slate-700);
+}
+
+.body {
+  overflow: hidden;
+}
+
+.inner {
+  padding: var(--space-5) 0 0;
+}
+
+@media (min-width: 640px) {
+  .inner {
+    padding-left: calc(30px + var(--space-3));
+  }
+}

@@ -1,0 +1,53 @@
+.page {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--gutter) 0;
+}
+
+.title {
+  font-size: var(--text-3xl);
+  font-stretch: var(--wide);
+  color: var(--indigo-800);
+}
+
+.count {
+  font-size: 0.5em;
+  font-stretch: 100%;
+  color: var(--text-muted);
+}
+
+.layout {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.lines {
+  border-top: 1px solid var(--border);
+}
+
+.aside {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  padding: var(--space-5);
+  background: var(--surface);
+  border-radius: var(--radius-panel);
+}
+
+.issue {
+  font-size: var(--text-sm);
+  color: var(--warning-600);
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: var(--space-8);
+  }
+  .aside {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-5));
+  }
+}

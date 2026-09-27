@@ -60,7 +60,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const fly = useCallback(
     (from: HTMLElement | null | undefined) => {
-      const img = from?.querySelector("img") ?? (from instanceof HTMLImageElement ? from : null);
+      // Largest visible image in the source (the main photo, not a thumbnail).
+      const img = from
+        ? [...from.querySelectorAll("img")]
+            .map((el) => ({ el, r: el.getBoundingClientRect() }))
+            .filter(({ r }) => r.width > 0 && r.bottom > 0 && r.top < window.innerHeight)
+            .sort((a, b) => b.r.width * b.r.height - a.r.width * a.r.height)[0]?.el
+        : null;
       const target = bagIconRef.current;
       if (reduce || !img || !target) return;
       const src = img.currentSrc || img.src;

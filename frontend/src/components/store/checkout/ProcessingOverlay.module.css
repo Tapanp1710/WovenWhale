@@ -1,0 +1,47 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  padding: var(--gutter);
+  background: rgb(243 244 241 / 0.86);
+  backdrop-filter: blur(6px);
+}
+
+.card {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.threads {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 48px;
+  margin-bottom: var(--space-3);
+}
+
+.threads span {
+  width: 6px;
+  height: 100%;
+  background: var(--indigo-800);
+  transform-origin: center;
+}
+
+.threads span:nth-child(3) {
+  background: var(--haldi-500);
+}
+
+.message {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  font-stretch: var(--wide);
+}
+
+.hint {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}

@@ -94,7 +94,8 @@ export async function applySnapshot(snapshot: CatalogSnapshot, opts: ApplyOption
         tags: source.tags,
         mrpPaise: source.mrpPaise,
         pricePaise: source.pricePaise,
-        seoTitle: `${name} | Handwoven Menswear | WovenWhale`,
+        // The storefront title template appends the brand.
+        seoTitle: `${name} — Handwoven ${attrs.productType}`,
         seoDescription: (source.shortDescription ?? source.description ?? name).slice(0, 300),
       };
 

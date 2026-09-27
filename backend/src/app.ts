@@ -95,6 +95,9 @@ export function createApp() {
     if (error instanceof DomainError) {
       return c.json(errorBody(error.code, error.message, undefined, error.details), error.status);
     }
+    // Malformed identifiers (e.g. a non-UUID in the path) are "not found", not server errors.
+    const pgCode = (error as { cause?: { code?: string } }).cause?.code;
+    if (pgCode === "22P02") return c.json(errorBody("NOT_FOUND", "Not found."), 404);
     if (error instanceof InvalidSignatureError) {
       return c.json(errorBody("INVALID_SIGNATURE", "Invalid signature."), 401);
     }
