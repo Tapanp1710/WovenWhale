@@ -1,0 +1,84 @@
+.progress {
+  display: grid;
+  gap: 0;
+}
+
+.progress li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-2) 0;
+}
+
+/* The thread connecting steps. */
+.progress li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: calc(50% + 8px);
+  height: calc(100% - 8px);
+  width: 2px;
+  background: var(--slate-200);
+}
+
+.progress li.done:not(:last-child)::after {
+  background: var(--indigo-800);
+}
+
+.dot {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--slate-300);
+  border-radius: 50%;
+  background: var(--surface);
+}
+
+.done .dot {
+  border-color: var(--indigo-800);
+  background: var(--indigo-800);
+}
+
+.current .dot {
+  border-color: var(--indigo-800);
+  box-shadow: inset 0 0 0 4px var(--surface);
+  background: var(--haldi-500);
+}
+
+.todo .label {
+  color: var(--slate-500);
+}
+
+.current .label {
+  font-weight: 700;
+}
+
+.label {
+  font-size: var(--text-sm);
+}
+
+.time {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.history {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.history li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px var(--space-3);
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--slate-200);
+}
+
+.note {
+  grid-column: 1 / -1;
+  font-size: var(--text-sm);
+  color: var(--slate-700);
+}

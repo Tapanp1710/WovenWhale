@@ -1,6 +1,7 @@
 "use client";
 
 import type { CatalogFacets, FacetOption } from "@wovenwhale/backend/contracts";
+import type { CSSProperties, ReactNode } from "react";
 import { useFilterNavigation } from "@/hooks/useFilterNavigation";
 import { DISCOUNT_OPTIONS, PRICE_BUCKETS, type MultiKey } from "@/lib/catalog-params";
 import styles from "./FilterControls.module.css";
@@ -24,7 +25,7 @@ const SWATCH: Record<string, string> = {
   Brown: "#7a5a43",
 };
 
-function Group({ title, children }: { title: string; children: React.ReactNode }) {
+function Group({ title, children }: { title: string; children: ReactNode }) {
   return (
     <fieldset className={styles.group}>
       <legend className={styles.legend}>{title}</legend>
@@ -104,7 +105,7 @@ export function FilterControls({ facets }: { facets: CatalogFacets }) {
                   aria-pressed={colors.includes(c.value)}
                   onClick={() => toggle("color", c.value)}
                 >
-                  <span className={styles.dot} style={{ background: SWATCH[c.value] ?? "#ccc" }} aria-hidden="true" />
+                  <span className={styles.dot} style={{ "--swatch": SWATCH[c.value] ?? "#ccc" } as CSSProperties} aria-hidden="true" />
                   {c.value}
                 </button>
               </li>

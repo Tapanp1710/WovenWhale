@@ -1,0 +1,17 @@
+.panel {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 440px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--gutter);
+}
+
+.title {
+  font-size: var(--text-2xl);
+  font-stretch: var(--wide);
+  color: var(--indigo-800);
+}
+
+.reason {
+  color: var(--slate-700);
+}

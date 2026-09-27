@@ -1,0 +1,31 @@
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--gutter) 0;
+}
+
+.header {
+  margin-bottom: var(--space-5);
+}
+
+.greeting {
+  font-size: var(--text-3xl);
+  font-stretch: var(--wide);
+  color: var(--indigo-800);
+}
+
+.layout {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.content {
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+}

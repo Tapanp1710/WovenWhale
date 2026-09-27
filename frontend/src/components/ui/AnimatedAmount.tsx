@@ -3,6 +3,7 @@
 import { animate, useReducedMotion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { formatINR } from "@/lib/format";
+import styles from "./AnimatedAmount.module.css";
 
 /** Rupee amount that counts to its new value so price changes are noticeable, not jarring. */
 export function AnimatedAmount({ paise, className }: { paise: number; className?: string }) {
@@ -33,7 +34,7 @@ export function AnimatedAmount({ paise, className }: { paise: number; className?
   }, [paise, reduce]);
 
   return (
-    <span ref={ref} className={className} style={{ fontVariantNumeric: "tabular-nums" }}>
+    <span ref={ref} className={[styles.amount, className].filter(Boolean).join(" ")}>
       {formatINR(paise)}
     </span>
   );

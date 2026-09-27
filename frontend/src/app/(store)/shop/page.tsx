@@ -7,7 +7,8 @@ import { breadcrumbJsonLd, jsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Shop handwoven shirts and kurtas",
-  description: "Every WovenWhale style: handwoven ikat, jamdani and kalamkari shirts and kurtas for men. Filter by size, colour, weave and price.",
+  description:
+    "Every WovenWhale style: handwoven ikat, jamdani and kalamkari shirts and kurtas for men. Filter by size, colour, weave and price.",
   alternates: { canonical: "/shop" },
 };
 

@@ -26,7 +26,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: product.seoTitle ?? product.name,
     description,
     alternates: { canonical: `/product/${product.slug}` },
-    openGraph: { type: "website", title: product.name, description, url: `/product/${product.slug}`, images: image ? [{ url: image.url, alt: image.alt }] : [] },
+    openGraph: {
+      type: "website",
+      title: product.name,
+      description,
+      url: `/product/${product.slug}`,
+      images: image ? [{ url: image.url, alt: image.alt }] : [],
+    },
     twitter: { card: "summary_large_image", title: product.name, description, images: image ? [image.url] : [] },
   };
 }
@@ -77,7 +83,9 @@ export default async function ProductPage({ params }: Props) {
         <nav aria-label="Breadcrumb" className={styles.crumbs}>
           <ol>
             {crumbs.map((c, i) => (
-              <li key={c.href}>{i < crumbs.length - 1 ? <Link href={c.href}>{c.label}</Link> : <span aria-current="page">{c.label}</span>}</li>
+              <li key={c.href}>
+                {i < crumbs.length - 1 ? <Link href={c.href}>{c.label}</Link> : <span aria-current="page">{c.label}</span>}
+              </li>
             ))}
           </ol>
         </nav>

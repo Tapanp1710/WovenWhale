@@ -1,0 +1,78 @@
+.actions {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.notice {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+  padding: var(--space-4);
+  border-left: 4px solid var(--haldi-500);
+  background: var(--haldi-100);
+}
+
+.cancel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.deadline {
+  font-size: var(--text-sm);
+  color: var(--slate-700);
+}
+
+.form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.reasons {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.reasons legend {
+  margin-bottom: var(--space-2);
+  font-weight: 600;
+}
+
+.reasons label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 36px;
+  cursor: pointer;
+}
+
+.reasons input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--indigo-800);
+}
+
+.refund {
+  font-size: var(--text-sm);
+  color: var(--slate-700);
+}
+
+.error {
+  padding: var(--space-3);
+  border-radius: var(--radius-control);
+  background: var(--danger-50);
+  color: var(--danger-600);
+  font-size: var(--text-sm);
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}

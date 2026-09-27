@@ -2,7 +2,7 @@
 
 import type { CartDTO } from "@wovenwhale/backend/contracts";
 import { X } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { useState, type CSSProperties, type FormEvent } from "react";
 import { AnimatedAmount } from "@/components/ui/AnimatedAmount";
 import { Button } from "@/components/ui/Button";
 import { formatINR } from "@/lib/format";
@@ -36,7 +36,7 @@ export function CartSummary({ cart, showCoupon = true }: { cart: CartDTO; showCo
             aria-valuenow={Math.round(progress * 100)}
             aria-label="Progress to free delivery"
           >
-            <span style={{ transform: `scaleX(${progress})` }} />
+            <span style={{ "--progress": progress } as CSSProperties} />
           </div>
         </div>
       )}

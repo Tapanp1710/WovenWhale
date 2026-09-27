@@ -4,13 +4,9 @@ import type { AddressDTO } from "@wovenwhale/backend/contracts";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { formatPhone } from "@/lib/format";
+import { formatAddress, formatPhone } from "@/lib/format";
 import { AddressForm } from "../account/AddressForm";
 import styles from "./AddressPicker.module.css";
-
-export function formatAddress(a: Pick<AddressDTO, "line1" | "line2" | "area" | "city" | "state" | "pincode" | "landmark">) {
-  return [a.line1, a.line2, a.area, a.landmark && `Near ${a.landmark}`, `${a.city}, ${a.state} ${a.pincode}`].filter(Boolean).join(", ");
-}
 
 export function AddressPicker({
   addresses,

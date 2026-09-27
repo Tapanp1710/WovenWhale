@@ -19,6 +19,7 @@
   display: block;
   height: 100%;
   background: var(--indigo-600);
+  transform: scaleX(var(--progress, 0));
   transform-origin: left;
   transition: transform var(--duration-base) var(--ease-out);
 }

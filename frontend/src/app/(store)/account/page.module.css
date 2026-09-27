@@ -1,0 +1,27 @@
+.page {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.title {
+  margin-bottom: var(--space-4);
+  font-size: var(--text-xl);
+  font-stretch: var(--wide);
+}
+
+.link,
+.muted a {
+  color: var(--indigo-600);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.muted {
+  color: var(--slate-700);
+}

@@ -19,7 +19,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!c) return { title: "Collection not found" };
   return {
     title: c.seoTitle ?? `${c.name} for men`,
-    description: c.seoDescription ?? `Shop ${c.productCount} handwoven ${c.name.toLowerCase()} styles from WovenWhale. Free delivery over ₹999 and 14-day returns.`,
+    description:
+      c.seoDescription ??
+      `Shop ${c.productCount} handwoven ${c.name.toLowerCase()} styles from WovenWhale. Free delivery over ₹999 and 14-day returns.`,
     alternates: { canonical: `/shop/${c.slug}` },
   };
 }
