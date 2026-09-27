@@ -113,12 +113,12 @@ Imports are idempotent: products match on their WooCommerce ID, so re-running up
 ## Testing
 
 ```bash
-npm test                     # 89 backend unit tests (Vitest)
+npm test                     # 90 backend unit tests (Vitest)
 npm run test:e2e             # Playwright end-to-end suite (starts servers if not running)
 ```
 
 - **Unit tests** ([`backend/tests`](backend/tests)) cover coupon rules, price and discount allocation, inventory movements, order and payment state transitions, COD approval, the cancellation window, return eligibility, refund calculations and contract validation.
-- **End-to-end tests** ([`frontend/e2e`](frontend/e2e)) cover browsing, search, filters and sort in the URL, the product page, the bag, prepaid and declined payments, COD pending approval then admin approval, COD rejection, cancellation inside and after 12 hours, and returns inside and after 14 days. Time windows are tested by moving the stored server-side deadline.
+- **End-to-end tests** ([`frontend/e2e`](frontend/e2e)) cover browsing, search, filters and sort in the URL, the product page, the bag, prepaid and declined payments, COD pending approval then admin approval, COD rejection, cancellation inside and after 12 hours, and returns inside and after 14 days, admin sign-in, COD approval from the admin queue, and role-based access (a Support admin cannot approve COD). Time windows are tested by moving the stored server-side deadline.
 
 First run of Playwright needs a browser: `npx playwright install chromium` in `frontend/`. For repeated local runs set `RATE_LIMIT_MULTIPLIER=20` in `.env` (never in production).
 
