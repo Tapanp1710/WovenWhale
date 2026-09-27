@@ -1,0 +1,22 @@
+node_modules/
+.next/
+dist/
+out/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Environment — never commit real secrets
+.env
+.env.*
+!.env.example
+
+# Local runtime data
+backend/uploads/
+backend/.data/
+frontend/test-results/
+frontend/playwright-report/
+frontend/playwright/.auth/
+
+.DS_Store
+Thumbs.db
