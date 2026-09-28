@@ -1,6 +1,7 @@
 "use client";
 
-import { refundProcessSchema, type RefundDTO, type RefundMethod } from "@wovenwhale/backend/contracts";
+import { refundProcessSchema, type AdminRefundRowDTO, type RefundDTO, type RefundMethod } from "@wovenwhale/backend/contracts";
+import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { api } from "@/lib/api/client";
@@ -20,17 +21,18 @@ export const REFUND_METHOD_LABELS: Record<RefundMethod, string> = {
  * Refunds with the two manual actions the API supports: recording a bank/UPI
  * payout as processed, and retrying a failed gateway refund.
  */
-export function RefundsTable({ refunds }: { refunds: RefundDTO[] }) {
+export function RefundsTable({ refunds, showOrder = false }: { refunds: (RefundDTO | AdminRefundRowDTO)[]; showOrder?: boolean }) {
   const canApprove = useCan("refunds.approve");
   const { run, pending } = useAction();
   const [processing, setProcessing] = useState<RefundDTO | null>(null);
 
   return (
     <>
-      <Table label="Refunds" minWidth={640}>
+      <Table label="Refunds" minWidth={showOrder ? 820 : 640}>
         <thead>
           <tr>
             <th scope="col">Created</th>
+            {showOrder && <th scope="col">Order</th>}
             <th scope="col">Method</th>
             <th scope="col">Reason</th>
             <th scope="col" className={cell.num}>
@@ -51,9 +53,18 @@ export function RefundsTable({ refunds }: { refunds: RefundDTO[] }) {
                 {formatDateTime(r.createdAt)}
                 {r.processedAt && <span className={cell.sub}>Processed {formatDateTime(r.processedAt)}</span>}
               </td>
+              {showOrder && "orderNumber" in r && (
+                <td>
+                  <Link href={`/admin/orders/${r.orderId}`} className={cell.strong}>
+                    {r.orderNumber}
+                  </Link>
+                  <span className={cell.sub}>{r.paymentMethod === "COD" ? "Cash on delivery" : "Prepaid"}</span>
+                </td>
+              )}
               <td>{REFUND_METHOD_LABELS[r.method]}</td>
               <td>
                 {r.reason}
+                {"failureReason" in r && r.failureReason && <span className={cell.sub}>Failed: {r.failureReason}</span>}
                 {r.returnNumber && <span className={cell.sub}>Return {r.returnNumber}</span>}
               </td>
               <td className={`${cell.num} ${cell.strong}`}>{formatINR(r.amountPaise)}</td>

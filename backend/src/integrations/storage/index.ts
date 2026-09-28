@@ -10,10 +10,11 @@ import { env } from "../../config/env";
  * the legacy WooCommerce server to Supabase Storage / S3 / Cloudinary by
  * re-keying rows, with zero UI changes.
  */
-export type ImageProviderKey = "external" | "local" | "supabase";
+/** static: a file shipped with the storefront (frontend/public), e.g. the WebP catalog photos. */
+export type ImageProviderKey = "external" | "static" | "local" | "supabase";
 
 export interface StorageProvider {
-  readonly name: Exclude<ImageProviderKey, "external">;
+  readonly name: Exclude<ImageProviderKey, "external" | "static">;
   upload(key: string, bytes: Uint8Array, contentType: string): Promise<{ key: string }>;
   delete(key: string): Promise<void>;
 }
@@ -89,6 +90,8 @@ export function resolveImageUrl(provider: string, storageKey: string): string {
   switch (provider as ImageProviderKey) {
     case "external":
       return storageKey;
+    case "static":
+      return `/${storageKey}`;
     case "supabase":
       return `${env.SUPABASE_URL}/storage/v1/object/public/${env.SUPABASE_STORAGE_BUCKET}/${storageKey}`;
     case "local":

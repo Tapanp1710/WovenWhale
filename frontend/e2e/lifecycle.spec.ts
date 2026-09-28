@@ -1,4 +1,5 @@
 import { createHmac } from "node:crypto";
+import sharp from "sharp";
 import { expect, request as playwrightRequest, test, type APIRequestContext } from "@playwright/test";
 import type {
   AdminReturnRowDTO,
@@ -49,6 +50,35 @@ const onHand = async (admin: APIRequestContext, sku: string) =>
   (await ok<{ items: InventoryRowDTO[] }>(await admin.get(`/api/admin/inventory?q=${encodeURIComponent(sku)}`))).items.find(
     (i) => i.sku === sku,
   )!;
+
+test.describe("admin media", () => {
+  test("an uploaded PNG is converted and stored as WebP; a fake image is refused", async () => {
+    const owner = await adminApi();
+    const list = await ok<{ items: { id: string }[] }>(await owner.get("/api/catalog/products?pageSize=1"));
+    const productId = list.items[0]!.id;
+    const png = await sharp({ create: { width: 900, height: 1200, channels: 3, background: "#2f5687" } })
+      .png()
+      .toBuffer();
+
+    const detail = await ok<{ images: { id: string; url: string }[] }>(
+      await owner.post(`/api/admin/catalog/products/${productId}/images`, {
+        multipart: { file: { name: "photo.png", mimeType: "image/png", buffer: png }, alt: "E2E upload" },
+      }),
+    );
+    const uploaded = detail.images.at(-1)!;
+    expect(uploaded.url).toMatch(/\.webp$/);
+    const served = await owner.get(uploaded.url);
+    expect(served.headers()["content-type"]).toBe("image/webp");
+
+    const fake = await owner.post(`/api/admin/catalog/products/${productId}/images`, {
+      multipart: { file: { name: "photo.png", mimeType: "image/png", buffer: Buffer.from("not an image at all") } },
+    });
+    expect(fake.status()).toBe(415);
+
+    await ok(await owner.delete(`/api/admin/catalog/images/${uploaded.id}`));
+    await owner.dispose();
+  });
+});
 
 test.describe("order lifecycle end to end (API)", () => {
   test("prepaid: pay → process → pack → ship (https link) → deliver → return → receive → refund → complete", async () => {

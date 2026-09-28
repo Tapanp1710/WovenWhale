@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "WovenWhale",
     locale: "en_IN",
-    images: [{ url: "/brand/wovenwhale-logo.jpeg", width: 1024, height: 274 }],
+    images: [{ url: "/brand/wovenwhale-logo.webp", width: 1024, height: 271 }],
   },
   twitter: { card: "summary_large_image" },
   icons: { icon: "/brand/favicon.svg" },

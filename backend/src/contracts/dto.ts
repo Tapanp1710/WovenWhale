@@ -336,6 +336,14 @@ export interface RefundDTO {
 
 /* ───────────────────────────────── Admin ───────────────────────────────── */
 
+/** A refund in the admin refunds queue, with the order it belongs to. */
+export interface AdminRefundRowDTO extends RefundDTO {
+  orderId: string;
+  orderNumber: string;
+  paymentMethod: PaymentMethod;
+  failureReason: string | null;
+}
+
 export interface AdminSessionDTO {
   id: string;
   email: string;

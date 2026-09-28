@@ -1,7 +1,28 @@
 import { expect, test } from "@playwright/test";
+import type { ProductListResponse } from "@wovenwhale/backend/contracts";
 import { inStockProduct } from "./support/fixtures";
 
 test.describe("storefront browsing", () => {
+  test("every product photo is a WebP file hosted with the storefront and delivered as WebP", async ({ request, page }) => {
+    const list = (await (await request.get("/api/catalog/products?pageSize=48")).json()) as ProductListResponse;
+    const urls = list.items.flatMap((p) => p.images.map((i) => i.url));
+    expect(urls.length).toBeGreaterThan(0);
+    for (const url of urls) expect(url).toMatch(/^\/catalog\/.+\.webp$/);
+
+    const original = await request.get(urls[0]!);
+    expect(original.headers()["content-type"]).toBe("image/webp");
+    const optimised = await request.get(`/_next/image?url=${encodeURIComponent(urls[0]!)}&w=640&q=75`, {
+      headers: { Accept: "image/avif,image/webp,image/*" },
+    });
+    expect(optimised.headers()["content-type"]).toBe("image/webp");
+
+    // What the browser actually loads on a product page.
+    await page.goto(`/product/${list.items[0]!.slug}`);
+    const img = page.locator("main img").first();
+    await expect(img).toBeVisible();
+    expect(await img.evaluate((el: HTMLImageElement) => el.currentSrc)).toContain(encodeURIComponent("/catalog/"));
+  });
+
   test("browse from the homepage into a collection", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toContainText("handlooms");

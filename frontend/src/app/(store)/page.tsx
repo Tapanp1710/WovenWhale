@@ -32,7 +32,7 @@ export default async function HomePage() {
     "@type": "Organization",
     name: "WovenWhale",
     url: SITE_URL,
-    logo: `${SITE_URL}/brand/wovenwhale-logo.jpeg`,
+    logo: `${SITE_URL}/brand/wovenwhale-logo.webp`,
   };
 
   return (

@@ -16,7 +16,7 @@
     "db:generate": "npm run db:generate -w backend",
     "db:migrate": "npm run db:migrate -w backend",
     "db:seed": "npm run db:seed -w backend",
-    "db:reset": "npm run db:reset -w backend",
+    "db:reset": "npm run db:reset -w backend && node -e \"for (const d of ['frontend/.next/cache', 'frontend/.next/dev/cache']) require('fs').rmSync(d, { recursive: true, force: true })\"",
     "catalog:import": "npm run catalog:import -w backend --",
     "dev": "node scripts/dev.mjs",
     "dev:backend": "npm run dev -w backend",

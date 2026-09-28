@@ -1,5 +1,6 @@
 import type { Permission } from "@wovenwhale/backend/contracts";
 import {
+  Banknote,
   BarChart3,
   Boxes,
   FolderTree,
@@ -43,6 +44,7 @@ export const NAV: { label: string; items: NavItem[] }[] = [
       { href: "/admin/orders", label: "Orders", icon: ReceiptText, perms: ["orders.view"] },
       { href: "/admin/cod", label: "COD approvals", icon: HandCoins, perms: ["orders.view"], badge: "cod" },
       { href: "/admin/returns", label: "Returns", icon: Undo2, perms: ["returns.view"] },
+      { href: "/admin/refunds", label: "Refunds", icon: Banknote, perms: ["returns.view", "refunds.approve"] },
       { href: "/admin/checkouts", label: "Abandoned checkouts", icon: ShoppingBasket, perms: ["orders.view", "customers.view"] },
       { href: "/admin/customers", label: "Customers", icon: Users, perms: ["customers.view"] },
     ],

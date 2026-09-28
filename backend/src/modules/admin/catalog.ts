@@ -19,6 +19,7 @@ import { providers } from "../../integrations";
 import { resolveImageUrl } from "../../integrations/storage";
 import { recordAudit } from "../../lib/audit";
 import { randomToken } from "../../lib/crypto";
+import { toWebp } from "../../lib/images";
 import { HttpError, notFound, readJson, readQuery } from "../../lib/http";
 import { adminOf, requirePermission } from "../auth/middleware";
 import { sizeRank, toImageDTO } from "../catalog/cards";
@@ -366,8 +367,12 @@ export const adminCatalogRoutes = new Hono<AppEnv>()
       .from(products)
       .where(eq(products.id, productId));
     if (!product) throw notFound("Product");
-    const key = `products/${product.slug}/${randomToken(9)}.${kind.ext}`;
-    await providers.storage.upload(key, bytes, kind.mime);
+    // Stored as WebP whatever the upload format; the magic-byte check above rejects non-images first.
+    const webp = await toWebp(bytes).catch(() => {
+      throw new HttpError(415, "UNSUPPORTED_IMAGE", "This image couldn't be read. Upload a JPEG, PNG, WebP or AVIF image.");
+    });
+    const key = `products/${product.slug}/${randomToken(9)}.webp`;
+    await providers.storage.upload(key, webp.data, "image/webp");
     const [{ next } = { next: 0 }] = await db
       .select({ next: sql<number>`coalesce(max(${productImages.sortOrder}) + 1, 0)::int` })
       .from(productImages)
@@ -380,6 +385,8 @@ export const adminCatalogRoutes = new Hono<AppEnv>()
           provider: providers.storage.name,
           storageKey: key,
           alt: typeof body.alt === "string" ? body.alt.slice(0, 200) : product.name,
+          width: webp.width,
+          height: webp.height,
           sortOrder: Number(next),
         })
         .returning();
@@ -430,7 +437,7 @@ export const adminCatalogRoutes = new Hono<AppEnv>()
         before: { imageId: image.id, key: image.storageKey },
       });
     });
-    if (image.provider !== "external") await providers.storage.delete(image.storageKey);
+    if (image.provider === providers.storage.name) await providers.storage.delete(image.storageKey);
     return c.json(await productDetail(image.productId));
   })
 

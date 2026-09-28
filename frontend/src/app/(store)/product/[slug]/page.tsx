@@ -59,7 +59,7 @@ export default async function ProductPage({ params }: Props) {
     name: product.name,
     sku: product.sku,
     description: product.shortDescription ?? product.description ?? undefined,
-    image: product.images.map((i) => i.url),
+    image: product.images.map((i) => absolute(i.url)),
     brand: { "@type": "Brand", name: "WovenWhale" },
     category: category?.name,
     material: product.fabric ?? undefined,

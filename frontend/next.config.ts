@@ -33,13 +33,13 @@ const nextConfig: NextConfig = {
   },
   images: {
     qualities: [60, 75, 90],
-    formats: ["image/avif", "image/webp"],
+    formats: ["image/webp"],
     remotePatterns: [
       // Legacy WooCommerce media (current product photography).
       { protocol: "https", hostname: "wovenwhale.com", pathname: "/wp-content/uploads/**" },
       ...(supabaseHost ? [{ protocol: "https" as const, hostname: supabaseHost, pathname: "/storage/v1/object/public/**" }] : []),
     ],
-    localPatterns: [{ pathname: "/api/uploads/**" }, { pathname: "/brand/**" }],
+    localPatterns: [{ pathname: "/api/uploads/**" }, { pathname: "/brand/**" }, { pathname: "/catalog/**" }],
   },
   // The browser talks to the commerce API through the storefront origin, so
   // session cookies stay first-party and SameSite protections apply.

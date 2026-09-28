@@ -29,7 +29,8 @@ export interface CatalogProduct {
   mrpPaise: number;
   pricePaise: number;
   variants: CatalogVariant[];
-  images: { url: string; alt: string | null; width: number | null; height: number | null }[];
+  /** `url` is the original source; `localPath` is the WebP copy under frontend/public (npm run catalog:images). */
+  images: { url: string; alt: string | null; width: number | null; height: number | null; localPath?: string }[];
   inStock: boolean;
 }
 

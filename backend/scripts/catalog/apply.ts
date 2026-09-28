@@ -158,14 +158,17 @@ export async function applySnapshot(snapshot: CatalogSnapshot, opts: ApplyOption
           .where(and(eq(productVariants.productId, productId), notInArray(productVariants.size, sizes)));
       }
 
-      // Images: replace external references; keep images uploaded through the admin.
-      await tx.delete(productImages).where(and(eq(productImages.productId, productId), inArray(productImages.provider, ["external"])));
+      // Images: replace imported ones (WebP files shipped with the storefront, or
+      // external references until converted); keep images uploaded through the admin.
+      await tx
+        .delete(productImages)
+        .where(and(eq(productImages.productId, productId), inArray(productImages.provider, ["external", "static"])));
       if (source.images.length) {
         await tx.insert(productImages).values(
           source.images.map((img, i) => ({
             productId,
-            provider: "external",
-            storageKey: img.url,
+            provider: img.localPath ? "static" : "external",
+            storageKey: img.localPath ?? img.url,
             alt: img.alt || `${name} — view ${i + 1}`,
             width: img.width,
             height: img.height,

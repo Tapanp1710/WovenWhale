@@ -24,7 +24,8 @@
     "demo:migrate": "tsx --env-file=../.env.demo src/db/migrate.ts",
     "demo:verify": "tsx --env-file=../.env.demo scripts/verify-db.ts",
     "demo:seed": "tsx --env-file=../.env.demo seed/index.ts",
-    "demo:reset": "tsx --env-file=../.env.demo seed/demo-reset.ts"
+    "demo:reset": "tsx --env-file=../.env.demo seed/demo-reset.ts",
+    "catalog:images": "tsx scripts/catalog/images-to-webp.ts"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.1",
@@ -32,6 +33,7 @@
     "hono": "^4.13.9",
     "postgres": "^3.4.9",
     "qrcode": "^1.5.4",
+    "sharp": "^0.35.5",
     "zod": "^4.6.5"
   },
   "devDependencies": {

@@ -11,10 +11,10 @@ import {
   refundProcessSchema,
   shipmentCreateSchema,
 } from "../../contracts/admin";
-import type { AdminOrderDetailDTO, AdminOrderRowDTO, AuditLogDTO } from "../../contracts/dto";
-import { ORDER_STATUSES, type OrderStatus } from "../../contracts/enums";
+import type { AdminOrderDetailDTO, AdminOrderRowDTO, AdminRefundRowDTO, AuditLogDTO } from "../../contracts/dto";
+import { ORDER_STATUSES, REFUND_STATUSES, type OrderStatus, type RefundStatus } from "../../contracts/enums";
 import { db } from "../../db/client";
-import { adminUsers, auditLogs, orderItems, orderNotes, orders, payments, refunds, users } from "../../db/schema";
+import { adminUsers, auditLogs, orderItems, orderNotes, orders, payments, refunds, returns, users } from "../../db/schema";
 import { DomainError } from "../../domain/errors";
 import { evaluateOrderTransition, type Actor } from "../../domain/order-state-machine";
 import { recordAudit } from "../../lib/audit";
@@ -230,18 +230,22 @@ export const adminOrderRoutes = new Hono<AppEnv>()
 
 export const adminRefundRoutes = new Hono<AppEnv>()
   .get("/", requirePermission("returns.view", "refunds.approve"), async (c) => {
+    const status = c.req.query("status");
     const rows = await db
-      .select({ f: refunds, orderNumber: orders.orderNumber, paymentMethod: orders.paymentMethod })
+      .select({ f: refunds, orderNumber: orders.orderNumber, paymentMethod: orders.paymentMethod, returnNumber: returns.returnNumber })
       .from(refunds)
       .innerJoin(orders, eq(orders.id, refunds.orderId))
+      .leftJoin(returns, eq(returns.id, refunds.returnId))
+      .where(REFUND_STATUSES.includes(status as RefundStatus) ? eq(refunds.status, status as RefundStatus) : undefined)
       .orderBy(desc(refunds.createdAt))
       .limit(200);
     return c.json(
-      rows.map(({ f, orderNumber, paymentMethod }) => ({
+      rows.map(({ f, orderNumber, paymentMethod, returnNumber }): AdminRefundRowDTO => ({
         id: f.id,
         orderId: f.orderId,
         orderNumber,
         paymentMethod,
+        returnNumber,
         amountPaise: f.amountPaise,
         method: f.method,
         status: f.status,

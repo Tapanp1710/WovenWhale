@@ -103,7 +103,7 @@ Contract: `createShipment`, `generateAWB`, `generateLabel`, `track`, `cancelShip
 
 ## Storage (Supabase Storage, S3, Cloudinary)
 
-Images are stored as `(provider, storage_key)` and resolved to URLs by `resolveImageUrl()`; the UI never builds URLs itself. Current product photos are `external` references to the WooCommerce media on wovenwhale.com. To migrate:
+Images are stored as `(provider, storage_key)` and resolved to URLs by `resolveImageUrl()`; the UI never builds URLs itself. Every stored image is WebP ([`lib/images.ts`](../backend/src/lib/images.ts)): the catalog photos are `static` WebP files shipped with the storefront (`frontend/public/catalog`, created by `npm run catalog:images -w backend`), and admin uploads are converted to WebP before they reach the storage provider (`local` or `supabase`). To move images to another store:
 
 1. Copy each image into the new store under a stable key.
 2. Update the row's `provider` and `storage_key`.

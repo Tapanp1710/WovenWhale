@@ -81,6 +81,7 @@ test.describe("UI quality across breakpoints", () => {
       "/admin/products",
       "/admin/inventory",
       "/admin/returns",
+      "/admin/refunds",
       "/admin/coupons",
       "/admin/customers",
       "/admin/analytics",

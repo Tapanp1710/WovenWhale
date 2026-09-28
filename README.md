@@ -60,7 +60,7 @@ Open http://localhost:3000. In development the OTP code is the value of `OTP_DEV
 | `npm run db:migrate` | Apply pending migrations |
 | `npm run db:seed` | Seed reference data, the catalog snapshot and demo activity |
 | `npm run db:verify` | Read-only check: migrations applied, RLS on every table, no Supabase API-role grants |
-| `npm run db:reset` | **Local only** (refuses non-localhost databases). Drop everything, migrate and seed again |
+| `npm run db:reset` | **Local only** (refuses non-localhost databases). Drop everything, migrate and seed again, and clear the storefront's cached catalog data |
 | `npm run catalog:import` | Refresh the catalog snapshot from wovenwhale.com (see below) |
 | `npm run typecheck` | Type-check both workspaces |
 | `npm run format` | Prettier across the repo |
@@ -114,7 +114,10 @@ npm run catalog:import                                   # live WooCommerce Stor
 npm run catalog:import -- --csv=wc-product-export.csv    # official WooCommerce CSV export (includes real stock)
 npm run catalog:import -- --csv=export.csv --apply       # also upsert into the database
 npm run catalog:import -- --csv=export.csv --apply --overwrite   # replace admin edits too
+npm run catalog:images -w backend                        # download new photos and convert them to WebP
 ```
+
+**Images are WebP.** The 233 product photos live in [`frontend/public/catalog/`](frontend/public/catalog) as WebP files (at most 1400 px wide) and are served by the storefront itself, so the shop no longer depends on the old WooCommerce media server. The snapshot keeps each original URL for reference. After importing a new catalog, run `catalog:images`, then seed or apply. It only converts photos it doesn't have yet (`-- --force` redoes all). Images uploaded in the admin are converted to WebP on the server whatever format is uploaded, and the storefront's image optimiser delivers WebP.
 
 Imports are idempotent: products match on their WooCommerce ID, so re-running updates rows in place. Fabric, pattern and colour aren't in the WooCommerce data; the importer derives them from names and categories, and admins can correct them in the dashboard.
 
