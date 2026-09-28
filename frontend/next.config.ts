@@ -8,8 +8,10 @@ try {
 }
 
 // A hosted build must never fall back to localhost.
-if (process.env.VERCEL && !process.env.BACKEND_URL?.startsWith("https://")) {
-  throw new Error("Set BACKEND_URL to the API's https:// URL in the Vercel project settings.");
+if (process.env.VERCEL) {
+  for (const key of ["BACKEND_URL", "SITE_URL"]) {
+    if (!process.env[key]?.startsWith("https://")) throw new Error(`Set ${key} to an https:// URL in the Vercel project settings.`);
+  }
 }
 const backend = process.env.BACKEND_URL ?? "http://localhost:4000";
 const supabaseHost = process.env.SUPABASE_URL ? new URL(process.env.SUPABASE_URL).hostname : null;

@@ -112,7 +112,8 @@ const schema = z
       ctx.addIssue({ code: "custom", path: ["WHATSAPP_SEND_ENABLED"], message: "WHATSAPP_SEND_ENABLED needs WHATSAPP_PROVIDER=meta" });
     }
     const origins = [env.SITE_URL, ...env.ALLOWED_ORIGINS.split(",")].map((o) => o.trim()).filter(Boolean);
-    if (origins.some((o) => !o.startsWith("https://"))) {
+    // localhost is exempt so the production build can be rehearsed on one machine.
+    if (origins.some((o) => !o.startsWith("https://") && !/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(o))) {
       ctx.addIssue({ code: "custom", path: ["ALLOWED_ORIGINS"], message: "SITE_URL and ALLOWED_ORIGINS must use https:// in production" });
     }
     // Refuse to boot production with development-only providers (a labelled demo may use them).

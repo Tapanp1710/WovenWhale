@@ -103,7 +103,9 @@ Row Level Security is on for every table with no policies, and Supabase's `anon`
 - **Real:** the WovenWhale catalog from [`backend/seed/data/catalog.snapshot.json`](backend/seed/data/catalog.snapshot.json) (59 products: names, SKUs, prices, sizes, categories and image URLs from wovenwhale.com), roles, permissions and WhatsApp template placeholders.
 - **Demo (clearly fake):** stock levels, featured/best-seller flags, 36 customers in the reserved `+91 70000 0xxxx` range with `@example.com` emails, 90 orders across every status (created through the real order services, then backdated), demo coupons (`WELCOME10`, `HANDLOOM15`, `FLAT200`, expired `MONSOON25`), abandoned checkouts and about 10,000 anonymous analytics events tagged `seed: true`.
 
-The seed refuses to run when `NODE_ENV=production`. Seed code lives in [`backend/seed/`](backend/seed), separate from application code.
+It also creates the **demo accounts** (one admin per role and a demo customer with ready-made orders): see [docs/demo.md](docs/demo.md).
+
+The seed refuses to run when `NODE_ENV=production`, except on a labelled demo deployment (`DEMO_MODE=true`). Seed code lives in [`backend/seed/`](backend/seed), separate from application code.
 
 ### Refreshing or replacing the catalog
 
@@ -120,16 +122,17 @@ Imports are idempotent: products match on their WooCommerce ID, so re-running up
 
 ```bash
 npm run typecheck            # both workspaces
-npm test                     # 132 backend unit tests (Vitest)
-npm run test:e2e             # 31 Playwright tests (starts servers if not running; needs the local database)
+npm test                     # 136 backend unit tests (Vitest)
+npm run test:e2e             # 36 Playwright tests (starts servers if not running; needs the local database)
 npm run db:verify            # schema, RLS and grants on the database in DATABASE_URL
 npm run build                # production builds of both apps
 ```
 
 - **Unit tests** ([`backend/tests`](backend/tests)) cover coupon rules, price and discount allocation, inventory movements, order and payment state transitions, COD approval, the cancellation window, return eligibility, refund calculations and contract validation. Security tests cover TOTP against the RFC 6238 vectors, secret encryption, recovery codes, the production configuration guard, client-IP handling, and signature verification for the Razorpay, Twilio, Meta WhatsApp and shipping adapters (with a fake network).
-- **End-to-end tests** ([`frontend/e2e`](frontend/e2e)) cover browsing, search, filters and sort in the URL, the product page, the bag, prepaid and declined payments, COD pending approval then admin approval, COD rejection, cancellation inside and after 12 hours, and returns inside and after 14 days, admin sign-in, COD approval from the admin queue, and role-based access (a Support admin cannot approve COD). Admin 2FA tests cover enrolment, password-only sessions being useless, code replay, single-use recovery codes, lockout under parallel guessing and super-admin reset, plus the UI flow. Security tests cover unsigned and replayed payment webhooks, wrong-amount captures, parallel OTP guessing, unsigned WhatsApp/shipping webhooks, cross-site requests and client-supplied prices. Time windows are tested by moving the stored server-side deadline.
+- **End-to-end tests** ([`frontend/e2e`](frontend/e2e)) cover browsing, search, filters and sort in the URL, the product page, the bag, prepaid and declined payments, COD pending approval then admin approval, COD rejection, cancellation inside and after 12 hours, and returns inside and after 14 days, admin sign-in, COD approval from the admin queue, and role-based access (a Support admin cannot approve COD). Admin 2FA tests cover enrolment, password-only sessions being useless, code replay, single-use recovery codes, lockout under parallel guessing and super-admin reset, plus the UI flow. Security tests cover unsigned and replayed payment webhooks, wrong-amount captures, parallel OTP guessing, unsigned WhatsApp/shipping webhooks, cross-site requests and client-supplied prices. Lifecycle tests take a prepaid order from payment through shipping (https-only tracking links), delivery, return, restock, a capped refund and completion, and cover the cart, coupons, wishlist, multiple addresses, the inventory ledger and per-role inventory and COD permissions with the audit trail. A UI sweep opens 29 pages at phone, tablet and desktop widths and fails on console errors, horizontal overflow or broken images. Time windows are tested by moving the stored server-side deadline.
+- **Demo acceptance** ([`e2e/demo-acceptance.spec.ts`](frontend/e2e/demo-acceptance.spec.ts)) walks through the demo against a demo deployment with mandatory 2FA: `E2E_BASE_URL=<storefront> DEMO_TOTP_SECRET=<key> npx playwright test e2e/demo-acceptance.spec.ts` in `frontend/`. It is skipped in the normal run.
 
-First run of Playwright needs a browser: `npx playwright install chromium` in `frontend/`. For repeated local runs set `RATE_LIMIT_MULTIPLIER=20` in `.env` (never in production).
+First run of Playwright needs a browser: `npx playwright install chromium` in `frontend/`. For repeated local runs set `RATE_LIMIT_MULTIPLIER=20` in `.env` (never in production). If ports 3000/4000 are used by another project, run the suite on others: `E2E_WEB_PORT=3200 E2E_API_PORT=4200 npm run test:e2e`.
 
 ## Build
 
@@ -158,7 +161,11 @@ Payments, OTP, WhatsApp, shipping, email and storage each have an interface, a d
 
 ## Deployment
 
-See [docs/deployment.md](docs/deployment.md) (Vercel for the storefront, a Node host for the API, Supabase for Postgres, cron for jobs).
+See [docs/deployment.md](docs/deployment.md): Vercel for the storefront, the API as a Docker image ([`backend/Dockerfile`](backend/Dockerfile), [`render.yaml`](render.yaml) for Render) and Supabase for Postgres. The same guide has a step-by-step **demo deployment**.
+
+## Demo
+
+A demo deployment runs the real application with `DEMO_MODE=true`: simulated payments (or Razorpay test mode), OTP `123456`, a "Demo store" banner on every page, and demo accounts for every role with 2FA. Accounts, a scripted walkthrough and the reset command are in [docs/demo.md](docs/demo.md).
 
 ## What needs your accounts
 

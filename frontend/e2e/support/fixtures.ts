@@ -1,3 +1,4 @@
+import { createHmac } from "node:crypto";
 import { request as playwrightRequest, type APIRequestContext, type Browser, type BrowserContext } from "@playwright/test";
 import type {
   AddressDTO,
@@ -10,6 +11,19 @@ import type {
 import postgres from "postgres";
 
 export const BASE_URL = process.env.E2E_BASE_URL ?? "http://localhost:3000";
+
+/** RFC 6238 TOTP, computed independently of the API so tests check real interoperability. */
+export function totp(secretB32: string, offsetSteps = 0) {
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+  let bits = "";
+  for (const ch of secretB32.replace(/\s/g, "").toUpperCase()) bits += alphabet.indexOf(ch).toString(2).padStart(5, "0");
+  const key = Buffer.from(bits.match(/.{8}/g)!.map((b) => parseInt(b, 2)));
+  const msg = Buffer.alloc(8);
+  msg.writeBigUInt64BE(BigInt(Math.floor(Date.now() / 30_000) + offsetSteps));
+  const h = createHmac("sha1", key).update(msg).digest();
+  const o = h[h.length - 1]! & 0xf;
+  return String((h.readUInt32BE(o) & 0x7fffffff) % 1_000_000).padStart(6, "0");
+}
 export const OTP_CODE = process.env.OTP_DEV_FIXED_CODE || "123456";
 const ORIGIN = { Origin: BASE_URL };
 

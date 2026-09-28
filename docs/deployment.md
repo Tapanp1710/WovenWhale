@@ -130,7 +130,7 @@ What you need: a Supabase account, a Render account connected to a Git host with
 
 5. **Storefront on Vercel.**
 
-   Run these from the **repository root** (the storefront imports shared contracts from `backend/`, so the whole workspace is uploaded):
+   The API must be up first: the storefront pre-renders the homepage from it during the build. Run these from the **repository root** (the storefront imports shared contracts from `backend/`, so the whole workspace is uploaded):
 
    ```bash
    npx vercel login
