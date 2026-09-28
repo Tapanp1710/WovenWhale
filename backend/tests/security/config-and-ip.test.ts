@@ -57,7 +57,6 @@ describe("production configuration guard", () => {
     ["plain-http origins", { ALLOWED_ORIGINS: "http://wovenwhale.com" }, /ALLOWED_ORIGINS/],
     ["Razorpay test keys outside a demo", { RAZORPAY_KEY_ID: "rzp_test_abc" }, /test keys are only allowed with DEMO_MODE/],
     ["a demo using live Razorpay keys", { DEMO_MODE: "true", RAZORPAY_KEY_ID: "rzp_live_abc" }, /DEMO_MODE must not be combined/],
-    ["a demo without 2FA", { DEMO_MODE: "true", PAYMENT_PROVIDER: "mock", ADMIN_MFA_REQUIRED: "false" }, /ADMIN_MFA_REQUIRED/],
   ];
 
   it("allows the simulated gateway and OTP only on a labelled demo (DEMO_MODE)", async () => {
@@ -71,6 +70,8 @@ describe("production configuration guard", () => {
     };
     const { env } = await loadEnv(demo);
     expect(env.DEMO_MODE).toBe(true);
+    // A labelled demo may sign admins in with a password only; the real store may not (see "optional admin 2FA").
+    await expect(loadEnv({ ...demo, ADMIN_MFA_REQUIRED: "false" })).resolves.toBeDefined();
     await expect(loadEnv({ ...demo, DEMO_MODE: "false" })).rejects.toThrow(/only with DEMO_MODE=true/);
   });
   for (const [name, override, message] of unsafe) {

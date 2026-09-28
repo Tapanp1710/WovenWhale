@@ -136,8 +136,12 @@ const schema = z
     if (env.RATE_LIMIT_MULTIPLIER !== 1) {
       ctx.addIssue({ code: "custom", path: ["RATE_LIMIT_MULTIPLIER"], message: "Rate limits cannot be relaxed in production" });
     }
-    if (!env.ADMIN_MFA_REQUIRED) {
-      ctx.addIssue({ code: "custom", path: ["ADMIN_MFA_REQUIRED"], message: "Admin two-factor authentication is mandatory in production" });
+    if (!env.ADMIN_MFA_REQUIRED && !env.DEMO_MODE) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["ADMIN_MFA_REQUIRED"],
+        message: "Admin two-factor authentication is mandatory in production (only a DEMO_MODE deployment may turn it off)",
+      });
     }
     if (env.MFA_ENCRYPTION_KEY.length < 32 || env.MFA_ENCRYPTION_KEY === env.SESSION_SECRET) {
       ctx.addIssue({

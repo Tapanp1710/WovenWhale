@@ -17,8 +17,9 @@ services:
         value: production
       - key: DEMO_MODE
         value: "true"
+      # Demo only: sign in with a password. The real store must use "true" (enforced at boot).
       - key: ADMIN_MFA_REQUIRED
-        value: "true"
+        value: "false"
       # Measured on the live demo: X-Forwarded-For = visitor, Vercel, Cloudflare (Render edge),
       # Render internal. The visitor is 4 entries from the right. Re-check with
       # GET /api/admin/diagnostics/request if the hosting chain changes.

@@ -3,19 +3,19 @@ import type { OrderSummaryDTO, Paginated, PlaceOrderResultDTO, StoreConfigDTO } 
 import { BASE_URL, customerOrder, inStockProduct, totp } from "./support/fixtures";
 
 /**
- * Acceptance walkthrough for a DEMO deployment (DEMO_MODE, 2FA required, demo
- * accounts seeded). Runs against a local rehearsal or the live demo:
+ * Acceptance walkthrough for a DEMO deployment (DEMO_MODE, demo accounts
+ * seeded). Works whether admin 2FA is on (pass DEMO_TOTP_SECRET) or off:
  *
- *   E2E_BASE_URL=https://<storefront> DEMO_TOTP_SECRET=<key> npx playwright test e2e/demo-acceptance.spec.ts
+ *   E2E_DEMO=1 E2E_BASE_URL=https://<storefront> [DEMO_TOTP_SECRET=<key>] npx playwright test e2e/demo-acceptance.spec.ts
  *
- * Skipped unless DEMO_TOTP_SECRET is set.
+ * Skipped in the normal local run.
  */
 const SECRET = process.env.DEMO_TOTP_SECRET ?? "";
 const PASSWORD = process.env.DEMO_ADMIN_PASSWORD ?? "Demo-Only-2026!";
 const DEMO_PHONE = "7000099999";
 
 test.describe.configure({ mode: "serial" });
-test.skip(!SECRET, "Set DEMO_TOTP_SECRET to run the demo acceptance walkthrough");
+test.skip(!process.env.E2E_DEMO && !SECRET, "Set E2E_DEMO=1 (and DEMO_TOTP_SECRET when 2FA is on) to run the demo walkthrough");
 
 const context = () => playwrightRequest.newContext({ baseURL: BASE_URL, extraHTTPHeaders: { Origin: BASE_URL } });
 
@@ -41,9 +41,13 @@ let step = 0;
 async function admin(email: string) {
   const api = await context();
   const login = await ok<{ step: string }>(await api.post("/api/admin/auth/login", { data: { email, password: PASSWORD } }));
-  expect(login.step).toBe("verify"); // password alone is never enough
-  expect((await api.get("/api/admin/orders")).status()).toBe(401);
-  await ok(await api.post("/api/admin/auth/2fa/verify", { data: { method: "totp", code: totp(SECRET, step++ % 2) } }));
+  if (login.step === "verify") {
+    // With 2FA on, the password alone gives no access.
+    expect((await api.get("/api/admin/orders")).status()).toBe(401);
+    await ok(await api.post("/api/admin/auth/2fa/verify", { data: { method: "totp", code: totp(SECRET, step++ % 2) } }));
+  } else {
+    expect(login.step).toBe("done");
+  }
   return api;
 }
 
@@ -141,13 +145,17 @@ test("security + COD: support is refused, the order manager approves, the audit 
   await Promise.all([owner.dispose(), support.dispose(), manager.dispose(), foreign.dispose()]);
 });
 
-test("admin UI: password, then authenticator code, then the dashboard", async ({ page }) => {
+test("admin UI: sign in (with the authenticator code when 2FA is on) and reach the dashboard", async ({ page }) => {
   await page.goto("/admin/login");
   await page.getByLabel("Email").fill("admin@wovenwhale.local");
   await page.getByLabel("Password").fill(PASSWORD);
   await page.getByRole("button", { name: /sign in/i }).click();
-  await expect(page.getByRole("heading", { name: "Two-factor verification" })).toBeVisible();
-  await page.getByLabel("Authenticator code").fill(totp(SECRET, 1));
-  await page.getByRole("button", { name: "Verify" }).click();
-  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
+  const twoFactor = page.getByRole("heading", { name: "Two-factor verification" });
+  const dashboard = page.getByRole("heading", { name: "Dashboard" });
+  await expect(twoFactor.or(dashboard)).toBeVisible();
+  if (await twoFactor.isVisible()) {
+    await page.getByLabel("Authenticator code").fill(totp(SECRET, 1));
+    await page.getByRole("button", { name: "Verify" }).click();
+  }
+  await expect(dashboard).toBeVisible();
 });

@@ -2,7 +2,8 @@
  * DEMO ONLY — named accounts for walking through the platform.
  *
  * - One admin per role, sharing a demo password. On a demo deployment
- *   (DEMO_MODE=true with ADMIN_MFA_REQUIRED=true) they are pre-enrolled in 2FA
+ *   (DEMO_MODE=true with ADMIN_MFA_REQUIRED=true) they are pre-enrolled in 2FA;
+ *   with ADMIN_MFA_REQUIRED=false they sign in with the password alone
  *   with DEMO_TOTP_SECRET, so a presenter can add that one key to an
  *   authenticator app and sign in as any role.
  * - One demo customer with orders ready for each step of the demo: a
@@ -38,7 +39,7 @@ const DEMO_ADMINS: { email: string; fullName: string; role: AdminRole }[] = [
 
 /** Only a labelled demo deployment gets pre-enrolled 2FA; local development keeps 2FA optional. */
 function demoTotpSecret(): string | null {
-  if (process.env.DEMO_MODE !== "true") return null;
+  if (process.env.DEMO_MODE !== "true" || process.env.ADMIN_MFA_REQUIRED !== "true") return null;
   const secret = process.env.DEMO_TOTP_SECRET?.trim().toUpperCase() ?? "";
   if (!secret) throw new Error("DEMO_MODE seeding needs DEMO_TOTP_SECRET (see docs/demo.md)");
   if (base32Decode(secret).length < 10) throw new Error("DEMO_TOTP_SECRET must be base32 with at least 16 characters");

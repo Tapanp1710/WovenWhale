@@ -28,7 +28,7 @@ The API sleeps after 15 minutes idle; open the storefront once before presenting
 
 ### Admins (sign in at `/admin/login`)
 
-All share the password **`Demo-Only-2026!`** (`DEMO_ADMIN_PASSWORD`). On a demo deployment each is enrolled in 2FA with the same authenticator key, `DEMO_TOTP_SECRET` from your `.env.demo`: add it once to Google Authenticator, 1Password or similar ("Enter a setup key", time-based) and use the 6-digit code at sign-in.
+All share the password **`Demo-Only-2026!`** (`DEMO_ADMIN_PASSWORD`). The live demo runs with **`ADMIN_MFA_REQUIRED=false`**, so the password is all you need. To demonstrate 2FA, set it to `true` on Render and re-seed (or reset): every demo admin is then enrolled with the same authenticator key, `DEMO_TOTP_SECRET` from `.env.demo` (add it once to an authenticator app as a time-based setup key). The real store always requires 2FA; only a `DEMO_MODE` deployment may turn it off.
 
 | Email | Role | Can |
 | --- | --- | --- |
