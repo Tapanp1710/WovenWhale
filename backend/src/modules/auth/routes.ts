@@ -1,14 +1,15 @@
 import { Hono } from "hono";
 import type { AppEnv } from "../../app-env";
 import { env } from "../../config/env";
-import { adminLoginSchema } from "../../contracts/admin";
+import { adminLoginSchema, mfaVerifySchema, totpCodeSchema } from "../../contracts/admin";
 import { profileUpdateSchema, sendOtpSchema, verifyOtpSchema } from "../../contracts/storefront";
 import { COOKIE, clearCookie, readCookie, writeCookie } from "../../lib/cookies";
 import { readJson } from "../../lib/http";
 import { rateLimit } from "../../lib/rate-limit";
 import { mergeGuestCart } from "../cart/service";
 import { recordEvent } from "../events/service";
-import { customerOf, requireAdmin, requireCustomer } from "./middleware";
+import { adminOf, adminSessionOf, customerOf, requireAdmin, requireAdminSession, requireCustomer } from "./middleware";
+import { beginSetup, disableMfa, enableMfa, mfaStatus, regenerateRecoveryCodes, verifySecondFactor } from "./mfa";
 import { adminLogin, getAdminSession, getCustomer, sendOtp, updateProfile, verifyOtpAndSignIn } from "./service";
 import { revokeSession } from "./sessions";
 
@@ -48,9 +49,9 @@ export const customerAuthRoutes = new Hono<AppEnv>()
 export const adminAuthRoutes = new Hono<AppEnv>()
   .post("/login", rateLimit("admin-login-ip", 20, 15 * 60 * 1000), async (c) => {
     const { email, password } = await readJson(c, adminLoginSchema);
-    const { token, mfaRequired } = await adminLogin(email, password, c.req.header("user-agent") ?? null);
-    writeCookie(c, COOKIE.adminSession, token, env.ADMIN_SESSION_TTL_HOURS * 60 * 60);
-    return c.json({ mfaRequired });
+    const { token, step, ttlSeconds } = await adminLogin(email, password, c.req.header("user-agent") ?? null);
+    writeCookie(c, COOKIE.adminSession, token, ttlSeconds);
+    return c.json({ step });
   })
   .post("/logout", async (c) => {
     const token = readCookie(c, COOKIE.adminSession);
@@ -58,4 +59,33 @@ export const adminAuthRoutes = new Hono<AppEnv>()
     clearCookie(c, COOKIE.adminSession);
     return c.json({ ok: true });
   })
-  .get("/me", requireAdmin, async (c) => c.json({ admin: await getAdminSession(c.get("admin")!.id) }));
+  .get("/me", requireAdmin, async (c) => c.json({ admin: await getAdminSession(c.get("admin")!.id) }))
+  /* ── Two-factor authentication ── */
+  .get("/2fa/status", requireAdminSession, async (c) => {
+    const session = adminSessionOf(c);
+    return c.json(await mfaStatus(session.id, session.mfaVerified));
+  })
+  .post("/2fa/verify", rateLimit("admin-mfa-ip", 20, 15 * 60 * 1000), requireAdminSession, async (c) => {
+    const input = await readJson(c, mfaVerifySchema);
+    const token = await verifySecondFactor(adminSessionOf(c).id, input, c.req.header("user-agent") ?? null);
+    writeCookie(c, COOKIE.adminSession, token, env.ADMIN_SESSION_TTL_HOURS * 60 * 60);
+    return c.json({ ok: true });
+  })
+  .post("/2fa/setup", rateLimit("admin-mfa-setup-ip", 10, 15 * 60 * 1000), requireAdminSession, async (c) =>
+    c.json(await beginSetup(adminSessionOf(c))),
+  )
+  .post("/2fa/enable", rateLimit("admin-mfa-setup-ip", 10, 15 * 60 * 1000), requireAdminSession, async (c) => {
+    const { code } = await readJson(c, totpCodeSchema);
+    const { token, recoveryCodes } = await enableMfa(adminSessionOf(c), code, c.req.header("user-agent") ?? null);
+    writeCookie(c, COOKIE.adminSession, token, env.ADMIN_SESSION_TTL_HOURS * 60 * 60);
+    return c.json({ recoveryCodes });
+  })
+  .post("/2fa/recovery-codes", rateLimit("admin-mfa-ip", 20, 15 * 60 * 1000), requireAdmin, async (c) => {
+    const { code } = await readJson(c, totpCodeSchema);
+    return c.json({ recoveryCodes: await regenerateRecoveryCodes(adminOf(c), code) });
+  })
+  .post("/2fa/disable", rateLimit("admin-mfa-ip", 20, 15 * 60 * 1000), requireAdmin, async (c) => {
+    const { code } = await readJson(c, totpCodeSchema);
+    await disableMfa(adminOf(c), code);
+    return c.json({ ok: true });
+  });

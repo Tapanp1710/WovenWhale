@@ -33,6 +33,7 @@ import { recordAudit } from "../../lib/audit";
 import { hashPassword } from "../../lib/crypto";
 import { notFound, readJson, readQuery } from "../../lib/http";
 import { adminOf, requirePermission } from "../auth/middleware";
+import { resetMfa } from "../auth/mfa";
 import { revokeAllAdminSessions } from "../auth/sessions";
 import { getStoreSettings, updateStoreSettings } from "../settings/service";
 import { auditDTO } from "./orders";
@@ -96,7 +97,7 @@ export const adminUserRoutes = new Hono<AppEnv>()
       role: role as AdminRole,
       isActive: a.isActive,
       lastLoginAt: a.lastLoginAt?.toISOString() ?? null,
-      mfaEnrolled: a.totpSecret !== null,
+      mfaEnrolled: a.totpEnabledAt !== null,
       createdAt: a.createdAt.toISOString(),
     }));
     return c.json(list);
@@ -161,6 +162,10 @@ export const adminUserRoutes = new Hono<AppEnv>()
       });
     });
     if (input.isActive === false || (input.role && input.role !== before.role)) await revokeAllAdminSessions(id);
+    return c.json({ ok: true });
+  })
+  .post("/:id/reset-2fa", requirePermission("admins.manage"), async (c) => {
+    await resetMfa(adminOf(c), c.req.param("id"));
     return c.json({ ok: true });
   });
 

@@ -25,7 +25,7 @@ export function Sidebar({ codPending, onNavigate }: { codPending: number | null;
   const router = useRouter();
   const toast = useToast();
   const [signingOut, setSigningOut] = useState(false);
-  const groups = NAV.map((g) => ({ ...g, items: g.items.filter((i) => can(admin, ...i.perms)) })).filter((g) => g.items.length);
+  const groups = NAV.map((g) => ({ ...g, items: g.items.filter((i) => !i.perms.length || can(admin, ...i.perms)) })).filter((g) => g.items.length);
   const current = activeHref(
     pathname,
     groups.flatMap((g) => g.items),

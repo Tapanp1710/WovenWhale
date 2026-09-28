@@ -340,6 +340,26 @@ export interface AdminSessionDTO {
   fullName: string;
   role: AdminRole;
   permissions: Permission[];
+  mfaEnabled: boolean;
+  mfaRequired: boolean;
+}
+
+/** What the admin must do after a correct password. */
+export type AdminLoginStep = "verify" | "enroll" | "done";
+
+export interface AdminMfaStatusDTO {
+  email: string;
+  enabled: boolean;
+  required: boolean;
+  /** False while the session is waiting for the second factor or for enrolment. */
+  sessionVerified: boolean;
+  recoveryCodesRemaining: number;
+}
+
+export interface AdminMfaSetupDTO {
+  secret: string;
+  otpauthUrl: string;
+  qrDataUrl: string;
 }
 
 export interface KpiDTO {

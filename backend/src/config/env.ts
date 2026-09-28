@@ -22,6 +22,10 @@ const schema = z
     SESSION_SECRET: z.string().min(32, "SESSION_SECRET must be at least 32 characters"),
     CUSTOMER_SESSION_TTL_DAYS: z.coerce.number().int().positive().default(30),
     ADMIN_SESSION_TTL_HOURS: z.coerce.number().int().positive().default(12),
+    /** Every admin must enrol in TOTP before using the console. Always on in production. */
+    ADMIN_MFA_REQUIRED: bool,
+    /** Key material for encrypting TOTP secrets and keying recovery-code hashes. Falls back to SESSION_SECRET outside production. */
+    MFA_ENCRYPTION_KEY: z.string().default(""),
 
     ORDER_CANCELLATION_WINDOW_HOURS: z.coerce.number().positive().default(12),
     RETURN_WINDOW_DAYS: z.coerce.number().positive().default(14),
@@ -68,6 +72,12 @@ const schema = z
     if (env.RATE_LIMIT_MULTIPLIER !== 1) {
       ctx.addIssue({ code: "custom", path: ["RATE_LIMIT_MULTIPLIER"], message: "Rate limits cannot be relaxed in production" });
     }
+    if (!env.ADMIN_MFA_REQUIRED) {
+      ctx.addIssue({ code: "custom", path: ["ADMIN_MFA_REQUIRED"], message: "Admin two-factor authentication is mandatory in production" });
+    }
+    if (env.MFA_ENCRYPTION_KEY.length < 32 || env.MFA_ENCRYPTION_KEY === env.SESSION_SECRET) {
+      ctx.addIssue({ code: "custom", path: ["MFA_ENCRYPTION_KEY"], message: "Set a dedicated MFA_ENCRYPTION_KEY (32+ characters) in production" });
+    }
     if (env.SESSION_SECRET.startsWith("replace-with")) {
       ctx.addIssue({ code: "custom", path: ["SESSION_SECRET"], message: "Set a real SESSION_SECRET in production" });
     }
@@ -86,6 +96,8 @@ function load(): Env {
 
 export const env = load();
 export const isProduction = env.NODE_ENV === "production";
+/** Never rotate this in place: existing TOTP secrets and recovery codes depend on it. */
+export const mfaKey = env.MFA_ENCRYPTION_KEY || env.SESSION_SECRET;
 export const allowedOrigins = new Set(
   env.ALLOWED_ORIGINS.split(",")
     .map((o) => o.trim())

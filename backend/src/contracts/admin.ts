@@ -43,6 +43,23 @@ export const adminLoginSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters").max(200),
 });
 
+const totpCode = z
+  .string()
+  .trim()
+  .regex(/^\d{6}$/, "Enter the 6-digit code from your authenticator app");
+
+/** A 6-digit authenticator code. */
+export const totpCodeSchema = z.object({ code: totpCode });
+
+/** Second sign-in step: an authenticator code or a single-use recovery code. */
+export const mfaVerifySchema = z.discriminatedUnion("method", [
+  z.object({ method: z.literal("totp"), code: totpCode }),
+  z.object({
+    method: z.literal("recovery"),
+    code: z.string().trim().regex(/^[0-9A-Za-z]{5}-?[0-9A-Za-z]{5}$/, "Recovery codes look like ABCDE-FGHJK"),
+  }),
+]);
+
 export const strongPasswordSchema = z
   .string()
   .min(12, "Use at least 12 characters")

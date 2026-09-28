@@ -11,6 +11,7 @@ import {
   ReceiptText,
   ScrollText,
   Settings,
+  ShieldCheck,
   ShoppingBasket,
   Tags,
   Undo2,
@@ -23,7 +24,7 @@ export interface NavItem {
   href: string;
   label: string;
   icon: LucideIcon;
-  /** Visible when the admin holds any of these. */
+  /** Visible when the admin holds any of these; empty = every admin. */
   perms: Permission[];
   badge?: "cod";
 }
@@ -64,5 +65,9 @@ export const NAV: { label: string; items: NavItem[] }[] = [
       { href: "/admin/settings/roles", label: "Roles", icon: KeyRound, perms: ["admins.manage"] },
       { href: "/admin/audit-logs", label: "Audit log", icon: ScrollText, perms: ["audit.view"] },
     ],
+  },
+  {
+    label: "Account",
+    items: [{ href: "/admin/security", label: "Sign-in security", icon: ShieldCheck, perms: [] }],
   },
 ];

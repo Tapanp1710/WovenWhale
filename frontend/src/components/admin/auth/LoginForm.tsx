@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { adminLoginSchema } from "@wovenwhale/backend/contracts";
+import { adminLoginSchema, type AdminLoginStep } from "@wovenwhale/backend/contracts";
 import { CircleAlert } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -27,12 +27,10 @@ export function LoginForm({ next }: { next: string }) {
   const submit = form.handleSubmit(async (values) => {
     setAlert(null);
     try {
-      const { mfaRequired } = await api<{ mfaRequired: boolean }>("/admin/auth/login", { method: "POST", body: values });
-      if (mfaRequired) {
-        await api("/admin/auth/logout", { method: "POST" }).catch(() => undefined);
-        setAlert("This account uses two-factor verification, which this console doesn't support yet. Ask a super admin for help.");
-        return;
-      }
+      const { step } = await api<{ step: AdminLoginStep }>("/admin/auth/login", { method: "POST", body: values });
+      const query = `?next=${encodeURIComponent(next)}`;
+      if (step === "verify") return router.push(`/admin/login/verify${query}`);
+      if (step === "enroll") return router.push(`/admin/login/setup${query}`);
       router.replace(next);
       router.refresh();
     } catch (error) {

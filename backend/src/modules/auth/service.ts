@@ -5,6 +5,7 @@ import type { AdminRole, Permission } from "../../contracts/enums";
 import { db } from "../../db/client";
 import { adminUsers, customerProfiles, otpChallenges, permissions, rolePermissions, roles, users } from "../../db/schema";
 import { DomainError } from "../../domain/errors";
+import { adminLoginStep, MFA_PENDING_SESSION_MS } from "../../domain/mfa";
 import { providers } from "../../integrations";
 import { recordAudit } from "../../lib/audit";
 import { hashPassword, verifyPassword } from "../../lib/crypto";
@@ -189,25 +190,29 @@ export async function adminLogin(email: string, password: string, userAgent: str
   }
 
   await db.update(adminUsers).set({ failedLoginCount: 0, lockedUntil: null, lastLoginAt: new Date() }).where(eq(adminUsers.id, admin.id));
-  const token = await createSession({
-    subject: "ADMIN",
-    principalId: admin.id,
-    ttlMs: env.ADMIN_SESSION_TTL_HOURS * 60 * 60 * 1000,
-    userAgent,
-    // 2FA-ready: enrolled admins get a session that must pass a TOTP step before use.
-    mfaVerified: admin.totpSecret === null,
-  });
+  // Enrolled admins (and, when 2FA is mandatory, unenrolled ones) get a short-lived
+  // session that only the 2FA endpoints accept until the second step succeeds.
+  const step = adminLoginStep(admin.totpEnabledAt !== null, env.ADMIN_MFA_REQUIRED);
+  const ttlMs = step === "done" ? env.ADMIN_SESSION_TTL_HOURS * 60 * 60 * 1000 : MFA_PENDING_SESSION_MS;
+  const token = await createSession({ subject: "ADMIN", principalId: admin.id, ttlMs, userAgent, mfaVerified: step === "done" });
   await recordAudit(db, admin, {
     action: "admin.login",
     entityType: "admin_user",
     entityId: admin.id,
   });
-  return { token, mfaRequired: admin.totpSecret !== null };
+  return { token, step, ttlSeconds: ttlMs / 1000 };
 }
 
 export async function getAdminSession(adminId: string): Promise<AdminSessionDTO> {
   const [row] = await db
-    .select({ id: adminUsers.id, email: adminUsers.email, fullName: adminUsers.fullName, role: roles.key, roleId: roles.id })
+    .select({
+      id: adminUsers.id,
+      email: adminUsers.email,
+      fullName: adminUsers.fullName,
+      role: roles.key,
+      roleId: roles.id,
+      totpEnabledAt: adminUsers.totpEnabledAt,
+    })
     .from(adminUsers)
     .innerJoin(roles, eq(roles.id, adminUsers.roleId))
     .where(eq(adminUsers.id, adminId));
@@ -223,5 +228,7 @@ export async function getAdminSession(adminId: string): Promise<AdminSessionDTO>
     fullName: row.fullName,
     role: row.role as AdminRole,
     permissions: perms.map((p) => p.key as Permission),
+    mfaEnabled: row.totpEnabledAt !== null,
+    mfaRequired: env.ADMIN_MFA_REQUIRED,
   };
 }

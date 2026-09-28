@@ -26,6 +26,8 @@ describe("address schema", () => {
   it("normalises blank optional fields to null", () => {
     const out = addressInputSchema.parse({ ...address, landmark: "", email: "" });
     expect(out.landmark).toBeNull();
+    // Regression: whitespace collapsing once stripped every letter "s".
+    expect(addressInputSchema.parse({ ...address, landmark: "  Near bus\u0007 stops  " }).landmark).toBe("Near bus stops");
     expect(out.email).toBeNull();
   });
 

@@ -26,6 +26,7 @@ export function AdminUsers({ admins }: { admins: AdminUserDTO[] }) {
   const { run, pending } = useAction();
   const [creating, setCreating] = useState(false);
   const [deactivating, setDeactivating] = useState<AdminUserDTO | null>(null);
+  const [resetting, setResetting] = useState<AdminUserDTO | null>(null);
 
   const patch = (a: AdminUserDTO, body: { role?: AdminRole; isActive?: boolean }, message: string) =>
     run(() => api(`/admin/admins/${a.id}`, { method: "PATCH", body }), message);
@@ -83,7 +84,16 @@ export function AdminUsers({ admins }: { admins: AdminUserDTO[] }) {
                     </select>
                   </td>
                   <td className={cell.nowrap}>{a.lastLoginAt ? formatDateTime(a.lastLoginAt) : "Never"}</td>
-                  <td>{a.mfaEnrolled ? <Badge tone="success">On</Badge> : <Badge>Off</Badge>}</td>
+                  <td>
+                    <span className={styles.mfa}>
+                      {a.mfaEnrolled ? <Badge tone="success">On</Badge> : <Badge>Off</Badge>}
+                      {a.mfaEnrolled && !self && (
+                        <Button size="sm" variant="ghost" onClick={() => setResetting(a)}>
+                          Reset
+                        </Button>
+                      )}
+                    </span>
+                  </td>
                   <td>{a.isActive ? <Badge tone="success">Active</Badge> : <Badge tone="danger">Deactivated</Badge>}</td>
                   <td className={cell.actions}>
                     {!self &&
@@ -115,6 +125,14 @@ export function AdminUsers({ admins }: { admins: AdminUserDTO[] }) {
         description="They are signed out everywhere and can't sign in until reactivated. Their audit history is kept."
         confirmLabel="Deactivate"
         onConfirm={() => patch(deactivating!, { isActive: false }, "Admin deactivated")}
+      />
+      <ConfirmDialog
+        open={resetting !== null}
+        onOpenChange={(o) => !o && setResetting(null)}
+        title={`Reset two-factor for ${resetting?.fullName ?? ""}?`}
+        description="Use this when they have lost their phone and their recovery codes. They are signed out and must set up two-factor again at their next sign-in. Confirm who is asking before you do this."
+        confirmLabel="Reset two-factor"
+        onConfirm={() => run(() => api(`/admin/admins/${resetting!.id}/reset-2fa`, { method: "POST" }), "Two-factor reset")}
       />
       {creating && <CreateAdminDialog onClose={() => setCreating(false)} />}
     </>

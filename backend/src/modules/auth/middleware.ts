@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import type { Context, MiddlewareHandler } from "hono";
 import type { AppEnv } from "../../app-env";
+import { env } from "../../config/env";
 import type { AdminRole, Permission } from "../../contracts/enums";
 import { db } from "../../db/client";
 import { adminUsers, permissions, rolePermissions, roles, users } from "../../db/schema";
@@ -47,17 +48,10 @@ async function loadPermissions(roleId: string): Promise<Set<Permission>> {
   return new Set(rows.map((r) => r.key as Permission));
 }
 
-/**
- * Authenticates an admin from the admin session cookie and loads role
- * permissions fresh on every request, so permission changes and account
- * deactivation take effect immediately.
- */
-export const requireAdmin: MiddlewareHandler<AppEnv> = async (c, next) => {
+async function resolveAdminSession(c: Context<AppEnv>) {
   const token = readCookie(c, COOKIE.adminSession);
   const session = token ? await findSession(token, "ADMIN") : null;
   if (!session?.adminUserId) throw new HttpError(401, "ADMIN_AUTH_REQUIRED", "Please sign in to the admin.");
-  if (!session.mfaVerified) throw new HttpError(401, "MFA_REQUIRED", "Two-factor verification required.");
-
   const [admin] = await db
     .select({
       id: adminUsers.id,
@@ -66,11 +60,42 @@ export const requireAdmin: MiddlewareHandler<AppEnv> = async (c, next) => {
       isActive: adminUsers.isActive,
       roleId: adminUsers.roleId,
       roleKey: roles.key,
+      totpEnabledAt: adminUsers.totpEnabledAt,
     })
     .from(adminUsers)
     .innerJoin(roles, eq(roles.id, adminUsers.roleId))
     .where(eq(adminUsers.id, session.adminUserId));
   if (!admin?.isActive) throw new HttpError(401, "ADMIN_AUTH_REQUIRED", "Please sign in to the admin.");
+  c.set("adminSession", {
+    id: admin.id,
+    email: admin.email,
+    sessionId: session.id,
+    mfaVerified: session.mfaVerified,
+    mfaEnabled: admin.totpEnabledAt !== null,
+  });
+  return { session, admin };
+}
+
+/**
+ * Accepts a password-verified admin session that may still be waiting for 2FA.
+ * Only the sign-in, 2FA verification and enrolment endpoints use this.
+ */
+export const requireAdminSession: MiddlewareHandler<AppEnv> = async (c, next) => {
+  await resolveAdminSession(c);
+  await next();
+};
+
+/**
+ * Authenticates a fully signed-in admin (password and, where applicable, 2FA)
+ * and loads role permissions fresh on every request, so permission changes and
+ * account deactivation take effect immediately.
+ */
+export const requireAdmin: MiddlewareHandler<AppEnv> = async (c, next) => {
+  const { session, admin } = await resolveAdminSession(c);
+  if (!session.mfaVerified) throw new HttpError(401, "MFA_REQUIRED", "Two-factor verification required.");
+  if (env.ADMIN_MFA_REQUIRED && !admin.totpEnabledAt) {
+    throw new HttpError(401, "MFA_ENROLLMENT_REQUIRED", "Set up two-factor authentication to continue.");
+  }
 
   c.set("admin", {
     id: admin.id,
@@ -92,6 +117,12 @@ export function requirePermission(...needed: Permission[]): MiddlewareHandler<Ap
     }
     await next();
   };
+}
+
+export function adminSessionOf(c: Context<AppEnv>) {
+  const session = c.get("adminSession");
+  if (!session) throw new HttpError(401, "ADMIN_AUTH_REQUIRED", "Please sign in to the admin.");
+  return session;
 }
 
 export function adminOf(c: Context<AppEnv>) {

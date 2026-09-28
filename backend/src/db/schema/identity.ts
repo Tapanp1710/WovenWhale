@@ -149,8 +149,14 @@ export const adminUsers = pgTable(
       .notNull()
       .references(() => roles.id),
     isActive: boolean("is_active").notNull().default(true),
-    /** Encrypted TOTP secret. Null = 2FA not enrolled. */
+    /** AES-256-GCM encrypted TOTP secret. Set during setup; 2FA is active only once `totpEnabledAt` is set. */
     totpSecret: varchar("totp_secret", { length: 256 }),
+    totpEnabledAt: timestamp("totp_enabled_at", { withTimezone: true }),
+    /** Last accepted TOTP time step; a code can never be used twice. */
+    totpLastStep: integer("totp_last_step"),
+    /** Second-factor failures, counted before verification so parallel guesses are bounded. */
+    mfaFailedCount: integer("mfa_failed_count").notNull().default(0),
+    mfaLockedUntil: timestamp("mfa_locked_until", { withTimezone: true }),
     failedLoginCount: integer("failed_login_count").notNull().default(0),
     lockedUntil: timestamp("locked_until", { withTimezone: true }),
     lastLoginAt: timestamp("last_login_at", { withTimezone: true }),
@@ -158,4 +164,19 @@ export const adminUsers = pgTable(
     updatedAt: updatedAt(),
   },
   (t) => [uniqueIndex("admin_users_email_uq").on(sql`lower(${t.email})`)],
+);
+
+/** Single-use 2FA recovery codes, stored as keyed hashes. */
+export const adminRecoveryCodes = pgTable(
+  "admin_recovery_codes",
+  {
+    id: id(),
+    adminUserId: uuid("admin_user_id")
+      .notNull()
+      .references(() => adminUsers.id, { onDelete: "cascade" }),
+    codeHash: varchar("code_hash", { length: 64 }).notNull(),
+    usedAt: timestamp("used_at", { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [uniqueIndex("admin_recovery_codes_uq").on(t.adminUserId, t.codeHash)],
 );
