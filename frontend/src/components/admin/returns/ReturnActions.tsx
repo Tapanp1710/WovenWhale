@@ -16,7 +16,7 @@ const infoSchema = returnTransitionSchema.pick({ infoRequest: true }).required()
 type Open = "approve" | "reject" | "info" | "receive" | "complete" | "refund" | null;
 
 /** Buttons follow the return's `allowedTransitions` and the admin's permissions. */
-export function ReturnActions({ ret }: { ret: AdminReturnRowDTO }) {
+export function ReturnActions({ ret, inline = false }: { ret: AdminReturnRowDTO; inline?: boolean }) {
   const canManage = useCan("returns.manage");
   const canRefund = useCan("refunds.approve");
   const { run } = useAction();
@@ -61,7 +61,7 @@ export function ReturnActions({ ret }: { ret: AdminReturnRowDTO }) {
   if (!buttons.length) return null;
 
   return (
-    <div className={styles.bar} role="group" aria-label="Return actions">
+    <div className={inline ? styles.inline : styles.bar} role="group" aria-label={`Actions for return ${ret.returnNumber}`}>
       {buttons}
       <ReasonDialog
         open={open === "approve"}

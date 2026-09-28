@@ -10,6 +10,7 @@ import { Undo2 } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { humanize } from "@/components/admin/labels";
+import { ReturnActions } from "@/components/admin/returns/ReturnActions";
 import { adminWith, readParams, toQuery, type SearchParams } from "@/components/admin/server";
 import { FilterForm } from "@/components/admin/ui/FilterForm";
 import { NoAccess } from "@/components/admin/ui/NoAccess";
@@ -30,6 +31,8 @@ export default async function ReturnsPage({ searchParams }: { searchParams: Sear
   if (!(await adminWith("returns.view"))) return <NoAccess what="returns" />;
   const params = await readParams(searchParams, ["status", "type", "page"]);
   const data = await sessionApi<Paginated<AdminReturnRowDTO>>(`/admin/returns${toQuery({ ...params, pageSize: "25" })}`);
+  // New requests can be approved or declined right here; later steps stay on the detail page.
+  const showActions = data.items.some((r) => r.status === "REQUESTED");
 
   return (
     <>
@@ -64,7 +67,7 @@ export default async function ReturnsPage({ searchParams }: { searchParams: Sear
         </FilterForm>
         {data.items.length ? (
           <>
-            <Table label="Returns" minWidth={900}>
+            <Table label="Returns" minWidth={showActions ? 1300 : 900}>
               <thead>
                 <tr>
                   <th scope="col">Return</th>
@@ -76,6 +79,7 @@ export default async function ReturnsPage({ searchParams }: { searchParams: Sear
                   </th>
                   <th scope="col">Requested</th>
                   <th scope="col">Status</th>
+                  {showActions && <th scope="col">Actions</th>}
                 </tr>
               </thead>
               <tbody>
@@ -107,6 +111,7 @@ export default async function ReturnsPage({ searchParams }: { searchParams: Sear
                     <td>
                       <ReturnStatusBadge status={r.status} />
                     </td>
+                    {showActions && <td>{r.status === "REQUESTED" && <ReturnActions ret={r} inline />}</td>}
                   </tr>
                 ))}
               </tbody>
