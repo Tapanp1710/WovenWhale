@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Heart, Menu, Search, ShoppingBag, User } from "lucide-react";
+import { ChevronDown, Heart, Menu, Search, ShoppingBag, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -83,6 +83,7 @@ export function Header({ nav, announcement }: { nav: Navigation; announcement: s
                       onClick={() => setWeavesOpen((o) => !o)}
                     >
                       Weaves
+                      <ChevronDown size={15} aria-hidden="true" className={styles.chevron} />
                     </button>
                     <AnimatePresence>
                       {weavesOpen && (

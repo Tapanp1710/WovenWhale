@@ -23,23 +23,38 @@ test.describe("storefront browsing", () => {
     expect(await img.evaluate((el: HTMLImageElement) => el.currentSrc)).toContain(encodeURIComponent("/catalog/"));
   });
 
-  test("homepage images open their product and have a wishlist heart", async ({ page }) => {
+  test("homepage images open their product; hero strips stay clean, the editorial photo has a heart", async ({ page }) => {
     await page.goto("/");
-    const firstStrip = page.getByRole("list", { name: "Featured pieces" }).getByRole("link").first();
+    const hero = page.getByRole("list", { name: "Featured pieces" });
+    const firstStrip = hero.getByRole("link").first();
     const name = await firstStrip.getAttribute("aria-label");
     expect(name).toBeTruthy();
-    await expect(
-      page.getByRole("list", { name: "Featured pieces" }).getByRole("button", { name: `Save ${name} to wishlist` }),
-    ).toBeVisible();
+    await expect(hero.getByRole("button")).toHaveCount(0); // no wishlist hearts on the hero
     await firstStrip.click();
     await expect(page).toHaveURL(/\/product\//);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(name!);
 
-    // The editorial photo further down also opens its product.
+    // The editorial photo further down opens its product and can be saved.
     await page.goto("/");
-    const editorial = page.locator("#loom-title").locator("xpath=ancestor::section[1]").getByRole("link").first();
-    await editorial.click();
+    const editorial = page.locator("#loom-title").locator("xpath=ancestor::section[1]");
+    await expect(editorial.getByRole("button", { name: /to wishlist/ })).toBeVisible();
+    await editorial.getByRole("link").first().click();
     await expect(page).toHaveURL(/\/product\//);
+  });
+
+  test("desktop navigation fits on one line and never touches the wordmark", async ({ page }) => {
+    for (const width of [1280, 1366, 1440, 1920]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/");
+      const nav = page.getByRole("navigation", { name: "Main" });
+      const heights = await nav.locator("a, button").evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
+      expect(new Set(heights).size, `nav links wrap at ${width}px`).toBe(1);
+      const navRight = await nav.evaluate((el) =>
+        Math.max(...[...el.querySelectorAll("a, button")].map((e) => e.getBoundingClientRect().right)),
+      );
+      const markLeft = (await page.getByRole("link", { name: "WovenWhale home" }).boundingBox())!.x;
+      expect(markLeft - navRight, `nav touches the wordmark at ${width}px`).toBeGreaterThan(24);
+    }
   });
 
   test("browse from the homepage into a collection", async ({ page }) => {

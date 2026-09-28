@@ -4,7 +4,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { WishlistButton } from "../product/WishlistButton";
 import styles from "./WarpHero.module.css";
 
 export interface Strip {
@@ -18,7 +17,7 @@ export interface Strip {
 /**
  * The page's one orchestrated moment: product photographs cut into tall
  * strips that slide into register like warp threads settling on a loom.
- * Each strip opens its product and can be saved to the wishlist.
+ * Each strip opens its product.
  */
 export function WarpHero({ strips }: { strips: Strip[] }) {
   const reduce = useReducedMotion();
@@ -50,9 +49,6 @@ export function WarpHero({ strips }: { strips: Strip[] }) {
             <Link href={`/product/${s.slug}`} className={styles.link} aria-label={s.name}>
               <Image src={s.src} alt="" fill sizes="(min-width: 1024px) 12vw, 22vw" preload={i < 3} className={styles.img} />
             </Link>
-            <span className={styles.wish}>
-              <WishlistButton productId={s.productId} name={s.name} />
-            </span>
           </motion.li>
         ))}
       </ul>
