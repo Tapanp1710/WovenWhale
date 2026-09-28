@@ -8,6 +8,12 @@ const bool = z
 const schema = z
   .object({
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+    /**
+     * Public demonstration deployment. Allows the mock payment gateway and mock
+     * OTP under NODE_ENV=production, and labels every page as a demo. Never set
+     * it on the real store.
+     */
+    DEMO_MODE: bool,
     SITE_URL: z.url().default("http://localhost:3000"),
     BACKEND_PORT: z.coerce.number().int().default(4000),
     ALLOWED_ORIGINS: z.string().default("http://localhost:3000"),
@@ -109,15 +115,22 @@ const schema = z
     if (origins.some((o) => !o.startsWith("https://"))) {
       ctx.addIssue({ code: "custom", path: ["ALLOWED_ORIGINS"], message: "SITE_URL and ALLOWED_ORIGINS must use https:// in production" });
     }
-    // Refuse to boot production with development-only providers.
+    // Refuse to boot production with development-only providers (a labelled demo may use them).
     const devOnly: [keyof typeof env, string][] = [
       ["PAYMENT_PROVIDER", "mock"],
       ["OTP_PROVIDER", "mock"],
     ];
     for (const [key, value] of devOnly) {
-      if (env[key] === value) {
-        ctx.addIssue({ code: "custom", path: [key], message: `${key}=${value} is not allowed in production` });
+      if (env[key] === value && !env.DEMO_MODE) {
+        ctx.addIssue({ code: "custom", path: [key], message: `${key}=${value} is not allowed in production (only with DEMO_MODE=true)` });
       }
+    }
+    // Razorpay test keys take no real money: only acceptable on a labelled demo.
+    if (env.PAYMENT_PROVIDER === "razorpay" && env.RAZORPAY_KEY_ID.startsWith("rzp_test_") && !env.DEMO_MODE) {
+      ctx.addIssue({ code: "custom", path: ["RAZORPAY_KEY_ID"], message: "Razorpay test keys are only allowed with DEMO_MODE=true" });
+    }
+    if (env.DEMO_MODE && env.RAZORPAY_KEY_ID.startsWith("rzp_live_")) {
+      ctx.addIssue({ code: "custom", path: ["DEMO_MODE"], message: "DEMO_MODE must not be combined with live Razorpay keys" });
     }
     if (env.RATE_LIMIT_MULTIPLIER !== 1) {
       ctx.addIssue({ code: "custom", path: ["RATE_LIMIT_MULTIPLIER"], message: "Rate limits cannot be relaxed in production" });
@@ -147,7 +160,8 @@ const schema = z
 export type Env = z.infer<typeof schema>;
 
 function load(): Env {
-  const parsed = schema.safeParse(process.env);
+  // Hosting platforms (Render, Railway, Fly) announce the port to bind in PORT.
+  const parsed = schema.safeParse({ ...process.env, BACKEND_PORT: process.env.BACKEND_PORT || process.env.PORT });
   if (!parsed.success) {
     const issues = parsed.error.issues.map((i) => `  • ${i.path.join(".")}: ${i.message}`).join("\n");
     throw new Error(`Invalid environment configuration:\n${issues}`);

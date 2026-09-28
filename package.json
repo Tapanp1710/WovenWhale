@@ -18,7 +18,7 @@
     "db:seed": "npm run db:seed -w backend",
     "db:reset": "npm run db:reset -w backend",
     "catalog:import": "npm run catalog:import -w backend --",
-    "dev": "npm run dev:backend & npm run dev:frontend",
+    "dev": "node scripts/dev.mjs",
     "dev:backend": "npm run dev -w backend",
     "dev:frontend": "npm run dev -w frontend",
     "build": "npm run build -w backend && npm run build -w frontend",
@@ -27,7 +27,11 @@
     "test:e2e": "npm run test:e2e -w frontend",
     "format": "prettier --write \"backend/**/*.ts\" \"frontend/**/*.{ts,tsx,css}\"",
     "format:check": "prettier --check \"backend/**/*.ts\" \"frontend/**/*.{ts,tsx,css}\"",
-    "db:verify": "npm run db:verify -w backend"
+    "db:verify": "npm run db:verify -w backend",
+    "demo:migrate": "npm run demo:migrate -w backend",
+    "demo:verify": "npm run demo:verify -w backend",
+    "demo:seed": "npm run demo:seed -w backend",
+    "demo:reset": "npm run demo:reset -w backend --"
   },
   "devDependencies": {
     "prettier": "^3.9.9"

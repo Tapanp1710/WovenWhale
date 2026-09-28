@@ -20,7 +20,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "db:bootstrap": "tsx --env-file-if-exists=../.env scripts/bootstrap.ts",
-    "db:verify": "tsx --env-file-if-exists=../.env scripts/verify-db.ts"
+    "db:verify": "tsx --env-file-if-exists=../.env scripts/verify-db.ts",
+    "demo:migrate": "tsx --env-file=../.env.demo src/db/migrate.ts",
+    "demo:verify": "tsx --env-file=../.env.demo scripts/verify-db.ts",
+    "demo:seed": "tsx --env-file=../.env.demo seed/index.ts",
+    "demo:reset": "tsx --env-file=../.env.demo seed/demo-reset.ts"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.1",

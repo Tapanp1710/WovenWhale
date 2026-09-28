@@ -12,5 +12,6 @@ export async function storeConfig(): Promise<StoreConfigDTO> {
     codMaxOrderPaise: 1000000,
     cancellationWindowHours: 12,
     returnWindowDays: 14,
+    demo: null,
   }));
 }

@@ -1,6 +1,5 @@
 import { mkdir, unlink, writeFile } from "node:fs/promises";
-import { dirname, join, normalize } from "node:path";
-import { fileURLToPath } from "node:url";
+import { dirname, join, normalize, resolve } from "node:path";
 import { env } from "../../config/env";
 
 /**
@@ -19,7 +18,12 @@ export interface StorageProvider {
   delete(key: string): Promise<void>;
 }
 
-export const LOCAL_UPLOAD_DIR = fileURLToPath(new URL("../../../uploads", import.meta.url));
+/**
+ * Relative to the working directory (the backend package when run through npm
+ * or the container), not to this file: the production bundle lives in dist/,
+ * where a source-relative path would point outside the project.
+ */
+export const LOCAL_UPLOAD_DIR = resolve(process.env.UPLOAD_DIR || "uploads");
 /** Public path the backend serves local uploads from (proxied through the storefront's /api). */
 export const LOCAL_UPLOAD_ROUTE = "/api/uploads";
 

@@ -131,6 +131,8 @@ export interface StoreConfigDTO {
   codMaxOrderPaise: number;
   cancellationWindowHours: number;
   returnWindowDays: number;
+  /** Present only on a demo deployment (DEMO_MODE): drives the "demo store" banner. */
+  demo: { otpCode: string | null; payments: "mock" | "razorpay-test" } | null;
 }
 
 /* ───────────────────────────── Customer & cart ───────────────────────────── */

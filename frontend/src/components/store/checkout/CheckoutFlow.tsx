@@ -59,10 +59,15 @@ export function CheckoutFlow({ cancellationWindowHours }: { cancellationWindowHo
     void api("/checkout/progress", { method: "POST", body: { step: STEP_API[s] } }).catch(() => undefined);
   }, []);
 
-  // Start the checkout session and load addresses once signed in.
+  // Start the checkout session (only for a non-empty bag) once signed in.
+  const hasItems = Boolean(cart?.lines.length);
+  useEffect(() => {
+    if (customer && hasItems) void api("/checkout/start", { method: "POST" }).catch(() => undefined);
+  }, [customer, hasItems]);
+
+  // Load addresses once signed in.
   useEffect(() => {
     if (!customer) return;
-    void api("/checkout/start", { method: "POST" }).catch(() => undefined);
     api<AddressDTO[]>("/account/addresses")
       .then((list) => {
         setAddresses(list);

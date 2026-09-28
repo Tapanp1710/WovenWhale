@@ -1,6 +1,7 @@
 import type { CategoryDTO, CustomerDTO, StoreConfigDTO } from "@wovenwhale/backend/contracts";
 import type { ReactNode } from "react";
 import { AdminPortalShortcut } from "@/components/store/layout/AdminPortalShortcut";
+import { DemoBanner } from "@/components/store/layout/DemoBanner";
 import { Footer } from "@/components/store/layout/Footer";
 import { Header } from "@/components/store/layout/Header";
 import { buildNavigation } from "@/components/store/layout/nav";
@@ -30,6 +31,7 @@ export default async function StoreLayout({ children }: { children: ReactNode })
           <a href="#main" className="skip-link">
             Skip to content
           </a>
+          {config?.demo && <DemoBanner demo={config.demo} />}
           <Header nav={nav} announcement={announcement} />
           <main id="main" className={styles.main}>
             {children}

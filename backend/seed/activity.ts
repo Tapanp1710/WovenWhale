@@ -239,7 +239,7 @@ async function createCustomer(random: Random, i: number, createdAt: Date) {
   return { user, address: address! };
 }
 
-async function completePrepaidPayment(orderNumber: string, succeed: boolean) {
+export async function completePrepaidPayment(orderNumber: string, succeed: boolean) {
   const gateway = providers.payments as MockPaymentProvider;
   const [row] = await db
     .select({ providerOrderId: payments.providerOrderId, amount: payments.amountPaise })
@@ -259,7 +259,7 @@ async function completePrepaidPayment(orderNumber: string, succeed: boolean) {
   await handleVerifiedPaymentEvent(event);
 }
 
-async function inStockVariants() {
+export async function inStockVariants() {
   return db
     .select({ id: productVariants.id, productId: productVariants.productId })
     .from(productVariants)

@@ -63,5 +63,11 @@ export async function getPublicStoreConfig(): Promise<StoreConfigDTO> {
     codMaxOrderPaise: s.codMaxOrderPaise,
     cancellationWindowHours: env.ORDER_CANCELLATION_WINDOW_HOURS,
     returnWindowDays: env.RETURN_WINDOW_DAYS,
+    demo: env.DEMO_MODE
+      ? {
+          otpCode: env.OTP_PROVIDER === "mock" ? env.OTP_DEV_FIXED_CODE || null : null,
+          payments: env.PAYMENT_PROVIDER === "mock" ? "mock" : "razorpay-test",
+        }
+      : null,
   };
 }

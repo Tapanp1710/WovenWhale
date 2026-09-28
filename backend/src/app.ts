@@ -73,7 +73,8 @@ export function createApp() {
   app.route("/api/webhooks", webhookRoutes);
   app.route("/api/admin/auth", adminAuthRoutes);
   app.route("/api/admin", adminRoutes);
-  if (!isProduction) app.route("/api/dev", devRoutes);
+  // The simulated gateway: development, or a labelled demo using the mock payment provider.
+  if (!isProduction || (env.DEMO_MODE && env.PAYMENT_PROVIDER === "mock")) app.route("/api/dev", devRoutes);
 
   app.use(
     "/api/uploads/*",

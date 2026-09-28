@@ -108,6 +108,49 @@ Webhook routes skip the browser-origin check and rely on signatures over the raw
 2. You're taken to **Set up two-factor authentication**: scan the QR code, enter a code, save the recovery codes in your password manager.
 3. Create the other admins with the least-privileged role that fits; each enrols in 2FA at first sign-in.
 
+## Demo deployment
+
+A public demo with simulated payments and a fixed OTP (see [demo.md](demo.md)). Architecture: **Vercel** (storefront) → `/api/*` rewrite → **Render** (API, Docker, free plan) → **Supabase** (Postgres). The browser only ever talks to the Vercel domain, so cookies are first-party and there is no CORS.
+
+What you need: a Supabase account, a Render account connected to a Git host with this repository, and a Vercel account. The free plans of all three are enough; Render's free API sleeps after 15 minutes idle and takes about a minute to wake.
+
+1. **Database.** Create a Supabase project `wovenwhale-demo` (region Mumbai). From **Connect**, copy the **Session pooler** URI (port 5432).
+2. **Secrets.** `cp .env.demo.example .env.demo` and fill it in: the database URI, three generated secrets and a generated `DEMO_TOTP_SECRET`. Pick the Vercel project name now so `SITE_URL` is known (for example `https://wovenwhale-demo.vercel.app`).
+3. **Schema and data** (from your machine):
+
+   ```bash
+   npm run demo:migrate
+   npm run demo:verify        # migrations, RLS, no Supabase API-role grants
+   npm run demo:seed          # catalog, demo stock/orders, demo accounts with 2FA
+   ```
+
+4. **API on Render.** Push the repository to GitHub, then Render → **New → Blueprint** → the repository. It reads [`render.yaml`](../render.yaml). Paste `DATABASE_URL`, `SESSION_SECRET`, `MFA_ENCRYPTION_KEY`, `MOCK_PAYMENT_WEBHOOK_SECRET`, `SITE_URL` and `ALLOWED_ORIGINS` from `.env.demo`. Wait for the deploy, then open `https://<service>.onrender.com/api/health` → `{"status":"ok"}`.
+
+   No Git host? Any Docker host works with the same image: `docker build -f backend/Dockerfile -t wovenwhale-api .` and run it with the same variables (Railway: `railway up` from the repository root; Fly.io: `fly launch --dockerfile backend/Dockerfile`).
+
+5. **Storefront on Vercel.**
+
+   Run these from the **repository root** (the storefront imports shared contracts from `backend/`, so the whole workspace is uploaded):
+
+   ```bash
+   npx vercel login
+   npx vercel link                  # new project, e.g. wovenwhale-demo; "code located in": ./frontend
+   npx vercel env add BACKEND_URL production           # https://<service>.onrender.com
+   npx vercel env add SITE_URL production              # https://wovenwhale-demo.vercel.app
+   npx vercel env add ADMIN_PORTAL_TRIGGER production  # 7391
+   npx vercel deploy --prod
+   ```
+
+   Or import the repository in the Vercel dashboard with **Root Directory = `frontend`** and the same variables.
+
+6. **Check it.** Open the storefront: the demo banner shows, products load, sign in with `70000 99999` / `123456`, place a COD and a prepaid order, sign in to `/admin` as `orders@wovenwhale.local` with the 2FA code, approve the COD order. Then, as `owner@…`, open `https://<vercel-domain>/api/admin/diagnostics/request`: `clientIp` must be your own public IP. If it shows a Vercel or Render address instead, adjust `TRUSTED_PROXY_HOPS` on Render (the `x-forwarded-for` list shows how many entries follow yours).
+
+**Razorpay test mode instead of the simulated gateway:** set `PAYMENT_PROVIDER=razorpay` and the `rzp_test_` keys on Render, and add the webhook `https://<vercel-domain>/api/webhooks/payments/razorpay` in the Razorpay dashboard (test mode). `DEMO_MODE` accepts test keys and refuses live ones.
+
+**Background jobs** run inside the API process (it's long-running on Render), except while the free instance is asleep; they catch up when it wakes.
+
+**Reset:** `npm run demo:reset -- --confirm=<database host>`.
+
 ## Releasing schema changes
 
 1. `npm run db:generate` locally, review the SQL, commit.

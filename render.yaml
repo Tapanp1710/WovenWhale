@@ -1,0 +1,52 @@
+# Render Blueprint for the commerce API (demo deployment).
+# Render → New → Blueprint → pick this repository. Values marked `sync: false`
+# are asked for in the dashboard: copy them from your .env.demo (never commit it).
+# The storefront is deployed separately on Vercel (see docs/deployment.md).
+services:
+  - type: web
+    name: wovenwhale-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    region: singapore
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DEMO_MODE
+        value: "true"
+      - key: BACKEND_PORT
+        value: "10000"
+      - key: ADMIN_MFA_REQUIRED
+        value: "true"
+      # Vercel's edge adds the visitor to X-Forwarded-For and Render appends Vercel's address.
+      # Confirm with GET /api/admin/diagnostics/request after the first deploy.
+      - key: TRUSTED_PROXY_HOPS
+        value: "2"
+      - key: PAYMENT_PROVIDER
+        value: mock
+      - key: OTP_PROVIDER
+        value: mock
+      - key: OTP_DEV_FIXED_CODE
+        value: "123456"
+      - key: WHATSAPP_PROVIDER
+        value: log
+      - key: WHATSAPP_SEND_ENABLED
+        value: "false"
+      - key: STORAGE_PROVIDER
+        value: local
+      - key: DATABASE_POOL_MAX
+        value: "5"
+      - key: DATABASE_URL
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: MFA_ENCRYPTION_KEY
+        sync: false
+      - key: MOCK_PAYMENT_WEBHOOK_SECRET
+        sync: false
+      - key: SITE_URL
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false

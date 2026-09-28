@@ -1,6 +1,8 @@
 import { Hono } from "hono";
 import type { AppEnv } from "../../app-env";
-import { requireAdmin } from "../auth/middleware";
+import { env } from "../../config/env";
+import { clientIp } from "../../lib/rate-limit";
+import { requireAdmin, requirePermission } from "../auth/middleware";
 import { adminAnalyticsRoutes, adminDashboardRoutes } from "./analytics";
 import { adminCatalogRoutes } from "./catalog";
 import { adminCouponRoutes } from "./coupons";
@@ -34,4 +36,21 @@ export const adminRoutes = new Hono<AppEnv>()
   .route("/admins", adminUserRoutes)
   .route("/roles", adminRoleRoutes)
   .route("/settings", adminSettingsRoutes)
-  .route("/whatsapp", adminWhatsAppRoutes);
+  .route("/whatsapp", adminWhatsAppRoutes)
+  /**
+   * Deployment check: shows which client address rate limits will use and the
+   * forwarding headers that reached the API, to set CLIENT_IP_HEADER /
+   * TRUSTED_PROXY_HOPS correctly (docs/deployment.md).
+   */
+  .get("/diagnostics/request", requirePermission("settings.manage"), (c) =>
+    c.json({
+      clientIp: clientIp(c),
+      config: { clientIpHeader: env.CLIENT_IP_HEADER || null, trustedProxyHops: env.TRUSTED_PROXY_HOPS },
+      headers: Object.fromEntries(
+        ["x-forwarded-for", "x-real-ip", "x-vercel-forwarded-for", "cf-connecting-ip", "true-client-ip"].map((h) => [
+          h,
+          c.req.header(h) ?? null,
+        ]),
+      ),
+    }),
+  );

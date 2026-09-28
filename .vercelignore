@@ -1,0 +1,6 @@
+backend/uploads
+backend/dist
+frontend/test-results
+frontend/playwright-report
+.env
+.env.*
