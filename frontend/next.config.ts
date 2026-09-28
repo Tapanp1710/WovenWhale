@@ -20,6 +20,12 @@ const nextConfig: NextConfig = {
   transpilePackages: ["@wovenwhale/backend"],
   poweredByHeader: false,
   agentRules: false,
+  // Dev server: accept the same hosts the API accepts (ALLOWED_ORIGINS), e.g. a LAN/WSL IP.
+  allowedDevOrigins: (process.env.ALLOWED_ORIGINS ?? "")
+    .split(",")
+    .map((o) => o.trim())
+    .filter((o) => URL.canParse(o))
+    .map((o) => new URL(o).hostname),
   experimental: {
     // Turbopack's on-disk dev cache speeds restarts but can grow past 1 GB;
     // set NEXT_DEV_FS_CACHE=false on disk-constrained machines.
