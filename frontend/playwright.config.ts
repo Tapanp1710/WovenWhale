@@ -17,6 +17,8 @@ const WEB_PORT = process.env.E2E_WEB_PORT ?? "3000";
 const API_PORT = process.env.E2E_API_PORT ?? "4000";
 const WEB = `http://localhost:${WEB_PORT}`;
 const API = `http://localhost:${API_PORT}`;
+// Testing a deployed site (E2E_BASE_URL=https://…): no local servers are started.
+const REMOTE = Boolean(process.env.E2E_BASE_URL && !/localhost|127\.0\.0\.1/.test(process.env.E2E_BASE_URL));
 process.env.E2E_BASE_URL ??= WEB; // read by e2e/support/fixtures.ts
 export default defineConfig({
   testDir: "./e2e",
@@ -35,22 +37,24 @@ export default defineConfig({
     { name: "desktop", use: { ...devices["Desktop Chrome"] }, grepInvert: /@mobile/ },
     { name: "mobile", use: { ...devices["Pixel 7"] }, grep: /@mobile/ },
   ],
-  webServer: [
-    {
-      // No watch mode: tsx watch stays silent when started without a terminal.
-      command: "npx tsx --env-file-if-exists=../.env src/server.ts",
-      cwd: "../backend",
-      url: `${API}/api/health`,
-      reuseExistingServer: true,
-      timeout: 120_000,
-      env: { BACKEND_PORT: API_PORT, SITE_URL: WEB, ALLOWED_ORIGINS: WEB },
-    },
-    {
-      command: `npx next dev --port ${WEB_PORT}`,
-      url: WEB,
-      reuseExistingServer: true,
-      timeout: 180_000,
-      env: { BACKEND_URL: API, SITE_URL: WEB },
-    },
-  ],
+  webServer: REMOTE
+    ? undefined
+    : [
+        {
+          // No watch mode: tsx watch stays silent when started without a terminal.
+          command: "npx tsx --env-file-if-exists=../.env src/server.ts",
+          cwd: "../backend",
+          url: `${API}/api/health`,
+          reuseExistingServer: true,
+          timeout: 120_000,
+          env: { BACKEND_PORT: API_PORT, SITE_URL: WEB, ALLOWED_ORIGINS: WEB },
+        },
+        {
+          command: `npx next dev --port ${WEB_PORT}`,
+          url: WEB,
+          reuseExistingServer: true,
+          timeout: 180_000,
+          env: { BACKEND_URL: API, SITE_URL: WEB },
+        },
+      ],
 });

@@ -4,6 +4,17 @@ A demo deployment is the real application with `DEMO_MODE=true`: the mock paymen
 
 > **DEMO ONLY.** The credentials below are public. Never seed them into a real store, and never combine `DEMO_MODE` with live Razorpay keys (the API refuses to start if you do).
 
+## Live demo
+
+| | |
+| --- | --- |
+| Storefront | https://wovenwhale-demo.vercel.app |
+| Admin | https://wovenwhale-demo.vercel.app/admin/login |
+| API (Render, free) | https://wovenwhale.onrender.com/api/health |
+| Database | Supabase project `wovenwhale-demo` (Mumbai) |
+
+The API sleeps after 15 minutes idle; open the storefront once before presenting (the first load can take about a minute).
+
 ## Accounts
 
 ### Customer

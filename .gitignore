@@ -25,3 +25,5 @@ Thumbs.db
 # Personal Claude Code settings
 .claude/settings.local.json
 .playwright-mcp/
+
+.vercel

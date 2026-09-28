@@ -77,6 +77,7 @@ Clients can put anything in `X-Forwarded-For`, and Next.js passes the header thr
 | Cloudflare in front | `CLIENT_IP_HEADER=cf-connecting-ip` |
 | Vercel storefront → API | `CLIENT_IP_HEADER=x-real-ip`, then verify (below) |
 | Your own nginx/ALB in front of the storefront, which appends to `X-Forwarded-For` | `TRUSTED_PROXY_HOPS=1` (one per proxy you run) |
+| Vercel storefront → Render API (the demo) | `TRUSTED_PROXY_HOPS=4` (measured: visitor, Vercel, Cloudflare, Render internal) |
 
 Verify in staging: sign in to the storefront twice from two different networks and confirm the API logs (or a temporary debug line) show two different addresses. If every request shows the same address, all customers share one rate-limit bucket.
 

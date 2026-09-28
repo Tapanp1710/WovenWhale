@@ -19,10 +19,11 @@ services:
         value: "true"
       - key: ADMIN_MFA_REQUIRED
         value: "true"
-      # Vercel's edge adds the visitor to X-Forwarded-For and Render appends Vercel's address.
-      # Confirm with GET /api/admin/diagnostics/request after the first deploy.
+      # Measured on the live demo: X-Forwarded-For = visitor, Vercel, Cloudflare (Render edge),
+      # Render internal. The visitor is 4 entries from the right. Re-check with
+      # GET /api/admin/diagnostics/request if the hosting chain changes.
       - key: TRUSTED_PROXY_HOPS
-        value: "2"
+        value: "4"
       - key: PAYMENT_PROVIDER
         value: mock
       - key: OTP_PROVIDER
