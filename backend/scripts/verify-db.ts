@@ -14,13 +14,12 @@ const journal = JSON.parse(readFileSync(fileURLToPath(new URL("../drizzle/meta/_
 };
 const problems: string[] = [];
 const ok = (msg: string) => console.log(`  ✓ ${msg}`);
+const one = async <T>(rows: Promise<readonly T[]>) => (await rows)[0]!;
 
-const [{ version }] = await sql<{ version: string }[]>`select current_setting('server_version') as version`;
+const { version } = await one(sql<{ version: string }[]>`select current_setting('server_version') as version`);
 ok(`PostgreSQL ${version}`);
 
-const [{ applied }] = await sql<{ applied: number }[]>`select count(*)::int as applied from drizzle.__drizzle_migrations`.catch(() => [
-  { applied: 0 },
-]);
+const { applied } = await one(sql<{ applied: number }[]>`select count(*)::int as applied from drizzle.__drizzle_migrations`.catch(() => [{ applied: 0 }]));
 if (applied === journal.entries.length) ok(`all ${applied} migrations applied`);
 else problems.push(`${applied} of ${journal.entries.length} migrations applied — run npm run db:migrate`);
 
@@ -29,7 +28,7 @@ const noRls = await sql<{ tablename: string }[]>`
 if (noRls.length === 0) ok("row level security enabled on every public table");
 else problems.push(`RLS disabled on: ${noRls.map((t) => t.tablename).join(", ")}`);
 
-const [{ supabase }] = await sql<{ supabase: boolean }[]>`select exists (select 1 from pg_roles where rolname = 'anon') as supabase`;
+const { supabase } = await one(sql<{ supabase: boolean }[]>`select exists (select 1 from pg_roles where rolname = 'anon') as supabase`);
 if (supabase) {
   const grants = await sql<{ grantee: string; table_name: string; privilege_type: string }[]>`
     select grantee, table_name, privilege_type from information_schema.role_table_grants
@@ -43,7 +42,7 @@ if (supabase) {
   ok("not a Supabase database (no anon role) — grant checks skipped");
 }
 
-const [{ roles }] = await sql<{ roles: number }[]>`select count(*)::int as roles from roles`;
+const { roles } = await one(sql<{ roles: number }[]>`select count(*)::int as roles from roles`);
 if (roles > 0) ok(`${roles} admin roles present`);
 else problems.push("no admin roles — run npm run db:bootstrap -w backend (production) or npm run db:seed (development)");
 

@@ -8,6 +8,7 @@ import { isTransitionAllowed } from "../../domain/order-state-machine";
 import { providers } from "../../integrations";
 import type { TrackingEvent } from "../../integrations/shipping/types";
 import { recordAudit } from "../../lib/audit";
+import { logger } from "../../lib/logger";
 import { captureException } from "../../lib/monitoring";
 import { kickNotificationDispatch } from "../notifications/service";
 import { transitionOrder } from "../orders/lifecycle";
@@ -67,6 +68,10 @@ export async function createShipment(
       });
     });
   } catch (error) {
+    // The carrier booking exists but the order didn't ship: cancel it so no pickup is scheduled.
+    await providers.shipping.cancelShipment(booked.providerShipmentId).catch((cancelError: unknown) =>
+      logger.error("shipment_cancel_failed", { orderId, providerShipmentId: booked.providerShipmentId, error: String(cancelError) }),
+    );
     if ((error as { cause?: { code?: string } }).cause?.code === "23505") {
       throw new DomainError("AWB_IN_USE", "This AWB number is already assigned to another shipment.", 409);
     }
