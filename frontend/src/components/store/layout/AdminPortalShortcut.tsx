@@ -20,7 +20,8 @@ export function AdminPortalShortcut({ sequence }: { sequence: string }) {
     let timer: ReturnType<typeof setTimeout> | undefined;
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
-      if (e.metaKey || e.ctrlKey || e.altKey || e.key.length !== 1) return;
+      // Autofill and some IMEs send keydown events without a `key`.
+      if (e.metaKey || e.ctrlKey || e.altKey || e.key?.length !== 1) return;
       if (target?.closest("input, textarea, select, [contenteditable='true']")) return;
       typed = (typed + e.key).slice(-sequence.length);
       clearTimeout(timer);

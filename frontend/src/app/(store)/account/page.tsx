@@ -2,16 +2,18 @@ import type { CustomerDTO, OrderSummaryDTO, Paginated } from "@wovenwhale/backen
 import Link from "next/link";
 import { OrderList } from "@/components/store/account/OrderList";
 import { ProfileForm } from "@/components/store/account/ProfileForm";
-import { sessionApi } from "@/lib/api/server";
+import { accountApi } from "@/lib/api/server";
 import styles from "./page.module.css";
 
 export const metadata = { title: "Overview" };
 
 export default async function AccountPage() {
-  const [{ customer }, orders] = await Promise.all([
-    sessionApi<{ customer: CustomerDTO }>("/auth/me"),
-    sessionApi<Paginated<OrderSummaryDTO>>("/orders?pageSize=3"),
+  const [me, orders] = await Promise.all([
+    accountApi<{ customer: CustomerDTO }>("/auth/me"),
+    accountApi<Paginated<OrderSummaryDTO>>("/orders?pageSize=3"),
   ]);
+  if (!me?.customer || !orders) return null;
+  const { customer } = me;
   return (
     <div className={styles.page}>
       <section aria-labelledby="recent-orders">

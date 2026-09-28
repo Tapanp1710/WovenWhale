@@ -3,12 +3,13 @@ import { RotateCcw } from "lucide-react";
 import { ReturnList } from "@/components/store/account/ReturnList";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { sessionApi } from "@/lib/api/server";
+import { accountApi } from "@/lib/api/server";
 
 export const metadata = { title: "Returns" };
 
 export default async function AccountReturnsPage() {
-  const returns = await sessionApi<ReturnSummaryDTO[]>("/returns");
+  const returns = await accountApi<ReturnSummaryDTO[]>("/returns");
+  if (!returns) return null;
   if (returns.length === 0) {
     return (
       <EmptyState

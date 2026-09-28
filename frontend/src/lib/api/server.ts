@@ -32,6 +32,20 @@ export async function sessionApiOrNull<T>(path: string): Promise<T | null> {
   }
 }
 
+/**
+ * For account pages. Next renders the account layout and page in parallel, so
+ * a signed-out visitor reaches the page even though the layout shows sign-in:
+ * return null (render nothing) instead of throwing a 401.
+ */
+export async function accountApi<T>(path: string): Promise<T | null> {
+  try {
+    return await sessionApi<T>(path);
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 401) return null;
+    throw error;
+  }
+}
+
 export async function publicApiOrNull<T>(path: string, revalidate = 60): Promise<T | null> {
   try {
     return await publicApi<T>(path, revalidate);

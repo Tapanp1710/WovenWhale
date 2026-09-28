@@ -32,7 +32,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en-IN" className={archivo.variable}>
+    <html lang="en-IN" className={archivo.variable} data-scroll-behavior="smooth">
       <body>
         <ToastProvider>{children}</ToastProvider>
       </body>
