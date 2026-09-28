@@ -165,7 +165,7 @@ Payments, OTP, WhatsApp, shipping, email and storage each have an interface, a d
 
 ## Deployment
 
-See [docs/deployment.md](docs/deployment.md): Vercel for the storefront, the API on Railway as a Docker image ([`backend/Dockerfile`](backend/Dockerfile), [`railway.json`](railway.json); [`render.yaml`](render.yaml) if you prefer Render) and Supabase for Postgres. The same guide has a step-by-step **demo deployment**.
+See [docs/deployment.md](docs/deployment.md): Vercel for the storefront, the API on Render as a Docker image ([`backend/Dockerfile`](backend/Dockerfile), [`render.yaml`](render.yaml); [`railway.json`](railway.json) for an always-on Railway alternative) and Supabase for Postgres. The same guide has a step-by-step **demo deployment**.
 
 ## Demo
 

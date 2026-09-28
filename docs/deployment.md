@@ -21,7 +21,7 @@ Staging runs with `NODE_ENV=production` on purpose, so every production safety c
 | Component | Recommended host | Notes |
 | --- | --- | --- |
 | Storefront and admin (`frontend/`) | Vercel, or any Node host running `next start` | Needs `BACKEND_URL` to reach the API |
-| Commerce API (`backend/`) | Railway (Docker, [`railway.json`](../railway.json)), or any long-running Node host (Render, Fly.io, a VM) | Runs the HTTP server and, for one instance, the job scheduler |
+| Commerce API (`backend/`) | Render (Docker, [`render.yaml`](../render.yaml)), Railway ([`railway.json`](../railway.json)), or any long-running Node host | Runs the HTTP server and, for one instance, the job scheduler |
 | Database | Supabase Postgres | See [supabase.md](supabase.md) |
 
 The API is a long-running process (background jobs, connection pool), so it's best on a container or VM host. If you prefer serverless for the API, set `DISABLE_SCHEDULER=true` and run `npm run jobs:run -w backend` from a scheduler every minute.
@@ -110,9 +110,9 @@ Webhook routes skip the browser-origin check and rely on signatures over the raw
 
 ## Demo deployment
 
-A public demo with simulated payments and a fixed OTP (see [demo.md](demo.md)). Architecture: **Vercel** (storefront) → `/api/*` rewrite → **Railway** (API, Docker) → **Supabase** (Postgres). The browser only ever talks to the Vercel domain, so cookies are first-party and there is no CORS.
+A public demo with simulated payments and a fixed OTP (see [demo.md](demo.md)). Architecture: **Vercel** (storefront) → `/api/*` rewrite → **Render** (API, Docker, free plan) → **Supabase** (Postgres). The browser only ever talks to the Vercel domain, so cookies are first-party and there is no CORS.
 
-All four accounts belong to **pendyala.tapan@gmail.com**: Supabase, GitHub (`Tapanp1710/WovenWhale`), Railway and Vercel. Each login below opens a browser; make sure you're signed in with that account (sign out of other accounts first if the browser picks one automatically).
+All accounts belong to **pendyala.tapan@gmail.com**: Supabase, GitHub (`Tapanp1710/WovenWhale`), Render and Vercel. Each login opens a browser; make sure it's that account (sign out of others first if the browser picks one automatically). Everything below fits the free plans.
 
 1. **Database (Supabase).** Sign in at [supabase.com](https://supabase.com/dashboard) as pendyala.tapan@gmail.com → **New project** `wovenwhale-demo`, region **Mumbai (ap-south-1)**, save the database password. From **Connect**, copy the **Session pooler** URI (port 5432).
 2. **Secrets.** `cp .env.demo.example .env.demo` and fill it in: the database URI, three generated secrets and a generated `DEMO_TOTP_SECRET`. Choose the Vercel project name now so `SITE_URL` is known (for example `https://wovenwhale-demo.vercel.app`).
@@ -124,41 +124,32 @@ All four accounts belong to **pendyala.tapan@gmail.com**: Supabase, GitHub (`Tap
    npm run demo:seed          # catalog, demo stock/orders, demo accounts with 2FA
    ```
 
-4. **API on Railway.** [`railway.json`](../railway.json) tells Railway to build [`backend/Dockerfile`](../backend/Dockerfile), run migrations on start and health-check `/api/health`. From the **repository root**:
+4. **API on Render.** The code must be on GitHub (`git push`). Sign up at [render.com](https://render.com) as pendyala.tapan@gmail.com and connect GitHub, then **New → Blueprint** → `Tapanp1710/WovenWhale`. Render reads [`render.yaml`](../render.yaml): a free Docker web service in Singapore built from [`backend/Dockerfile`](../backend/Dockerfile), health-checked on `/api/health`, running migrations on every start. It asks for the values marked `sync: false`; copy them from `.env.demo`: `DATABASE_URL`, `SESSION_SECRET`, `MFA_ENCRYPTION_KEY`, `MOCK_PAYMENT_WEBHOOK_SECRET`, `SITE_URL`, `ALLOWED_ORIGINS`. When the deploy finishes, open `https://wovenwhale-api.onrender.com/api/health` (Render shows the exact URL) → `{"status":"ok"}`. Every push to `main` redeploys.
 
-   ```bash
-   npx @railway/cli login            # browser: sign in as pendyala.tapan@gmail.com
-   npx @railway/cli init             # new project, e.g. wovenwhale-api
-   npx @railway/cli up               # builds the Dockerfile from this folder and deploys
-   npx @railway/cli domain           # gives the API a public https://…up.railway.app URL
-   ```
-
-   Then set the variables in the Railway dashboard (**Variables → Raw editor**), copying the values from `.env.demo`: `NODE_ENV`, `DEMO_MODE`, `DATABASE_URL`, `DATABASE_POOL_MAX`, `SESSION_SECRET`, `MFA_ENCRYPTION_KEY`, `MOCK_PAYMENT_WEBHOOK_SECRET`, `ADMIN_MFA_REQUIRED`, `TRUSTED_PROXY_HOPS`, `PAYMENT_PROVIDER`, `OTP_PROVIDER`, `OTP_DEV_FIXED_CODE`, `WHATSAPP_PROVIDER`, `WHATSAPP_SEND_ENABLED`, `STORAGE_PROVIDER`, `SITE_URL`, `ALLOWED_ORIGINS`. Don't set `PORT`; Railway provides it. Railway redeploys on save; check `https://<api>.up.railway.app/api/health` → `{"status":"ok"}`. In **Settings**, set the region to **Southeast Asia (Singapore)** (closest to India).
-
-   Alternatively connect the GitHub repository in Railway (**New project → Deploy from GitHub repo → Tapanp1710/WovenWhale**) so every push to `main` deploys.
-
-5. **Storefront on Vercel.** The API must be up first: the storefront pre-renders the homepage from it during the build. Run these from the **repository root** (the storefront imports shared contracts from `backend/`, so the whole workspace is uploaded):
+5. **Storefront on Vercel.** Open the API's `/api/health` URL first so the free instance is awake: the storefront pre-renders the homepage from the API during the build. Then, from the **repository root** (the storefront imports shared contracts from `backend/`, so the whole workspace is uploaded):
 
    ```bash
    npx vercel login                 # sign in as pendyala.tapan@gmail.com
    npx vercel link                  # new project, e.g. wovenwhale-demo; "code located in": ./frontend
-   npx vercel env add BACKEND_URL production           # https://<api>.up.railway.app
+   npx vercel env add BACKEND_URL production           # https://wovenwhale-api.onrender.com
    npx vercel env add SITE_URL production              # https://wovenwhale-demo.vercel.app
    npx vercel env add ADMIN_PORTAL_TRIGGER production  # 7391
    npx vercel deploy --prod
    ```
 
-   Or import `Tapanp1710/WovenWhale` in the Vercel dashboard with **Root Directory = `frontend`** and the same variables.
+   Or import `Tapanp1710/WovenWhale` in the Vercel dashboard with **Root Directory = `frontend`** and the same variables; then every push to `main` redeploys the storefront too.
 
-6. **Check it.** Open the storefront: the demo banner shows, products load, sign in with `70000 99999` / `123456`, place a COD and a prepaid order, sign in to `/admin` as `orders@wovenwhale.local` with the 2FA code, approve the COD order. Then, as `owner@…`, open `https://<vercel-domain>/api/admin/diagnostics/request`: `clientIp` must be your own public IP. If it shows a Vercel or Railway address instead, adjust `TRUSTED_PROXY_HOPS` on Railway (the `x-forwarded-for` list shows how many entries follow yours). The automated check: `E2E_BASE_URL=https://<vercel-domain> DEMO_TOTP_SECRET=<key> npx playwright test e2e/demo-acceptance.spec.ts` in `frontend/`.
+6. **Check it.** Open the storefront: the demo banner shows, products load, sign in with `70000 99999` / `123456`, place a COD and a prepaid order, sign in to `/admin` as `orders@wovenwhale.local` with the 2FA code, approve the COD order. Then, as `owner@…`, open `https://<vercel-domain>/api/admin/diagnostics/request`: `clientIp` must be your own public IP. If it shows a Vercel or Render address instead, adjust `TRUSTED_PROXY_HOPS` in the Render dashboard (the `x-forwarded-for` list shows how many entries follow yours). The automated check: `E2E_BASE_URL=https://<vercel-domain> DEMO_TOTP_SECRET=<key> npx playwright test e2e/demo-acceptance.spec.ts` in `frontend/`.
 
-**Costs.** Supabase and Vercel have free plans that cover a demo. Railway gives a one-time trial credit, then needs a paid plan (Hobby, about $5/month) to keep the API running.
+**Free-plan behaviour.**
+- The Render API sleeps after 15 minutes without requests; the next request takes about a minute while it wakes. Before a demo, open the site (or `/api/health`) once and it stays fast while in use.
+- Background jobs (payment expiry, refunds, notifications) pause while it sleeps and catch up when it wakes.
+- Uploaded product photos are stored on the instance's disk, which is reset on every deploy; the catalogue photos ship with the storefront and are unaffected. For lasting uploads use `STORAGE_PROVIDER=supabase` (see [supabase.md](supabase.md#4-storage-optional)).
+- A free Supabase project pauses after a week without activity; resume it from the dashboard.
 
-**Razorpay test mode instead of the simulated gateway:** set `PAYMENT_PROVIDER=razorpay` and the `rzp_test_` keys on Railway, and add the webhook `https://<vercel-domain>/api/webhooks/payments/razorpay` in the Razorpay dashboard (test mode). `DEMO_MODE` accepts test keys and refuses live ones.
+**Razorpay test mode instead of the simulated gateway:** set `PAYMENT_PROVIDER=razorpay` and the `rzp_test_` keys in the Render dashboard, and add the webhook `https://<vercel-domain>/api/webhooks/payments/razorpay` in the Razorpay dashboard (test mode). `DEMO_MODE` accepts test keys and refuses live ones.
 
-**Background jobs** run inside the API process, which stays up on Railway.
-
-**Other Docker hosts.** The same image runs anywhere: [`render.yaml`](../render.yaml) is a ready Render blueprint, and `fly launch --dockerfile backend/Dockerfile` works on Fly.io.
+**Always-on alternative.** Railway (Hobby plan, about $5/month) runs the same image without sleeping: [`railway.json`](../railway.json) is ready; `npx @railway/cli login`, `npx @railway/cli init`, `npx @railway/cli up`, `npx @railway/cli domain`, then set the same variables. Render's paid instances also stay awake.
 
 **Reset:** `npm run demo:reset -- --confirm=<database host>`.
 

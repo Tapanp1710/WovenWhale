@@ -1,4 +1,5 @@
-# Render Blueprint for the commerce API (demo deployment).
+# Render Blueprint for the commerce API (demo deployment, free plan).
+# The API listens on the PORT Render provides and runs migrations on start.
 # Render → New → Blueprint → pick this repository. Values marked `sync: false`
 # are asked for in the dashboard: copy them from your .env.demo (never commit it).
 # The storefront is deployed separately on Vercel (see docs/deployment.md).
@@ -16,8 +17,6 @@ services:
         value: production
       - key: DEMO_MODE
         value: "true"
-      - key: BACKEND_PORT
-        value: "10000"
       - key: ADMIN_MFA_REQUIRED
         value: "true"
       # Vercel's edge adds the visitor to X-Forwarded-For and Render appends Vercel's address.
