@@ -16,7 +16,7 @@ PostgreSQL 15+ (Supabase in production, Docker locally). Schema is defined in Ty
 | Area | Tables |
 | --- | --- |
 | Identity | `users`, `customer_profiles`, `addresses`, `otp_challenges`, `sessions` |
-| Admin and RBAC | `admin_users`, `roles`, `permissions`, `role_permissions`, `audit_logs`, `store_settings` |
+| Admin and RBAC | `admin_users` (with encrypted TOTP secret and 2FA lockout counters), `admin_recovery_codes`, `roles`, `permissions`, `role_permissions`, `audit_logs`, `store_settings` |
 | Catalog | `categories`, `products`, `product_categories`, `product_variants`, `product_images` |
 | Inventory | `inventory` (one row per variant), `inventory_transactions` (append-only journal) |
 | Shopping | `carts`, `cart_items`, `checkout_sessions`, `wishlists`, `wishlist_items` |
@@ -51,9 +51,18 @@ PostgreSQL 15+ (Supabase in production, Docker locally). Schema is defined in Ty
 
 ## Row Level Security
 
-Migration `0001_enable_rls` enables RLS on every table without policies and revokes table privileges from Supabase's `anon` and `authenticated` roles. The API connects with the database owner role and isn't affected; Supabase's auto-generated REST and GraphQL endpoints can read or write nothing. Migration `0002` does the same for tables it adds. Any future table needs the same treatment (see [security.md](security.md)).
+Migration `0001_enable_rls` enables RLS on every table without policies and revokes table privileges from Supabase's `anon` and `authenticated` roles. The API connects with the database owner role and isn't affected; Supabase's auto-generated REST and GraphQL endpoints can read or write nothing. Migration `0002` does the same for tables it adds. Migration `0004_admin_mfa` re-applies RLS to every table and also revokes `anon`/`authenticated` privileges on sequences and functions and in **default privileges**, so tables created later get no Data API access either. A new table still needs `ALTER TABLE … ENABLE ROW LEVEL SECURITY` in its migration; `npm run db:verify` fails if one is missing.
 
 ## Migrations
+
+| Migration | What it does |
+| --- | --- |
+| `0000_init` | Full commerce schema |
+| `0001_enable_rls` | RLS on every table, no grants for Supabase API roles |
+| `0002_newsletter_support` | Newsletter subscribers and support requests |
+| `0003_variant_nulls_not_distinct` | Variant uniqueness treats a missing colour as one value |
+| `0004_admin_mfa` | Admin TOTP 2FA columns, recovery codes, Supabase grant hardening |
+| `0005_whatsapp_reply_permission` | `whatsapp.reply` permission for existing roles (data migration) |
 
 ```bash
 # change files in backend/src/db/schema, then:
@@ -64,6 +73,8 @@ npm run db:migrate           # applies pending migrations (tracked in drizzle.__
 - Review generated SQL before committing. Never edit an applied migration; add a new one.
 - Custom SQL (RLS, data backfills) goes in a custom migration: `npx drizzle-kit generate --custom --name <name>` in `backend/`.
 - Every migration must be safe to run on a live database: add nullable columns or defaults first, backfill, then tighten.
+- The migration files are the only source of truth. Don't change a schema in the Supabase dashboard or through the MCP server; if it happened, capture it in a migration.
+- After migrating any environment, run `npm run db:verify` (read-only): it checks every migration is applied, RLS is on for every table and Supabase's API roles hold no privileges.
 
 ## Useful queries
 

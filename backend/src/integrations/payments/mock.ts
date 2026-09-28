@@ -40,9 +40,16 @@ export class MockPaymentProvider implements PaymentProvider {
 
   async createPayment(input: CreatePaymentInput): Promise<CreatePaymentResult> {
     const providerOrderId = `mock_order_${randomToken(12)}`;
+    return { providerOrderId, clientCheckout: this.checkoutFor({ ...input, providerOrderId }) };
+  }
+
+  checkoutFor(input: CreatePaymentInput & { providerOrderId: string }) {
     return {
-      providerOrderId,
-      clientCheckout: { gateway: "mock", providerOrderId, amountPaise: input.amountPaise, currency: input.currency },
+      gateway: "mock",
+      providerOrderId: input.providerOrderId,
+      amountPaise: input.amountPaise,
+      currency: input.currency,
+      orderNumber: input.orderNumber,
     };
   }
 

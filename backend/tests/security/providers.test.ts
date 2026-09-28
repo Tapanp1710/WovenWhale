@@ -39,6 +39,19 @@ describe("Razorpay adapter", () => {
     expect(result.clientCheckout.key).toBe("rzp_test_key");
   });
 
+  it("resuming an open attempt still gives Checkout the publishable key (and never the secret)", () => {
+    const checkout = rzp().checkoutFor({
+      orderId: "o1",
+      orderNumber: "WW123",
+      amountPaise: 249900,
+      currency: "INR",
+      customer: { name: "Meera", phone: "+919812345678", email: "meera@example.com" },
+      providerOrderId: "order_ABC",
+    });
+    expect(checkout).toMatchObject({ gateway: "razorpay", key: "rzp_test_key", providerOrderId: "order_ABC", amountPaise: 249900 });
+    expect(JSON.stringify(checkout)).not.toContain(KEY_SECRET);
+  });
+
   it("refuses a gateway order whose amount differs", async () => {
     const { impl } = fakeFetch([{ status: 200, body: { id: "order_ABC", amount: 100 } }]);
     await expect(

@@ -35,26 +35,22 @@ export async function initiatePayment(orderId: string): Promise<NonNullable<Plac
     .where(and(eq(payments.orderId, o.id), inArray(payments.status, ["PAYMENT_INITIATED", "PAYMENT_PENDING"])))
     .orderBy(desc(payments.createdAt))
     .limit(1);
-  if (open?.providerOrderId) {
-    return {
-      provider: open.provider,
-      clientCheckout: {
-        gateway: open.provider,
-        providerOrderId: open.providerOrderId,
-        amountPaise: open.amountPaise,
-        currency: "INR",
-        orderNumber: o.orderNumber,
-      },
-    };
-  }
-
-  const created = await providers.payments.createPayment({
+  const session = {
     orderId: o.id,
     orderNumber: o.orderNumber,
     amountPaise: o.totalPaise,
-    currency: "INR",
+    currency: "INR" as const,
     customer: { name: order.name ?? o.shippingAddress.fullName, phone: order.phone, email: order.email },
-  });
+  };
+  // Resume the open attempt (same gateway order) rather than creating a second one the customer could also pay.
+  if (open?.providerOrderId && open.provider === providers.payments.name) {
+    return {
+      provider: open.provider,
+      clientCheckout: providers.payments.checkoutFor({ ...session, amountPaise: open.amountPaise, providerOrderId: open.providerOrderId }),
+    };
+  }
+
+  const created = await providers.payments.createPayment(session);
   await db.transaction(async (tx) => {
     await tx.insert(payments).values({
       orderId: o.id,

@@ -83,20 +83,21 @@ export class RazorpayPaymentProvider implements PaymentProvider {
       notes: { orderNumber: input.orderNumber },
     });
     if (order.amount !== input.amountPaise) throw new Error("Razorpay order amount mismatch");
+    return { providerOrderId: order.id, clientCheckout: this.checkoutFor({ ...input, providerOrderId: order.id }) };
+  }
+
+  /** The key id is Razorpay's publishable key; the secret never leaves the server. */
+  checkoutFor(input: CreatePaymentInput & { providerOrderId: string }) {
     return {
-      providerOrderId: order.id,
-      // The key id is Razorpay's publishable key; the secret never leaves the server.
-      clientCheckout: {
-        gateway: "razorpay",
-        key: this.keyId,
-        providerOrderId: order.id,
-        amountPaise: input.amountPaise,
-        currency: input.currency,
-        orderNumber: input.orderNumber,
-        prefillName: input.customer.name,
-        prefillContact: input.customer.phone,
-        ...(input.customer.email ? { prefillEmail: input.customer.email } : {}),
-      },
+      gateway: "razorpay",
+      key: this.keyId,
+      providerOrderId: input.providerOrderId,
+      amountPaise: input.amountPaise,
+      currency: input.currency,
+      orderNumber: input.orderNumber,
+      prefillName: input.customer.name,
+      prefillContact: input.customer.phone,
+      ...(input.customer.email ? { prefillEmail: input.customer.email } : {}),
     };
   }
 

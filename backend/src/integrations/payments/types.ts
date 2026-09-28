@@ -42,6 +42,8 @@ export interface RefundResult {
 export interface PaymentProvider {
   readonly name: string;
   createPayment(input: CreatePaymentInput): Promise<CreatePaymentResult>;
+  /** Browser-safe checkout data for an existing gateway order (used to resume an open attempt). */
+  checkoutFor(input: CreatePaymentInput & { providerOrderId: string }): CreatePaymentResult["clientCheckout"];
   /**
    * Verifies the signed payload the storefront receives from the gateway's
    * client SDK after checkout. Returns null when the signature is invalid.
