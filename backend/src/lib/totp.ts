@@ -78,7 +78,13 @@ export function verifyTotp(secretB32: string, code: string, nowMs = Date.now()):
 
 export function otpauthUrl(secretB32: string, account: string, issuer: string) {
   const label = encodeURIComponent(`${issuer}:${account}`);
-  const params = new URLSearchParams({ secret: secretB32, issuer, algorithm: "SHA1", digits: String(DIGITS), period: String(TOTP_PERIOD_SECONDS) });
+  const params = new URLSearchParams({
+    secret: secretB32,
+    issuer,
+    algorithm: "SHA1",
+    digits: String(DIGITS),
+    period: String(TOTP_PERIOD_SECONDS),
+  });
   return `otpauth://totp/${label}?${params.toString()}`;
 }
 

@@ -19,7 +19,9 @@ const one = async <T>(rows: Promise<readonly T[]>) => (await rows)[0]!;
 const { version } = await one(sql<{ version: string }[]>`select current_setting('server_version') as version`);
 ok(`PostgreSQL ${version}`);
 
-const { applied } = await one(sql<{ applied: number }[]>`select count(*)::int as applied from drizzle.__drizzle_migrations`.catch(() => [{ applied: 0 }]));
+const { applied } = await one(
+  sql<{ applied: number }[]>`select count(*)::int as applied from drizzle.__drizzle_migrations`.catch(() => [{ applied: 0 }]),
+);
 if (applied === journal.entries.length) ok(`all ${applied} migrations applied`);
 else problems.push(`${applied} of ${journal.entries.length} migrations applied — run npm run db:migrate`);
 
@@ -34,7 +36,13 @@ if (supabase) {
     select grantee, table_name, privilege_type from information_schema.role_table_grants
     where table_schema = 'public' and grantee in ('anon', 'authenticated')`;
   if (grants.length === 0) ok("anon/authenticated have no table privileges (Supabase Data API exposes nothing)");
-  else problems.push(`Supabase API roles have grants: ${grants.slice(0, 10).map((g) => `${g.grantee}:${g.privilege_type}:${g.table_name}`).join(", ")}`);
+  else
+    problems.push(
+      `Supabase API roles have grants: ${grants
+        .slice(0, 10)
+        .map((g) => `${g.grantee}:${g.privilege_type}:${g.table_name}`)
+        .join(", ")}`,
+    );
   const policies = await sql<{ n: number }[]>`select count(*)::int as n from pg_policies where schemaname = 'public'`;
   if (policies[0]!.n === 0) ok("no RLS policies (deny-by-default)");
   else problems.push(`${policies[0]!.n} RLS policies exist in public — review them; the API is the only intended data path`);

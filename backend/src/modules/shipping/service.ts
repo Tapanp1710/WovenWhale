@@ -69,9 +69,11 @@ export async function createShipment(
     });
   } catch (error) {
     // The carrier booking exists but the order didn't ship: cancel it so no pickup is scheduled.
-    await providers.shipping.cancelShipment(booked.providerShipmentId).catch((cancelError: unknown) =>
-      logger.error("shipment_cancel_failed", { orderId, providerShipmentId: booked.providerShipmentId, error: String(cancelError) }),
-    );
+    await providers.shipping
+      .cancelShipment(booked.providerShipmentId)
+      .catch((cancelError: unknown) =>
+        logger.error("shipment_cancel_failed", { orderId, providerShipmentId: booked.providerShipmentId, error: String(cancelError) }),
+      );
     if ((error as { cause?: { code?: string } }).cause?.code === "23505") {
       throw new DomainError("AWB_IN_USE", "This AWB number is already assigned to another shipment.", 409);
     }

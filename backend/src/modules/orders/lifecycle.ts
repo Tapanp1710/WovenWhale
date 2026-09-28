@@ -58,11 +58,7 @@ export async function refundedAmount(tx: Tx, orderId: string, statuses: RefundSt
     .from(refunds)
     .leftJoin(payments, eq(payments.id, refunds.paymentId))
     .where(
-      and(
-        eq(refunds.orderId, orderId),
-        inArray(refunds.status, statuses),
-        or(isNull(refunds.paymentId), eq(payments.isDuplicate, false)),
-      ),
+      and(eq(refunds.orderId, orderId), inArray(refunds.status, statuses), or(isNull(refunds.paymentId), eq(payments.isDuplicate, false))),
     );
   return Number(row?.total ?? 0);
 }

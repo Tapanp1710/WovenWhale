@@ -56,7 +56,10 @@ export const mfaVerifySchema = z.discriminatedUnion("method", [
   z.object({ method: z.literal("totp"), code: totpCode }),
   z.object({
     method: z.literal("recovery"),
-    code: z.string().trim().regex(/^[0-9A-Za-z]{5}-?[0-9A-Za-z]{5}$/, "Recovery codes look like ABCDE-FGHJK"),
+    code: z
+      .string()
+      .trim()
+      .regex(/^[0-9A-Za-z]{5}-?[0-9A-Za-z]{5}$/, "Recovery codes look like ABCDE-FGHJK"),
   }),
 ]);
 

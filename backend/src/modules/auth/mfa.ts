@@ -123,7 +123,10 @@ export async function enableMfa(actor: Actor, code: string, userAgent: string | 
   if (!admin.totpSecret) throw new DomainError("MFA_SETUP_REQUIRED", "Start setup again to get a new key.", 409);
   if (!(await consumeTotp(admin.id, admin.totpSecret, code))) throw invalidCode();
 
-  await db.update(adminUsers).set({ totpEnabledAt: new Date(), mfaFailedCount: 0, mfaLockedUntil: null }).where(eq(adminUsers.id, admin.id));
+  await db
+    .update(adminUsers)
+    .set({ totpEnabledAt: new Date(), mfaFailedCount: 0, mfaLockedUntil: null })
+    .where(eq(adminUsers.id, admin.id));
   const recoveryCodes = await replaceRecoveryCodes(admin.id);
   await recordAudit(db, actor, { action: "admin.mfa_enabled", entityType: "admin_user", entityId: admin.id });
   const token = await issueVerifiedSession(admin.id, userAgent);
@@ -158,7 +161,12 @@ export async function verifySecondFactor(adminId: string, input: SecondFactor, u
   const ok =
     input.method === "totp" ? await consumeTotp(adminId, admin.totpSecret, input.code) : await consumeRecoveryCode(adminId, input.code);
   if (!ok) {
-    await recordAudit(db, admin, { action: "admin.mfa_failed", entityType: "admin_user", entityId: adminId, after: { method: input.method } });
+    await recordAudit(db, admin, {
+      action: "admin.mfa_failed",
+      entityType: "admin_user",
+      entityId: adminId,
+      after: { method: input.method },
+    });
     throw invalidCode(MFA_MAX_FAILURES - attempt.attempts);
   }
 
@@ -185,7 +193,8 @@ export async function regenerateRecoveryCodes(actor: Actor, code: string) {
 }
 
 export async function disableMfa(actor: Actor, code: string) {
-  if (env.ADMIN_MFA_REQUIRED) throw new DomainError("MFA_REQUIRED_BY_POLICY", "Two-factor authentication is required for every admin.", 409);
+  if (env.ADMIN_MFA_REQUIRED)
+    throw new DomainError("MFA_REQUIRED_BY_POLICY", "Two-factor authentication is required for every admin.", 409);
   await requireCurrentCode(actor.id, code);
   await clearMfa(actor.id);
   await recordAudit(db, actor, { action: "admin.mfa_disabled", entityType: "admin_user", entityId: actor.id });

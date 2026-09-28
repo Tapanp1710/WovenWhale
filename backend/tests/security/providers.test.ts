@@ -55,7 +55,13 @@ describe("Razorpay adapter", () => {
   it("refuses a gateway order whose amount differs", async () => {
     const { impl } = fakeFetch([{ status: 200, body: { id: "order_ABC", amount: 100 } }]);
     await expect(
-      rzp(impl).createPayment({ orderId: "o", orderNumber: "WW1", amountPaise: 249900, currency: "INR", customer: { name: "", phone: "", email: null } }),
+      rzp(impl).createPayment({
+        orderId: "o",
+        orderNumber: "WW1",
+        amountPaise: 249900,
+        currency: "INR",
+        customer: { name: "", phone: "", email: null },
+      }),
     ).rejects.toThrow(/mismatch/);
   });
 
@@ -72,7 +78,9 @@ describe("Razorpay adapter", () => {
     event: "payment.captured",
     created_at: 1_790_000_000,
     payload: {
-      payment: { entity: { id: "pay_1", order_id: "order_1", amount: 249900, currency: "INR", card: { last4: "1111" }, contact: "+919812345678" } },
+      payment: {
+        entity: { id: "pay_1", order_id: "order_1", amount: 249900, currency: "INR", card: { last4: "1111" }, contact: "+919812345678" },
+      },
     },
   });
 
@@ -104,7 +112,10 @@ describe("Razorpay adapter", () => {
   it("maps refund events and refund API status", async () => {
     const body = JSON.stringify({
       event: "refund.processed",
-      payload: { refund: { entity: { id: "rfnd_1", payment_id: "pay_1", amount: 5000 } }, payment: { entity: { id: "pay_1", order_id: "order_1", amount: 249900, currency: "INR" } } },
+      payload: {
+        refund: { entity: { id: "rfnd_1", payment_id: "pay_1", amount: 5000 } },
+        payment: { entity: { id: "pay_1", order_id: "order_1", amount: 249900, currency: "INR" } },
+      },
     });
     const event = await rzp().parseWebhook(body, new Headers({ "x-razorpay-signature": hmac(WEBHOOK_SECRET, body) }));
     expect(event).toMatchObject({ type: "refund.processed", providerRefundId: "rfnd_1", amountPaise: null });
@@ -149,9 +160,9 @@ describe("WhatsApp Cloud API adapter", () => {
     const sent = JSON.parse(String(calls[0]!.init.body));
     expect(sent).toMatchObject({ to: "919812345678", type: "template", template: { name: "order_confirmed", language: { code: "en" } } });
 
-    await expect(meta(fakeFetch([{ status: 400, body: { error: { message: "Template not approved" } } }]).impl).sendText("+91", "hi")).rejects.toThrow(
-      /Template not approved/,
-    );
+    await expect(
+      meta(fakeFetch([{ status: 400, body: { error: { message: "Template not approved" } } }]).impl).sendText("+91", "hi"),
+    ).rejects.toThrow(/Template not approved/);
   });
 
   it("accepts only webhooks signed with the app secret", () => {
@@ -169,7 +180,9 @@ describe("WhatsApp Cloud API adapter", () => {
             {
               value: {
                 statuses: [{ id: "wamid.1", status: "delivered", timestamp: "1790000000" }],
-                messages: [{ id: "wamid.2", from: "919812345678", timestamp: "1790000001", type: "text", text: { body: "Where is my order?" } }],
+                messages: [
+                  { id: "wamid.2", from: "919812345678", timestamp: "1790000001", type: "text", text: { body: "Where is my order?" } },
+                ],
               },
             },
           ],
@@ -184,14 +197,17 @@ describe("shipping webhook", () => {
   const body = JSON.stringify({ events: [{ awb: "AWB1", status: "DELIVERED", occurredAt: "2026-09-20T10:00:00Z", id: "e1" }] });
 
   it("accepts a correctly signed tracking update", async () => {
-    const events = await new ManualShippingProvider("ship_secret").parseWebhook(body, new Headers({ "x-shipping-signature": hmac("ship_secret", body) }));
+    const events = await new ManualShippingProvider("ship_secret").parseWebhook(
+      body,
+      new Headers({ "x-shipping-signature": hmac("ship_secret", body) }),
+    );
     expect(events[0]).toMatchObject({ awb: "AWB1", status: "DELIVERED", providerEventId: "e1" });
   });
 
   it("rejects unsigned updates, and all updates when no secret is configured", async () => {
     await expect(new ManualShippingProvider("ship_secret").parseWebhook(body, new Headers())).rejects.toBeInstanceOf(InvalidSignatureError);
-    await expect(new ManualShippingProvider("").parseWebhook(body, new Headers({ "x-shipping-signature": hmac("", body) }))).rejects.toBeInstanceOf(
-      InvalidSignatureError,
-    );
+    await expect(
+      new ManualShippingProvider("").parseWebhook(body, new Headers({ "x-shipping-signature": hmac("", body) })),
+    ).rejects.toBeInstanceOf(InvalidSignatureError);
   });
 });

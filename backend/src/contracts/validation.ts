@@ -41,7 +41,12 @@ export const optionalEmailSchema = blankable
 
 export const optionalText = (max: number) =>
   blankable
-    .transform((s) => s.replace(/[\u0000-\u001F\u007F]/g, " ").replace(/\s+/g, " ").trim())
+    .transform((s) =>
+      s
+        .replace(/[\u0000-\u001F\u007F]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim(),
+    )
     .pipe(z.string().max(max))
     .transform((s) => s || null)
     .optional();

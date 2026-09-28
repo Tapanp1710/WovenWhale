@@ -25,7 +25,9 @@ test.describe("security boundaries (API)", () => {
 
     // Unsigned or mis-signed: rejected before anything is parsed.
     const forged = event("evt_forged", placed.totalPaise);
-    expect((await hook.post("/api/webhooks/payments/mock", { data: forged, headers: { "Content-Type": "application/json" } })).status()).toBe(401);
+    expect(
+      (await hook.post("/api/webhooks/payments/mock", { data: forged, headers: { "Content-Type": "application/json" } })).status(),
+    ).toBe(401);
     expect(
       (
         await hook.post("/api/webhooks/payments/mock", {
@@ -75,12 +77,15 @@ test.describe("security boundaries (API)", () => {
     const hook = await anonymous();
     const body = JSON.stringify({ entry: [] });
     expect((await hook.post("/api/webhooks/whatsapp", { data: body, headers: { "Content-Type": "application/json" } })).status()).toBe(401);
-    expect(
-      (await hook.get("/api/webhooks/whatsapp?hub.mode=subscribe&hub.verify_token=guess&hub.challenge=123")).status(),
-    ).toBe(403);
+    expect((await hook.get("/api/webhooks/whatsapp?hub.mode=subscribe&hub.verify_token=guess&hub.challenge=123")).status()).toBe(403);
     const tracking = JSON.stringify({ events: [{ awb: "AWB1", status: "DELIVERED", occurredAt: new Date().toISOString() }] });
     expect(
-      (await hook.post("/api/webhooks/shipping/manual", { data: tracking, headers: { "Content-Type": "application/json", "x-shipping-signature": "00" } })).status(),
+      (
+        await hook.post("/api/webhooks/shipping/manual", {
+          data: tracking,
+          headers: { "Content-Type": "application/json", "x-shipping-signature": "00" },
+        })
+      ).status(),
     ).toBe(401);
     await hook.dispose();
   });

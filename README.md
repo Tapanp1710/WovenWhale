@@ -7,7 +7,7 @@ The direct-to-consumer commerce platform for **WovenWhale**, a handwoven menswea
 | Storefront and admin UI | [`frontend/`](frontend) | Next.js 16 (App Router), React 19, TypeScript, CSS Modules, Framer Motion, React Hook Form, Zod, Recharts |
 | Commerce API | [`backend/`](backend) | Hono on Node.js, Drizzle ORM, PostgreSQL, Zod, Vitest |
 | Shared contracts | [`backend/src/contracts`](backend/src/contracts) | Zod schemas, DTO types and lifecycle enums used by both apps |
-| Docs | [`docs/`](docs) | Architecture, database, order state machine, integrations, deployment, security |
+| Docs | [`docs/`](docs) | Architecture, database, Supabase, order state machine, integrations, deployment, security |
 
 ## Architecture at a glance
 
@@ -48,7 +48,7 @@ Generate a session secret:
 node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"
 ```
 
-Open http://localhost:3000. In development the OTP code is the value of `OTP_DEV_FIXED_CODE` (default `123456`), and it is also printed in the API console.
+Open http://localhost:3000. In development the OTP code is the value of `OTP_DEV_FIXED_CODE` (default `123456`), and it is also printed in the API console. These are **development-only** conveniences: production refuses the mock OTP provider.
 
 ### Development commands
 
@@ -59,7 +59,8 @@ Open http://localhost:3000. In development the OTP code is the value of `OTP_DEV
 | `npm run db:generate` | Generate a migration from schema changes (`backend/src/db/schema`) |
 | `npm run db:migrate` | Apply pending migrations |
 | `npm run db:seed` | Seed reference data, the catalog snapshot and demo activity |
-| `npm run db:reset` | **Local only.** Drop everything, migrate and seed again |
+| `npm run db:verify` | Read-only check: migrations applied, RLS on every table, no Supabase API-role grants |
+| `npm run db:reset` | **Local only** (refuses non-localhost databases). Drop everything, migrate and seed again |
 | `npm run catalog:import` | Refresh the catalog snapshot from wovenwhale.com (see below) |
 | `npm run typecheck` | Type-check both workspaces |
 | `npm run format` | Prettier across the repo |
@@ -74,21 +75,26 @@ All variables live in one root `.env`, read by both apps. [`.env.example`](.env.
 | URLs | `SITE_URL`, `BACKEND_URL`, `ALLOWED_ORIGINS` | `ALLOWED_ORIGINS` drives the CSRF origin check |
 | Database | `DATABASE_URL`, `DATABASE_POOL_MAX` | Supabase pooled connection string in production |
 | Sessions | `SESSION_SECRET`, `CUSTOMER_SESSION_TTL_DAYS`, `ADMIN_SESSION_TTL_HOURS` | The API refuses to boot in production with the placeholder secret |
+| Admin 2FA | `ADMIN_MFA_REQUIRED`, `MFA_ENCRYPTION_KEY` | Required and a dedicated key in production; never rotate the key in place |
+| Client IP | `CLIENT_IP_HEADER` or `TRUSTED_PROXY_HOPS` | One is required in production so rate limits see real clients ([deployment.md](docs/deployment.md#client-ip-for-rate-limiting)) |
 | Business rules | `ORDER_CANCELLATION_WINDOW_HOURS` (12), `RETURN_WINDOW_DAYS` (14), `PAYMENT_TIMEOUT_MINUTES`, `ABANDONED_CHECKOUT_THRESHOLD_MINUTES` | Deadlines are stored on each order when it's placed or delivered |
-| Providers | `PAYMENT_PROVIDER`, `OTP_PROVIDER`, `WHATSAPP_PROVIDER`, `SHIPPING_PROVIDER`, `EMAIL_PROVIDER`, `STORAGE_PROVIDER` | `mock` payment/OTP are refused in production |
-| Provider secrets | `RAZORPAY_*`, `OTP_API_KEY`, `WHATSAPP_*`, `SHIPPING_*`, `EMAIL_*`, `SUPABASE_SERVICE_ROLE_KEY` | Server only. Never prefix with `NEXT_PUBLIC_` |
-| Messaging | `WHATSAPP_SEND_ENABLED` | Outbound WhatsApp stays off until this is `true` and templates are approved |
+| Providers | `PAYMENT_PROVIDER` (`mock`, `razorpay`), `OTP_PROVIDER` (`mock`, `twilio`), `WHATSAPP_PROVIDER` (`log`, `meta`), `SHIPPING_PROVIDER`, `EMAIL_PROVIDER`, `STORAGE_PROVIDER` | `mock` payment/OTP are refused in production; a selected provider's credentials are checked at boot |
+| Provider secrets | `RAZORPAY_*`, `TWILIO_*`, `WHATSAPP_*`, `SHIPPING_WEBHOOK_SECRET`, `SUPABASE_SERVICE_ROLE_KEY` | Server only. Never prefix with `NEXT_PUBLIC_` |
+| Messaging | `WHATSAPP_SEND_ENABLED` | Outbound WhatsApp stays off until this is `true`, the provider is `meta` and templates are approved |
 | Storefront | `ADMIN_PORTAL_TRIGGER`, `SUPPORT_EMAIL`, `SUPPORT_PHONE`, `SUPPORT_WHATSAPP`, `SUPPORT_HOURS` | Contact channels only appear when set |
 | Operations | `REDIS_URL`, `SENTRY_DSN`, `RATE_LIMIT_MULTIPLIER`, `NEXT_DEV_FS_CACHE` | The multiplier must be 1 in production |
 
-## Supabase setup
+## Supabase
 
-1. Create a Supabase project (Postgres 15+). Under **Project settings, Database**, copy the **pooled** connection string (Supavisor, transaction mode) into `DATABASE_URL`. The client already uses `prepare: false` for pooler compatibility.
-2. Run `npm run db:migrate` against it. The `enable_rls` migration turns on Row Level Security for every table with no policies and revokes table access from `anon` and `authenticated`, so Supabase's auto-generated REST and GraphQL APIs expose nothing even if the anon key leaks. All data access goes through this API.
-3. Optional: set `STORAGE_PROVIDER=supabase`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` and create a **public** bucket named by `SUPABASE_STORAGE_BUCKET` for admin image uploads.
-4. Use separate Supabase projects for staging and production, each with its own `.env`.
+Development runs on local Docker Postgres by default. Every environment beyond that uses its own Supabase project. [docs/supabase.md](docs/supabase.md) covers:
 
-A note on the MCP config: [`.mcp.json`](.mcp.json) points the Supabase MCP server at `https://supabase.com/`, which isn't an MCP endpoint. Use `https://mcp.supabase.com/mcp?project_ref=<ref>` to connect tooling to a development project.
+- the **development / staging / production** split;
+- connection strings (transaction pooler for the API);
+- applying migrations and verifying them with `npm run db:verify`;
+- connecting the **Supabase MCP server** (read-only, scoped to the development project, via [`.mcp.json`](.mcp.json));
+- Storage, backups and restore drills, and how to reset each environment.
+
+Row Level Security is on for every table with no policies, and Supabase's `anon`/`authenticated` roles hold no privileges (including on tables created later), so the auto-generated Data API exposes nothing even if the anon key leaks. The service-role key, if used for Storage, lives only in the API's environment.
 
 ## Seed data
 
@@ -113,12 +119,15 @@ Imports are idempotent: products match on their WooCommerce ID, so re-running up
 ## Testing
 
 ```bash
-npm test                     # 90 backend unit tests (Vitest)
-npm run test:e2e             # Playwright end-to-end suite (starts servers if not running)
+npm run typecheck            # both workspaces
+npm test                     # 132 backend unit tests (Vitest)
+npm run test:e2e             # 31 Playwright tests (starts servers if not running; needs the local database)
+npm run db:verify            # schema, RLS and grants on the database in DATABASE_URL
+npm run build                # production builds of both apps
 ```
 
-- **Unit tests** ([`backend/tests`](backend/tests)) cover coupon rules, price and discount allocation, inventory movements, order and payment state transitions, COD approval, the cancellation window, return eligibility, refund calculations and contract validation.
-- **End-to-end tests** ([`frontend/e2e`](frontend/e2e)) cover browsing, search, filters and sort in the URL, the product page, the bag, prepaid and declined payments, COD pending approval then admin approval, COD rejection, cancellation inside and after 12 hours, and returns inside and after 14 days, admin sign-in, COD approval from the admin queue, and role-based access (a Support admin cannot approve COD). Time windows are tested by moving the stored server-side deadline.
+- **Unit tests** ([`backend/tests`](backend/tests)) cover coupon rules, price and discount allocation, inventory movements, order and payment state transitions, COD approval, the cancellation window, return eligibility, refund calculations and contract validation. Security tests cover TOTP against the RFC 6238 vectors, secret encryption, recovery codes, the production configuration guard, client-IP handling, and signature verification for the Razorpay, Twilio, Meta WhatsApp and shipping adapters (with a fake network).
+- **End-to-end tests** ([`frontend/e2e`](frontend/e2e)) cover browsing, search, filters and sort in the URL, the product page, the bag, prepaid and declined payments, COD pending approval then admin approval, COD rejection, cancellation inside and after 12 hours, and returns inside and after 14 days, admin sign-in, COD approval from the admin queue, and role-based access (a Support admin cannot approve COD). Admin 2FA tests cover enrolment, password-only sessions being useless, code replay, single-use recovery codes, lockout under parallel guessing and super-admin reset, plus the UI flow. Security tests cover unsigned and replayed payment webhooks, wrong-amount captures, parallel OTP guessing, unsigned WhatsApp/shipping webhooks, cross-site requests and client-supplied prices. Time windows are tested by moving the stored server-side deadline.
 
 First run of Playwright needs a browser: `npx playwright install chromium` in `frontend/`. For repeated local runs set `RATE_LIMIT_MULTIPLIER=20` in `.env` (never in production).
 
@@ -132,7 +141,8 @@ npm run start -w frontend    # next start
 
 ## Admin access
 
-- Sign in at `/admin/login`. The development seed creates a super-admin from `SEED_SUPER_ADMIN_EMAIL` / `SEED_SUPER_ADMIN_PASSWORD` (default `owner@wovenwhale.local` / `ChangeMe!2026`). **Change it immediately.**
+- Sign in at `/admin/login`. **Development only:** the seed creates a super-admin from `SEED_SUPER_ADMIN_EMAIL` / `SEED_SUPER_ADMIN_PASSWORD` (default `owner@wovenwhale.local` / `ChangeMe!2026`). This is a local test credential, never a production one.
+- **Two-factor authentication:** after the password, admins enter a code from an authenticator app (or a single-use recovery code). Set it up under **Admin → Sign-in security**. It is mandatory in production (`ADMIN_MFA_REQUIRED=true`), where every admin enrols at first sign-in. Details: [docs/security.md](docs/security.md#admin-two-factor-authentication-totp).
 - In production, create the first super-admin with the idempotent bootstrap instead of the seed:
 
   ```bash
@@ -144,18 +154,32 @@ npm run start -w frontend    # next start
 
 ## Integrations
 
-Payments, OTP, WhatsApp, shipping, email and storage each have an interface and a development adapter. To go live you add an adapter and switch the provider variable. See [docs/integrations.md](docs/integrations.md) for each contract and a step-by-step for Razorpay, MSG91/Twilio/Supabase OTP, WhatsApp Cloud API and Shiprocket/Delhivery.
+Payments, OTP, WhatsApp, shipping, email and storage each have an interface, a development adapter and, where built, a production adapter: **Razorpay** (payments), **Twilio Verify** (OTP) and the **Meta WhatsApp Cloud API**. They switch on with environment variables once you add credentials. They are tested against each provider's documented API but not yet against the live services. See [docs/integrations.md](docs/integrations.md).
 
 ## Deployment
 
 See [docs/deployment.md](docs/deployment.md) (Vercel for the storefront, a Node host for the API, Supabase for Postgres, cron for jobs).
 
+## What needs your accounts
+
+Everything that can be built without your credentials is done. These need you:
+
+| Service | Credentials → variables | Where | Environments | Verification needed |
+| --- | --- | --- | --- | --- |
+| Supabase | Project ref → `SUPABASE_DEV_PROJECT_REF` (shell); pooler URL → `DATABASE_URL`; optional `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | supabase.com → project → Connect / API settings | One project each: dev, staging, production | None; PITR is a paid add-on |
+| Razorpay | `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET` | Dashboard → API keys; Webhooks | Test keys: dev/staging. Live keys: production | KYC and website review before live keys |
+| Twilio Verify | `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_VERIFY_SERVICE_SID` | console.twilio.com → Verify → Services | Staging and production (separate services recommended) | Account upgrade from trial; confirm India SMS/DLT handling with Twilio |
+| WhatsApp Cloud API | `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_BUSINESS_ACCOUNT_ID`, `WHATSAPP_APP_SECRET`, `WHATSAPP_WEBHOOK_VERIFY_TOKEN` (you choose it) | developers.facebook.com → your app → WhatsApp; Business Manager → System users | Test number: staging. Business number: production | Meta business verification, display-name approval, template approval |
+| Shipping | `SHIPPING_WEBHOOK_SECRET` (you choose it) | Your courier or aggregator's webhook settings | Staging and production | Depends on the provider |
+| Secrets you generate | `SESSION_SECRET`, `MFA_ENCRYPTION_KEY` | `node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"` | Different in every environment | None |
+
 ## Production checklist
 
-- [ ] `NODE_ENV=production`, a fresh 48-byte `SESSION_SECRET`, `RATE_LIMIT_MULTIPLIER=1`
-- [ ] `DATABASE_URL` points at the production Supabase pooler; `npm run db:migrate` applied; RLS verified
-- [ ] First super-admin created with `db:bootstrap`; seed **not** run; demo coupons absent
-- [ ] Real payment and OTP adapters configured (`PAYMENT_PROVIDER`, `OTP_PROVIDER` are not `mock`)
+- [ ] `NODE_ENV=production`, a fresh 48-byte `SESSION_SECRET`, a different 48-byte `MFA_ENCRYPTION_KEY`, `ADMIN_MFA_REQUIRED=true`, `RATE_LIMIT_MULTIPLIER=1`
+- [ ] `CLIENT_IP_HEADER` or `TRUSTED_PROXY_HOPS` set for your hosting and verified from two networks
+- [ ] `DATABASE_URL` points at the production Supabase pooler; `npm run db:migrate` applied; `npm run db:verify` passes; point-in-time recovery enabled; a restore drill done in staging
+- [ ] First super-admin created with `db:bootstrap` and enrolled in 2FA, recovery codes stored; seed **not** run; demo coupons absent
+- [ ] `PAYMENT_PROVIDER=razorpay` with **live** keys (KYC complete) and `OTP_PROVIDER=twilio`, each tested end to end in staging first
 - [ ] Payment, shipping and WhatsApp webhook URLs registered with each provider, with their secrets set
 - [ ] `ALLOWED_ORIGINS` and `SITE_URL` set to the real storefront domain(s) over HTTPS
 - [ ] `/api/dev/*` absent (it's only mounted outside production); confirm with a request

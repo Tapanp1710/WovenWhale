@@ -57,7 +57,10 @@ const schema = z
 
     WHATSAPP_ACCESS_TOKEN: z.string().trim().default(""),
     WHATSAPP_PHONE_NUMBER_ID: z.string().trim().default(""),
-    WHATSAPP_GRAPH_VERSION: z.string().regex(/^v\d+\.\d+$/).default("v21.0"),
+    WHATSAPP_GRAPH_VERSION: z
+      .string()
+      .regex(/^v\d+\.\d+$/)
+      .default("v21.0"),
 
     WHATSAPP_APP_SECRET: z.string().default(""),
     WHATSAPP_WEBHOOK_VERIFY_TOKEN: z.string().default(""),
@@ -80,9 +83,18 @@ const schema = z
     const required: Partial<Record<string, (keyof typeof env)[]>> = {
       "PAYMENT_PROVIDER=razorpay": ["RAZORPAY_KEY_ID", "RAZORPAY_KEY_SECRET", "RAZORPAY_WEBHOOK_SECRET"],
       "OTP_PROVIDER=twilio": ["TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN", "TWILIO_VERIFY_SERVICE_SID"],
-      "WHATSAPP_PROVIDER=meta": ["WHATSAPP_ACCESS_TOKEN", "WHATSAPP_PHONE_NUMBER_ID", "WHATSAPP_APP_SECRET", "WHATSAPP_WEBHOOK_VERIFY_TOKEN"],
+      "WHATSAPP_PROVIDER=meta": [
+        "WHATSAPP_ACCESS_TOKEN",
+        "WHATSAPP_PHONE_NUMBER_ID",
+        "WHATSAPP_APP_SECRET",
+        "WHATSAPP_WEBHOOK_VERIFY_TOKEN",
+      ],
     };
-    const selected = [`PAYMENT_PROVIDER=${env.PAYMENT_PROVIDER}`, `OTP_PROVIDER=${env.OTP_PROVIDER}`, `WHATSAPP_PROVIDER=${env.WHATSAPP_PROVIDER}`];
+    const selected = [
+      `PAYMENT_PROVIDER=${env.PAYMENT_PROVIDER}`,
+      `OTP_PROVIDER=${env.OTP_PROVIDER}`,
+      `WHATSAPP_PROVIDER=${env.WHATSAPP_PROVIDER}`,
+    ];
     for (const choice of selected) {
       for (const key of required[choice] ?? []) {
         if (!env[key]) ctx.addIssue({ code: "custom", path: [key], message: `${key} is required when ${choice}` });
@@ -114,7 +126,11 @@ const schema = z
       ctx.addIssue({ code: "custom", path: ["ADMIN_MFA_REQUIRED"], message: "Admin two-factor authentication is mandatory in production" });
     }
     if (env.MFA_ENCRYPTION_KEY.length < 32 || env.MFA_ENCRYPTION_KEY === env.SESSION_SECRET) {
-      ctx.addIssue({ code: "custom", path: ["MFA_ENCRYPTION_KEY"], message: "Set a dedicated MFA_ENCRYPTION_KEY (32+ characters) in production" });
+      ctx.addIssue({
+        code: "custom",
+        path: ["MFA_ENCRYPTION_KEY"],
+        message: "Set a dedicated MFA_ENCRYPTION_KEY (32+ characters) in production",
+      });
     }
     if (!env.CLIENT_IP_HEADER && env.TRUSTED_PROXY_HOPS === 0) {
       ctx.addIssue({

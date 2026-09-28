@@ -1,32 +1,43 @@
 # Deployment
 
-A production deployment has three parts:
+## Environments
+
+| | Development | Staging | Production |
+| --- | --- | --- | --- |
+| Purpose | Building and testing locally | Rehearsal with real provider sandboxes | Customers |
+| `NODE_ENV` | `development` | `production` | `production` |
+| Database | Local Docker, or Supabase **dev** project | Supabase **staging** project | Supabase **production** project |
+| Data | Seed (real catalog + fake demo activity) | Official catalog export, test customers | Real data only |
+| Payments | `mock` | `razorpay` with **test** keys | `razorpay` with **live** keys |
+| OTP | `mock` (fixed code `123456`) | `twilio` (a trial or dedicated service) | `twilio` |
+| WhatsApp | `log`, sending off | `meta` test number, sending off until templates approved | `meta`, sending on only after approval |
+| Admin 2FA | optional | required | required |
+| Rate limits | may be relaxed (`RATE_LIMIT_MULTIPLIER`) for tests | 1 | 1 |
+
+Staging runs with `NODE_ENV=production` on purpose, so every production safety check applies there first. Each environment has its own secrets; never copy production secrets into staging or development, and never point either at the production database.
+
+## Components
 
 | Component | Recommended host | Notes |
 | --- | --- | --- |
 | Storefront and admin (`frontend/`) | Vercel, or any Node host running `next start` | Needs `BACKEND_URL` to reach the API |
 | Commerce API (`backend/`) | A long-running Node host (Render, Railway, Fly.io, ECS, a VM) | Runs the HTTP server and, for one instance, the job scheduler |
-| Database | Supabase Postgres | Use the pooled connection string |
+| Database | Supabase Postgres | See [supabase.md](supabase.md) |
 
 The API is a long-running process (background jobs, connection pool), so it's best on a container or VM host. If you prefer serverless for the API, set `DISABLE_SCHEDULER=true` and run `npm run jobs:run -w backend` from a scheduler every minute.
 
 ## 1. Database
 
-1. Create the production Supabase project and copy the **pooled** connection string into the API's `DATABASE_URL`.
-2. From CI or a trusted machine: `DATABASE_URL=... npm run db:migrate`.
-3. Create the first super-admin (idempotent, production-safe):
+Full procedure, including backups: [supabase.md](supabase.md).
 
-   ```bash
-   DATABASE_URL=... BOOTSTRAP_ADMIN_EMAIL=owner@wovenwhale.com BOOTSTRAP_ADMIN_PASSWORD='…' npm run db:bootstrap -w backend
-   ```
+```bash
+DATABASE_URL=... npm run db:migrate
+DATABASE_URL=... npm run db:verify
+DATABASE_URL=... BOOTSTRAP_ADMIN_EMAIL=owner@wovenwhale.com BOOTSTRAP_ADMIN_PASSWORD='…' npm run db:bootstrap -w backend
+DATABASE_URL=... npm run catalog:import -- --csv=wc-product-export.csv --apply
+```
 
-4. Load the catalog from the official WooCommerce export (includes real stock):
-
-   ```bash
-   DATABASE_URL=... npm run catalog:import -- --csv=wc-product-export.csv --apply
-   ```
-
-5. **Do not** run `db:seed` in production (it refuses to when `NODE_ENV=production`).
+Never run `db:seed` or `db:reset` outside development (both refuse).
 
 ## 2. API
 
@@ -36,49 +47,77 @@ npm run build -w backend          # esbuild → backend/dist/server.js
 NODE_ENV=production node backend/dist/server.js
 ```
 
-Required environment: everything in `.env.example` that applies to production, in particular `NODE_ENV=production`, `DATABASE_URL`, `SESSION_SECRET`, `SITE_URL`, `ALLOWED_ORIGINS` (the storefront origin), provider selections and their secrets. The process validates configuration on boot and exits with a clear list of problems.
+The process validates configuration on boot and exits with a list of every problem. In production it requires, beyond the obvious URLs and database:
 
-- Health check: `GET /api/health` (checks the database).
+| Variable | Why |
+| --- | --- |
+| `SESSION_SECRET` | 48 random bytes, unique per environment |
+| `MFA_ENCRYPTION_KEY` | 48 random bytes, different from `SESSION_SECRET`; never rotate in place |
+| `ADMIN_MFA_REQUIRED=true` | Admins must use 2FA |
+| `CLIENT_IP_HEADER` or `TRUSTED_PROXY_HOPS` | Real client IPs for rate limiting (below) |
+| `PAYMENT_PROVIDER=razorpay` + `RAZORPAY_*` | Real payments |
+| `OTP_PROVIDER=twilio` + `TWILIO_*` | Real OTP |
+| `SITE_URL`, `ALLOWED_ORIGINS` over `https://` | CSRF origin check |
+| `RATE_LIMIT_MULTIPLIER=1` | No relaxed limits |
+
+Generate secrets with `node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"`.
+
+- Health check: `GET /api/health` (checks the database; reveals nothing else).
 - Graceful shutdown on `SIGTERM`: stops the scheduler, closes the server and drains the pool.
-- Run exactly **one** instance with the in-process scheduler, or run several with `DISABLE_SCHEDULER=true` plus an external scheduler, and back rate limits with Redis.
-- Local uploads (`STORAGE_PROVIDER=local`) aren't suitable for multi-instance or ephemeral hosts; use `STORAGE_PROVIDER=supabase` in production.
+- Run exactly **one** instance with the in-process scheduler, or several with `DISABLE_SCHEDULER=true` plus an external scheduler, and back rate limits with Redis.
+- Local uploads (`STORAGE_PROVIDER=local`) aren't suitable for multi-instance or ephemeral hosts; use `STORAGE_PROVIDER=supabase`.
+- Keep the API off the public internet where your host allows (private networking, or an allow-list for the storefront's egress). Customers only ever talk to the storefront domain.
+
+### Client IP for rate limiting
+
+Clients can put anything in `X-Forwarded-For`, and Next.js passes the header through unchanged when self-hosted. So the API only believes forwarding headers you declare:
+
+| Your setup | Setting |
+| --- | --- |
+| Cloudflare in front | `CLIENT_IP_HEADER=cf-connecting-ip` |
+| Vercel storefront → API | `CLIENT_IP_HEADER=x-real-ip`, then verify (below) |
+| Your own nginx/ALB in front of the storefront, which appends to `X-Forwarded-For` | `TRUSTED_PROXY_HOPS=1` (one per proxy you run) |
+
+Verify in staging: sign in to the storefront twice from two different networks and confirm the API logs (or a temporary debug line) show two different addresses. If every request shows the same address, all customers share one rate-limit bucket.
 
 ## 3. Storefront
 
 On Vercel:
 
 1. Import the repository and set the root directory to `frontend`.
-2. Set environment variables: `BACKEND_URL` (the API's internal or public URL), `SITE_URL`, `ADMIN_PORTAL_TRIGGER`, `SUPPORT_*`, and `SUPABASE_URL` if images are served from Supabase Storage.
-3. Build command `npm run build`; output is handled by Vercel.
+2. Set environment variables: `BACKEND_URL` (the API's URL), `SITE_URL`, `ADMIN_PORTAL_TRIGGER`, `SUPPORT_*`, and `SUPABASE_URL` if images are served from Supabase Storage. Server secrets (session, MFA, provider, database) belong to the API, not the storefront.
+3. Build command `npm run build`.
 
-`next.config.ts` rewrites `/api/*` to `BACKEND_URL`, so the browser only ever talks to the storefront domain. Put the API behind the same private network or restrict it to the storefront's egress where your host allows.
+`next.config.ts` rewrites `/api/*` to `BACKEND_URL`, so the browser only talks to the storefront domain and cookies stay first-party.
 
 ## 4. Webhooks
 
-Register these with each provider once its adapter is configured:
+Register these once the provider is configured (URLs use the storefront domain; `/api/*` is forwarded to the API):
 
 | Provider | URL | Secret |
 | --- | --- | --- |
-| Payment gateway | `https://<storefront-or-api>/api/webhooks/payments/<provider>` | e.g. `RAZORPAY_WEBHOOK_SECRET` |
-| Shipping | `https://<storefront-or-api>/api/webhooks/shipping/<provider>` | `SHIPPING_WEBHOOK_SECRET` |
-| WhatsApp | `https://<storefront-or-api>/api/webhooks/whatsapp` | `WHATSAPP_WEBHOOK_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET` |
+| Razorpay | `https://<domain>/api/webhooks/payments/razorpay` | `RAZORPAY_WEBHOOK_SECRET` |
+| Shipping (manual/generic) | `https://<domain>/api/webhooks/shipping/manual` | `SHIPPING_WEBHOOK_SECRET` |
+| WhatsApp | `https://<domain>/api/webhooks/whatsapp` | `WHATSAPP_WEBHOOK_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET` |
 
-Webhook routes skip the browser-origin check and rely on signatures instead.
+Webhook routes skip the browser-origin check and rely on signatures over the raw body instead.
 
-## 5. Environments
+## 5. First production sign-in
 
-Keep separate Supabase projects, API instances and storefront deployments for staging and production, each with its own secrets. Never point staging at the production database.
+1. Sign in at `https://<domain>/admin/login` with the bootstrap account.
+2. You're taken to **Set up two-factor authentication**: scan the QR code, enter a code, save the recovery codes in your password manager.
+3. Create the other admins with the least-privileged role that fits; each enrols in 2FA at first sign-in.
 
 ## Releasing schema changes
 
 1. `npm run db:generate` locally, review the SQL, commit.
-2. Deploy: run `npm run db:migrate` **before** starting the new API version.
+2. Deploy: back up (production), run `npm run db:migrate` **before** starting the new API version, then `npm run db:verify`.
 3. Write migrations to be backward compatible with the currently running version (add, backfill, then tighten in a later release).
 
 ## Rollback
 
 - Storefront: redeploy the previous build (instant on Vercel).
-- API: redeploy the previous image. Because migrations are additive, the previous version keeps working against the newer schema.
-- Data: Supabase point-in-time recovery (enable it on the production project).
+- API: redeploy the previous image. Migrations are additive, so the previous version keeps working against the newer schema.
+- Data: Supabase point-in-time recovery or the pre-migration dump ([supabase.md](supabase.md#5-backups-and-recovery)).
 
 See the production checklist in the [README](../README.md#production-checklist).

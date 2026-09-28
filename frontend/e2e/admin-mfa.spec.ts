@@ -47,9 +47,9 @@ async function enrolledAdmin(owner: APIRequestContext) {
 }
 
 const auditActions = async (owner: APIRequestContext, id: string) =>
-  ((await (await owner.get(`/api/admin/audit-logs?entityType=admin_user&entityId=${id}`)).json()) as { items: { action: string }[] }).items.map(
-    (a) => a.action,
-  );
+  (
+    (await (await owner.get(`/api/admin/audit-logs?entityType=admin_user&entityId=${id}`)).json()) as { items: { action: string }[] }
+  ).items.map((a) => a.action);
 
 test.describe("admin two-factor authentication", () => {
   test("enrolment: wrong code refused, correct code enables 2FA and issues recovery codes", async () => {
@@ -102,7 +102,9 @@ test.describe("admin two-factor authentication", () => {
     const code = admin.recoveryCodes[0]!;
 
     const first = await login(admin.email, admin.password);
-    expect((await first.api.post("/api/admin/auth/2fa/verify", { data: { method: "recovery", code: code.toLowerCase() } })).ok()).toBe(true);
+    expect((await first.api.post("/api/admin/auth/2fa/verify", { data: { method: "recovery", code: code.toLowerCase() } })).ok()).toBe(
+      true,
+    );
 
     const second = await login(admin.email, admin.password);
     expect((await second.api.post("/api/admin/auth/2fa/verify", { data: { method: "recovery", code } })).status()).toBe(401);

@@ -130,8 +130,7 @@ export class RazorpayPaymentProvider implements PaymentProvider {
     const payment = body.payload.payment?.entity;
     const refund = body.payload.refund?.entity;
     // Razorpay retries deliver the same event id header; fall back to a content-derived id.
-    const eventId =
-      headers.get(EVENT_ID_HEADER) ?? `${body.event}:${refund?.id ?? payment?.id ?? "unknown"}:${body.created_at ?? ""}`;
+    const eventId = headers.get(EVENT_ID_HEADER) ?? `${body.event}:${refund?.id ?? payment?.id ?? "unknown"}:${body.created_at ?? ""}`;
     return {
       eventId,
       type: body.event as PaymentEventType,

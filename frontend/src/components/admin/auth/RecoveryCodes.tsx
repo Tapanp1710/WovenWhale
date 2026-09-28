@@ -27,8 +27,8 @@ export function RecoveryCodes({ codes, email }: { codes: string[]; email: string
   return (
     <div className={styles.wrap}>
       <p className={styles.note}>
-        Save these somewhere safe, such as a password manager. If you lose your phone, each code signs you in once. They won&apos;t be
-        shown again.
+        Save these somewhere safe, such as a password manager. If you lose your phone, each code signs you in once. They won&apos;t be shown
+        again.
       </p>
       <ol className={styles.codes} aria-label="Recovery codes" data-testid="recovery-codes">
         {codes.map((c) => (

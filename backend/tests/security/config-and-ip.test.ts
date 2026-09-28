@@ -9,7 +9,8 @@ const BASE = {
 async function loadEnv(vars: Record<string, string>) {
   vi.resetModules();
   const saved = { ...process.env };
-  for (const key of Object.keys(process.env)) if (/^[A-Z_]+$/.test(key) && !["PATH", "HOME", "SYSTEMROOT", "TEMP", "TMP"].includes(key)) delete process.env[key];
+  for (const key of Object.keys(process.env))
+    if (/^[A-Z_]+$/.test(key) && !["PATH", "HOME", "SYSTEMROOT", "TEMP", "TMP"].includes(key)) delete process.env[key];
   Object.assign(process.env, BASE, vars);
   try {
     return await import("../../src/config/env");
@@ -82,8 +83,8 @@ describe("client IP for rate limiting", () => {
   });
 
   it("uses the edge header when configured", async () => {
-    expect(await ipFor({ CLIENT_IP_HEADER: "cf-connecting-ip" }, { "cf-connecting-ip": "198.51.100.7", "x-forwarded-for": "6.6.6.6" })).toBe(
-      "198.51.100.7",
-    );
+    expect(
+      await ipFor({ CLIENT_IP_HEADER: "cf-connecting-ip" }, { "cf-connecting-ip": "198.51.100.7", "x-forwarded-for": "6.6.6.6" }),
+    ).toBe("198.51.100.7");
   });
 });

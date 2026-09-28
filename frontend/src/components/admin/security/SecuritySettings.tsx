@@ -125,7 +125,12 @@ function CodeDialog({ action, onClose, onCodes }: { action: Action; onClose: () 
           <Button variant="ghost" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="submit" form="mfa-code-form" variant={action === "disable" ? "danger" : "primary"} loading={form.formState.isSubmitting}>
+          <Button
+            type="submit"
+            form="mfa-code-form"
+            variant={action === "disable" ? "danger" : "primary"}
+            loading={form.formState.isSubmitting}
+          >
             {copy.confirm}
           </Button>
         </div>
