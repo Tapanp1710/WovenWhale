@@ -9,7 +9,7 @@ import type {
   InventoryTxnDTO,
   WishlistItemDTO,
 } from "@wovenwhale/backend/contracts";
-import { BASE_URL, adminApi, customerApi, customerOrder, inStockProduct, orderId, placeOrder } from "./support/fixtures";
+import { BASE_URL, adminApi, customerApi, customerOrder, deliverCodOrder, inStockProduct, orderId, placeOrder } from "./support/fixtures";
 
 const MOCK_SECRET = process.env.MOCK_PAYMENT_WEBHOOK_SECRET || "dev-mock-gateway-secret";
 const DEMO_PASSWORD = process.env.DEMO_ADMIN_PASSWORD || "Demo-Only-2026!";
@@ -264,4 +264,42 @@ test.describe("order lifecycle end to end (API)", () => {
     );
     await Promise.all([api.dispose(), owner.dispose(), support.dispose(), manager.dispose()]);
   });
+});
+
+test("new return requests are approved or declined straight from the Returns list", async ({ browser }) => {
+  const admin = await adminApi();
+  const requestReturn = async () => {
+    const { api, phone } = await customerApi();
+    const placed = await placeOrder(api, phone, "COD");
+    await deliverCodOrder(admin, placed.orderNumber);
+    const item = (await customerOrder(api, placed.orderNumber)).items[0]!;
+    const { returnNumber } = await ok<{ returnNumber: string }>(
+      await api.post(`/api/orders/${placed.orderNumber}/returns`, {
+        data: { type: "RETURN", reason: "SIZE_ISSUE", items: [{ orderItemId: item.id, quantity: 1 }] },
+      }),
+    );
+    return returnNumber;
+  };
+  const [keep, decline] = [await requestReturn(), await requestReturn()];
+
+  // Support handles returns (but not COD approvals).
+  const support = await playwrightRequest.newContext({ baseURL: BASE_URL, extraHTTPHeaders: { Origin: BASE_URL } });
+  await ok(await support.post("/api/admin/auth/login", { data: { email: "support@wovenwhale.local", password: DEMO_PASSWORD } }));
+  const staff = await browser.newContext({ storageState: await support.storageState(), baseURL: BASE_URL });
+  const page = await staff.newPage();
+  await page.goto("/admin/returns?status=REQUESTED");
+  const actions = (n: string) => page.getByRole("group", { name: `Actions for return ${n}` });
+
+  await actions(keep).getByRole("button", { name: "Approve" }).click();
+  await page.getByRole("dialog").getByRole("button", { name: "Approve" }).click();
+  await expect(actions(keep)).toHaveCount(0);
+
+  await actions(decline).getByRole("button", { name: "Decline" }).click();
+  await page.getByRole("dialog").getByRole("button", { name: "Decline request" }).click();
+  await expect(actions(decline)).toHaveCount(0);
+
+  const list = await ok<{ items: AdminReturnRowDTO[] }>(await admin.get("/api/admin/returns?pageSize=100"));
+  const status = (n: string) => list.items.find((r) => r.returnNumber === n)?.status;
+  expect([status(keep), status(decline)]).toEqual(["APPROVED", "REJECTED"]);
+  await Promise.all([admin.dispose(), support.dispose(), staff.close()]);
 });
