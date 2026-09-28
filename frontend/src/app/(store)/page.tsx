@@ -19,12 +19,11 @@ export default async function HomePage() {
 
   // Hero strips: second (detail) shots read best as narrow threads.
   const heroProducts = [...feed.featured, ...feed.newArrivals].filter((p, i, all) => all.findIndex((x) => x.id === p.id) === i);
-  const strips = heroProducts
-    .slice(0, 6)
-    .map((p) => p.images[1] ?? p.images[0])
-    .filter((img): img is NonNullable<typeof img> => Boolean(img))
-    .map((img) => ({ src: img.url, alt: img.alt }));
-  const editorialImage = feed.bestSellers[0]?.images[0] ?? feed.featured[0]?.images[0] ?? null;
+  const strips = heroProducts.slice(0, 6).flatMap((p) => {
+    const img = p.images[1] ?? p.images[0];
+    return img ? [{ src: img.url, alt: img.alt, productId: p.id, slug: p.slug, name: p.name }] : [];
+  });
+  const editorialProduct = [...feed.bestSellers, ...feed.featured].find((p) => p.images[0]) ?? null;
   const clearance = feed.categories.find((c) => c.slug === "sale");
 
   const organization = {
@@ -55,7 +54,7 @@ export default async function HomePage() {
         </Section>
       )}
 
-      <LoomEditorial imageUrl={editorialImage?.url ?? null} imageAlt={editorialImage?.alt ?? ""} />
+      <LoomEditorial product={editorialProduct} />
 
       {feed.bestSellers.length > 0 && (
         <Section

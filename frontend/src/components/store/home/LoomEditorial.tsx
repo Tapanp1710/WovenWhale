@@ -1,5 +1,7 @@
+import type { ProductCardDTO } from "@wovenwhale/backend/contracts";
 import Image from "next/image";
 import Link from "next/link";
+import { WishlistButton } from "../product/WishlistButton";
 import styles from "./LoomEditorial.module.css";
 
 const TECHNIQUES = [
@@ -21,11 +23,21 @@ const TECHNIQUES = [
 ];
 
 /** Editorial explainer: why a handwoven piece looks and feels the way it does. */
-export function LoomEditorial({ imageUrl, imageAlt }: { imageUrl: string | null; imageAlt: string }) {
+export function LoomEditorial({ product }: { product: ProductCardDTO | null }) {
+  const image = product?.images[0];
   return (
     <section className={styles.editorial} aria-labelledby="loom-title">
       <div className={styles.media}>
-        {imageUrl && <Image src={imageUrl} alt={imageAlt} fill sizes="(min-width: 1024px) 45vw, 100vw" className={styles.img} />}
+        {product && image && (
+          <>
+            <Link href={`/product/${product.slug}`} className={styles.imageLink} aria-label={product.name}>
+              <Image src={image.url} alt={image.alt} fill sizes="(min-width: 1024px) 45vw, 100vw" className={styles.img} />
+            </Link>
+            <span className={styles.wish}>
+              <WishlistButton productId={product.id} name={product.name} />
+            </span>
+          </>
+        )}
       </div>
       <div className={styles.copy}>
         <h2 id="loom-title" className={styles.title}>

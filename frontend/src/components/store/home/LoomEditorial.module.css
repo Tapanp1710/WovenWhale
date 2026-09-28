@@ -76,3 +76,14 @@
     padding: var(--space-8) var(--space-8);
   }
 }
+
+.imageLink {
+  position: absolute;
+  inset: 0;
+}
+
+.wish {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+}

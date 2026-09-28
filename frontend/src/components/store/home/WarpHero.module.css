@@ -80,3 +80,27 @@
     display: block;
   }
 }
+
+.warp {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  position: absolute;
+  inset: 0;
+}
+
+.link:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
+}
+
+/* Heart centred at the foot of each thread. */
+.wish {
+  position: absolute;
+  bottom: var(--space-2);
+  left: 50%;
+  transform: translateX(-50%);
+}

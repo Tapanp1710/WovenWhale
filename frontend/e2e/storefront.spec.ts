@@ -23,6 +23,25 @@ test.describe("storefront browsing", () => {
     expect(await img.evaluate((el: HTMLImageElement) => el.currentSrc)).toContain(encodeURIComponent("/catalog/"));
   });
 
+  test("homepage images open their product and have a wishlist heart", async ({ page }) => {
+    await page.goto("/");
+    const firstStrip = page.getByRole("list", { name: "Featured pieces" }).getByRole("link").first();
+    const name = await firstStrip.getAttribute("aria-label");
+    expect(name).toBeTruthy();
+    await expect(
+      page.getByRole("list", { name: "Featured pieces" }).getByRole("button", { name: `Save ${name} to wishlist` }),
+    ).toBeVisible();
+    await firstStrip.click();
+    await expect(page).toHaveURL(/\/product\//);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(name!);
+
+    // The editorial photo further down also opens its product.
+    await page.goto("/");
+    const editorial = page.locator("#loom-title").locator("xpath=ancestor::section[1]").getByRole("link").first();
+    await editorial.click();
+    await expect(page).toHaveURL(/\/product\//);
+  });
+
   test("browse from the homepage into a collection", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toContainText("handlooms");
