@@ -112,9 +112,9 @@ Webhook routes skip the browser-origin check and rely on signatures over the raw
 
 A public demo with simulated payments and a fixed OTP (see [demo.md](demo.md)). Architecture: **Vercel** (storefront) → `/api/*` rewrite → **Render** (API, Docker, free plan) → **Supabase** (Postgres). The browser only ever talks to the Vercel domain, so cookies are first-party and there is no CORS.
 
-All accounts belong to **pendyala.tapan@gmail.com**: Supabase, GitHub (`Tapanp1710/WovenWhale`), Render and Vercel. Each login opens a browser; make sure it's that account (sign out of others first if the browser picks one automatically). Everything below fits the free plans.
+Sign in to Supabase, Render and Vercel with **Continue with GitHub** using the **Tapanp1710** GitHub account (the repository is `Tapanp1710/WovenWhale`). Each login opens a browser; make sure GitHub is signed in as Tapanp1710 first. Everything below fits the free plans.
 
-1. **Database (Supabase).** Sign in at [supabase.com](https://supabase.com/dashboard) as pendyala.tapan@gmail.com → **New project** `wovenwhale-demo`, region **Mumbai (ap-south-1)**, save the database password. From **Connect**, copy the **Session pooler** URI (port 5432).
+1. **Database (Supabase).** Sign in at [supabase.com](https://supabase.com/dashboard) with GitHub (Tapanp1710) → **New project** `wovenwhale-demo`, region **Mumbai (ap-south-1)**, save the database password. From **Connect**, copy the **Session pooler** URI (port 5432).
 2. **Secrets.** `cp .env.demo.example .env.demo` and fill it in: the database URI, three generated secrets and a generated `DEMO_TOTP_SECRET`. Choose the Vercel project name now so `SITE_URL` is known (for example `https://wovenwhale-demo.vercel.app`).
 3. **Schema and data** (from your machine):
 
@@ -124,12 +124,12 @@ All accounts belong to **pendyala.tapan@gmail.com**: Supabase, GitHub (`Tapanp17
    npm run demo:seed          # catalog, demo stock/orders, demo accounts with 2FA
    ```
 
-4. **API on Render.** The code must be on GitHub (`git push`). Sign up at [render.com](https://render.com) as pendyala.tapan@gmail.com and connect GitHub, then **New → Blueprint** → `Tapanp1710/WovenWhale`. Render reads [`render.yaml`](../render.yaml): a free Docker web service in Singapore built from [`backend/Dockerfile`](../backend/Dockerfile), health-checked on `/api/health`, running migrations on every start. It asks for the values marked `sync: false`; copy them from `.env.demo`: `DATABASE_URL`, `SESSION_SECRET`, `MFA_ENCRYPTION_KEY`, `MOCK_PAYMENT_WEBHOOK_SECRET`, `SITE_URL`, `ALLOWED_ORIGINS`. When the deploy finishes, open `https://wovenwhale-api.onrender.com/api/health` (Render shows the exact URL) → `{"status":"ok"}`. Every push to `main` redeploys.
+4. **API on Render.** The code must be on GitHub (`git push`). Sign up at [render.com](https://render.com) with GitHub (Tapanp1710) and allow it to read the repository, then **New → Blueprint** → `Tapanp1710/WovenWhale`. Render reads [`render.yaml`](../render.yaml): a free Docker web service in Singapore built from [`backend/Dockerfile`](../backend/Dockerfile), health-checked on `/api/health`, running migrations on every start. It asks for the values marked `sync: false`; copy them from `.env.demo`: `DATABASE_URL`, `SESSION_SECRET`, `MFA_ENCRYPTION_KEY`, `MOCK_PAYMENT_WEBHOOK_SECRET`, `SITE_URL`, `ALLOWED_ORIGINS`. When the deploy finishes, open `https://wovenwhale-api.onrender.com/api/health` (Render shows the exact URL) → `{"status":"ok"}`. Every push to `main` redeploys.
 
 5. **Storefront on Vercel.** Open the API's `/api/health` URL first so the free instance is awake: the storefront pre-renders the homepage from the API during the build. Then, from the **repository root** (the storefront imports shared contracts from `backend/`, so the whole workspace is uploaded):
 
    ```bash
-   npx vercel login                 # sign in as pendyala.tapan@gmail.com
+   npx vercel login                 # choose "Continue with GitHub" (Tapanp1710)
    npx vercel link                  # new project, e.g. wovenwhale-demo; "code located in": ./frontend
    npx vercel env add BACKEND_URL production           # https://wovenwhale-api.onrender.com
    npx vercel env add SITE_URL production              # https://wovenwhale-demo.vercel.app
