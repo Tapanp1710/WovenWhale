@@ -56,7 +56,7 @@ export function createApp() {
 
   app.get("/api/health", async (c) => {
     await sqlClient`select 1`;
-    return c.json({ status: "ok", env: env.NODE_ENV });
+    return c.json({ status: "ok" });
   });
 
   app.route("/api/catalog", catalogRoutes);

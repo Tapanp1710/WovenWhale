@@ -1,4 +1,4 @@
-import { and, desc, eq, gt, isNull, sql } from "drizzle-orm";
+import { and, desc, eq, gt, isNull, lt, sql } from "drizzle-orm";
 import { env } from "../../config/env";
 import type { AdminSessionDTO, CustomerDTO } from "../../contracts/dto";
 import type { AdminRole, Permission } from "../../contracts/enums";
@@ -58,25 +58,31 @@ export async function verifyOtpAndSignIn(phone: string, code: string, userAgent:
     .orderBy(desc(otpChallenges.createdAt))
     .limit(1);
   if (!challenge) throw new DomainError("OTP_EXPIRED", "This code has expired. Request a new one.", 422);
-  if (challenge.attempts >= OTP_MAX_ATTEMPTS) {
-    throw new DomainError("OTP_TOO_MANY_ATTEMPTS", "Too many incorrect attempts. Request a new code.", 429);
-  }
-
-  // Count the attempt before verifying so parallel guesses can't bypass the limit.
-  await db
+  // Claim an attempt atomically before verifying: the conditional increment means
+  // parallel guesses can never exceed the limit, whatever the row said when read.
+  const [attempt] = await db
     .update(otpChallenges)
     .set({ attempts: sql`${otpChallenges.attempts} + 1` })
-    .where(eq(otpChallenges.id, challenge.id));
+    .where(and(eq(otpChallenges.id, challenge.id), lt(otpChallenges.attempts, OTP_MAX_ATTEMPTS), isNull(otpChallenges.consumedAt)))
+    .returning({ attempts: otpChallenges.attempts });
+  if (!attempt) throw new DomainError("OTP_TOO_MANY_ATTEMPTS", "Too many incorrect attempts. Request a new code.", 429);
+
   const valid = await providers.otp.verifyOTP({ phone, code, providerRef: challenge.providerRef, codeHash: challenge.codeHash });
   if (!valid) {
-    const left = OTP_MAX_ATTEMPTS - challenge.attempts - 1;
+    const left = OTP_MAX_ATTEMPTS - attempt.attempts;
     throw new DomainError(
       "OTP_INVALID",
       left > 0 ? `Incorrect code. ${left} attempt${left === 1 ? "" : "s"} left.` : "Incorrect code.",
       422,
     );
   }
-  await db.update(otpChallenges).set({ consumedAt: new Date() }).where(eq(otpChallenges.id, challenge.id));
+  // Single use: only one request can consume the challenge.
+  const [consumed] = await db
+    .update(otpChallenges)
+    .set({ consumedAt: new Date() })
+    .where(and(eq(otpChallenges.id, challenge.id), isNull(otpChallenges.consumedAt)))
+    .returning({ id: otpChallenges.id });
+  if (!consumed) throw new DomainError("OTP_EXPIRED", "This code has expired. Request a new one.", 422);
 
   const now = new Date();
   const { user, isNew } = await db.transaction(async (tx) => {

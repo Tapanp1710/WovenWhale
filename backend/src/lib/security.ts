@@ -25,7 +25,7 @@ export const originGuard: MiddlewareHandler<AppEnv> = async (c, next) => {
   const hasAuthCookie = Boolean(readCookie(c, COOKIE.customerSession) || readCookie(c, COOKIE.adminSession));
   if (hasAuthCookie) {
     const referer = c.req.header("referer");
-    const refererOrigin = referer ? new URL(referer).origin : null;
+    const refererOrigin = referer && URL.canParse(referer) ? new URL(referer).origin : null;
     if (!refererOrigin || !allowedOrigins.has(refererOrigin)) {
       throw new HttpError(403, "CSRF_REJECTED", "Request origin not allowed.");
     }

@@ -46,10 +46,28 @@ const schema = z
       .default(""),
     MOCK_PAYMENT_WEBHOOK_SECRET: z.string().default("dev-mock-gateway-secret"),
 
+    RAZORPAY_KEY_ID: z.string().trim().default(""),
+    RAZORPAY_KEY_SECRET: z.string().trim().default(""),
+    RAZORPAY_WEBHOOK_SECRET: z.string().trim().default(""),
+
+    TWILIO_ACCOUNT_SID: z.string().trim().default(""),
+    TWILIO_AUTH_TOKEN: z.string().trim().default(""),
+    TWILIO_VERIFY_SERVICE_SID: z.string().trim().default(""),
+    TWILIO_VERIFY_CHANNEL: z.enum(["sms", "whatsapp"]).default("sms"),
+
+    WHATSAPP_ACCESS_TOKEN: z.string().trim().default(""),
+    WHATSAPP_PHONE_NUMBER_ID: z.string().trim().default(""),
+    WHATSAPP_GRAPH_VERSION: z.string().regex(/^v\d+\.\d+$/).default("v21.0"),
+
     WHATSAPP_APP_SECRET: z.string().default(""),
     WHATSAPP_WEBHOOK_VERIFY_TOKEN: z.string().default(""),
     WHATSAPP_SEND_ENABLED: bool,
     SHIPPING_WEBHOOK_SECRET: z.string().default(""),
+
+    /** Header set by your edge/CDN with the real client IP (overwritten, not appended), e.g. cf-connecting-ip. */
+    CLIENT_IP_HEADER: z.string().trim().toLowerCase().default(""),
+    /** Number of proxies you control that append to X-Forwarded-For in front of the API. */
+    TRUSTED_PROXY_HOPS: z.coerce.number().int().min(0).max(5).default(0),
 
     /** Scales every rate limit (local/CI test runs only; must be 1 in production). */
     RATE_LIMIT_MULTIPLIER: z.coerce.number().int().min(1).max(1000).default(1),
@@ -58,7 +76,27 @@ const schema = z
     SENTRY_DSN: z.string().default(""),
   })
   .superRefine((env, ctx) => {
+    // A selected provider needs its credentials in every environment.
+    const required: Partial<Record<string, (keyof typeof env)[]>> = {
+      "PAYMENT_PROVIDER=razorpay": ["RAZORPAY_KEY_ID", "RAZORPAY_KEY_SECRET", "RAZORPAY_WEBHOOK_SECRET"],
+      "OTP_PROVIDER=twilio": ["TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN", "TWILIO_VERIFY_SERVICE_SID"],
+      "WHATSAPP_PROVIDER=meta": ["WHATSAPP_ACCESS_TOKEN", "WHATSAPP_PHONE_NUMBER_ID", "WHATSAPP_APP_SECRET", "WHATSAPP_WEBHOOK_VERIFY_TOKEN"],
+    };
+    const selected = [`PAYMENT_PROVIDER=${env.PAYMENT_PROVIDER}`, `OTP_PROVIDER=${env.OTP_PROVIDER}`, `WHATSAPP_PROVIDER=${env.WHATSAPP_PROVIDER}`];
+    for (const choice of selected) {
+      for (const key of required[choice] ?? []) {
+        if (!env[key]) ctx.addIssue({ code: "custom", path: [key], message: `${key} is required when ${choice}` });
+      }
+    }
+
     if (env.NODE_ENV !== "production") return;
+    if (env.WHATSAPP_SEND_ENABLED && env.WHATSAPP_PROVIDER !== "meta") {
+      ctx.addIssue({ code: "custom", path: ["WHATSAPP_SEND_ENABLED"], message: "WHATSAPP_SEND_ENABLED needs WHATSAPP_PROVIDER=meta" });
+    }
+    const origins = [env.SITE_URL, ...env.ALLOWED_ORIGINS.split(",")].map((o) => o.trim()).filter(Boolean);
+    if (origins.some((o) => !o.startsWith("https://"))) {
+      ctx.addIssue({ code: "custom", path: ["ALLOWED_ORIGINS"], message: "SITE_URL and ALLOWED_ORIGINS must use https:// in production" });
+    }
     // Refuse to boot production with development-only providers.
     const devOnly: [keyof typeof env, string][] = [
       ["PAYMENT_PROVIDER", "mock"],
@@ -77,6 +115,13 @@ const schema = z
     }
     if (env.MFA_ENCRYPTION_KEY.length < 32 || env.MFA_ENCRYPTION_KEY === env.SESSION_SECRET) {
       ctx.addIssue({ code: "custom", path: ["MFA_ENCRYPTION_KEY"], message: "Set a dedicated MFA_ENCRYPTION_KEY (32+ characters) in production" });
+    }
+    if (!env.CLIENT_IP_HEADER && env.TRUSTED_PROXY_HOPS === 0) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["CLIENT_IP_HEADER"],
+        message: "Set CLIENT_IP_HEADER or TRUSTED_PROXY_HOPS so rate limits see real client addresses (see docs/deployment.md)",
+      });
     }
     if (env.SESSION_SECRET.startsWith("replace-with")) {
       ctx.addIssue({ code: "custom", path: ["SESSION_SECRET"], message: "Set a real SESSION_SECRET in production" });

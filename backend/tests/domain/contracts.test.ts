@@ -84,3 +84,15 @@ describe("admin shipment schema", () => {
     expect(shipmentCreateSchema.safeParse({ courierName: "Delhivery", awb: "dlv1234", trackingUrl: "nope" }).success).toBe(false);
   });
 });
+
+describe("shipment tracking links", () => {
+  it("accepts https links and blanks, rejects script and plain-http URLs", async () => {
+    const { shipmentCreateSchema } = await import("../../src/contracts/admin");
+    const base = { courierName: "Delhivery", awb: "AWB12345" };
+    expect(shipmentCreateSchema.parse({ ...base, trackingUrl: "https://track.example.com/AWB12345" }).trackingUrl).toContain("https://");
+    expect(shipmentCreateSchema.parse({ ...base, trackingUrl: "" }).trackingUrl).toBeNull();
+    for (const bad of ["javascript:alert(1)", "data:text/html,<script>alert(1)</script>", "http://track.example.com"]) {
+      expect(shipmentCreateSchema.safeParse({ ...base, trackingUrl: bad }).success).toBe(false);
+    }
+  });
+});

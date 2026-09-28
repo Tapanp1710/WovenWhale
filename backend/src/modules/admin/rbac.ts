@@ -21,6 +21,7 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<AdminRole, readonly Permission[]> 
     "inventory.view",
     "coupons.view",
     "whatsapp.view",
+    "whatsapp.reply",
   ],
   INVENTORY_MANAGER: ["dashboard.view", "products.view", "products.manage", "inventory.view", "inventory.manage", "orders.view"],
   SUPPORT: [
@@ -32,6 +33,7 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<AdminRole, readonly Permission[]> 
     "products.view",
     "coupons.view",
     "whatsapp.view",
+    "whatsapp.reply",
   ],
 };
 

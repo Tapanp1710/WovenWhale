@@ -21,6 +21,9 @@ export const customerAuthRoutes = new Hono<AppEnv>()
   .post("/otp/verify", rateLimit("otp-verify-ip", 20, 10 * 60 * 1000), async (c) => {
     const { phone, code } = await readJson(c, verifyOtpSchema);
     const { token, userId, isNew } = await verifyOtpAndSignIn(phone, code, c.req.header("user-agent") ?? null);
+    // Never keep a session that existed before sign-in (session fixation).
+    const previous = readCookie(c, COOKIE.customerSession);
+    if (previous) await revokeSession(previous);
     writeCookie(c, COOKIE.customerSession, token, env.CUSTOMER_SESSION_TTL_DAYS * 24 * 60 * 60);
 
     const guestToken = readCookie(c, COOKIE.guestCart);

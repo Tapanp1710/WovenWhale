@@ -197,7 +197,8 @@ export const shipmentCreateSchema = z.object({
   awb: z.string().trim().toUpperCase().min(4).max(64),
   // Accepts "", null or a URL so client-validated output re-validates on the server.
   trackingUrl: z
-    .union([z.url("Enter a full link starting with https://"), z.literal(""), z.null()])
+    // https only: the link is shown to customers, so javascript:/data: URLs must never be stored.
+    .union([z.url({ protocol: /^https$/, message: "Enter a full link starting with https://" }), z.literal(""), z.null()])
     .optional()
     .transform((v) => v || null),
 });
@@ -309,3 +310,5 @@ export const whatsappTemplateUpdateSchema = z.object({
   isApproved: z.boolean(),
   isActive: z.boolean(),
 });
+
+export const whatsappReplySchema = z.object({ body: requiredText("Reply", 1000, 1) });

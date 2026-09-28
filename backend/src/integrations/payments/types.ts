@@ -58,3 +58,11 @@ export class InvalidSignatureError extends Error {
     this.name = "InvalidSignatureError";
   }
 }
+
+/** A correctly signed webhook for an event type this platform doesn't act on (acknowledged, not retried). */
+export class IgnoredWebhookEvent extends Error {
+  constructor(readonly event: string) {
+    super(`Ignored webhook event ${event}`);
+    this.name = "IgnoredWebhookEvent";
+  }
+}

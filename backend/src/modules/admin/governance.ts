@@ -10,6 +10,7 @@ import {
   rolePermissionsSchema,
   storeSettingsSchema,
   whatsappTemplateUpdateSchema,
+  whatsappReplySchema,
 } from "../../contracts/admin";
 import type { AbandonedCheckoutDTO, AdminUserDTO, RoleDTO, WhatsAppConversationDTO, WhatsAppTemplateDTO } from "../../contracts/dto";
 import type { AdminRole, CheckoutStatus, Permission } from "../../contracts/enums";
@@ -28,10 +29,13 @@ import {
   whatsappMessages,
   whatsappTemplates,
 } from "../../db/schema";
+import { env } from "../../config/env";
 import { DomainError } from "../../domain/errors";
+import { providers } from "../../integrations";
 import { recordAudit } from "../../lib/audit";
 import { hashPassword } from "../../lib/crypto";
 import { notFound, readJson, readQuery } from "../../lib/http";
+import { rateLimit } from "../../lib/rate-limit";
 import { adminOf, requirePermission } from "../auth/middleware";
 import { resetMfa } from "../auth/mfa";
 import { revokeAllAdminSessions } from "../auth/sessions";
@@ -312,6 +316,7 @@ export const adminWhatsAppRoutes = new Hono<AppEnv>()
       customerName: name,
       lastMessageAt: conv.lastMessageAt?.toISOString() ?? null,
       messageCount: Number(messageCount),
+      serviceWindowExpiresAt: conv.serviceWindowExpiresAt?.toISOString() ?? null,
     }));
     return c.json(list);
   })
@@ -333,6 +338,44 @@ export const adminWhatsAppRoutes = new Hono<AppEnv>()
         createdAt: m.createdAt.toISOString(),
       })),
     );
+  })
+  /**
+   * Support reply inside WhatsApp's 24-hour customer-service window. Outside it,
+   * Meta only allows approved templates, so the reply is refused. Nothing is
+   * recorded as sent unless a real provider accepted the message.
+   */
+  .post("/conversations/:id/reply", requirePermission("whatsapp.reply"), rateLimit("whatsapp-reply", 60, 60 * 60 * 1000), async (c) => {
+    const { body } = await readJson(c, whatsappReplySchema);
+    const [conversation] = await db
+      .select()
+      .from(whatsappConversations)
+      .where(eq(whatsappConversations.id, c.req.param("id")));
+    if (!conversation) throw notFound("Conversation");
+    if (!env.WHATSAPP_SEND_ENABLED || providers.whatsapp.name === "log") {
+      throw new DomainError("WHATSAPP_NOT_CONFIGURED", "WhatsApp sending isn't set up yet.", 409);
+    }
+    if (!conversation.serviceWindowExpiresAt || conversation.serviceWindowExpiresAt < new Date()) {
+      throw new DomainError(
+        "WHATSAPP_WINDOW_CLOSED",
+        "It's been more than 24 hours since the customer's last message, so WhatsApp only allows an approved template.",
+        409,
+      );
+    }
+    const { providerMessageId } = await providers.whatsapp.sendText(conversation.phone, body);
+    await db.transaction(async (tx) => {
+      const [message] = await tx
+        .insert(whatsappMessages)
+        .values({ conversationId: conversation.id, direction: "OUTBOUND", body, providerMessageId, status: "SENT" })
+        .returning({ id: whatsappMessages.id });
+      await tx.update(whatsappConversations).set({ lastMessageAt: new Date() }).where(eq(whatsappConversations.id, conversation.id));
+      await recordAudit(tx, adminOf(c), {
+        action: "whatsapp.reply_sent",
+        entityType: "whatsapp_conversation",
+        entityId: conversation.id,
+        after: { messageId: message!.id, chars: body.length },
+      });
+    });
+    return c.json({ ok: true }, 201);
   })
   .get("/templates", requirePermission("whatsapp.view"), async (c) => {
     const rows = await db.select().from(whatsappTemplates).orderBy(asc(whatsappTemplates.topic));

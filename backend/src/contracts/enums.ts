@@ -161,6 +161,7 @@ export const PERMISSIONS = [
   "returns.manage",
   "refunds.approve",
   "whatsapp.view",
+  "whatsapp.reply",
   "analytics.view",
   "settings.manage",
   "audit.view",

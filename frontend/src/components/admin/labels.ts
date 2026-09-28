@@ -106,6 +106,7 @@ export const PERMISSION_LABELS: Record<Permission, string> = {
   "returns.manage": "Process returns",
   "refunds.approve": "Approve refunds",
   "whatsapp.view": "View WhatsApp",
+  "whatsapp.reply": "Reply on WhatsApp",
   "analytics.view": "View analytics",
   "settings.manage": "Manage store settings",
   "audit.view": "View audit log",

@@ -21,7 +21,7 @@ import { recordAudit } from "../../lib/audit";
 import { notFound, readJson, readQuery } from "../../lib/http";
 import { adminOf, requirePermission } from "../auth/middleware";
 import { kickNotificationDispatch } from "../notifications/service";
-import { transitionOrder, type OrderRow } from "../orders/lifecycle";
+import { lockOrder, paidAmount, refundedAmount, transitionOrder, type OrderRow } from "../orders/lifecycle";
 import { buildOrderDetail } from "../orders/queries";
 import { kickRefundProcessor, markRefund } from "../payments/service";
 import { createShipment } from "../shipping/service";
@@ -283,8 +283,25 @@ export const adminRefundRoutes = new Hono<AppEnv>()
       .select()
       .from(refunds)
       .where(eq(refunds.id, c.req.param("id")));
-    if (!refund || refund.status !== "FAILED") throw new DomainError("REFUND_NOT_RETRYABLE", "Only failed refunds can be retried.", 409);
-    await db.update(refunds).set({ status: "PENDING", failureReason: null }).where(eq(refunds.id, refund.id));
+    if (!refund) throw notFound("Refund");
+    await db.transaction(async (tx) => {
+      const order = await lockOrder(tx, refund.orderId);
+      const [current] = await tx.select().from(refunds).where(eq(refunds.id, refund.id)).for("update");
+      if (current?.status !== "FAILED") throw new DomainError("REFUND_NOT_RETRYABLE", "Only failed refunds can be retried.", 409);
+      // A failed refund stopped counting against the payment; other refunds may have used that room since.
+      const [payment] = current.paymentId ? await tx.select().from(payments).where(eq(payments.id, current.paymentId)) : [];
+      if (!payment?.isDuplicate && current.amountPaise > (await paidAmount(tx, order)) - (await refundedAmount(tx, order.id))) {
+        throw new DomainError("REFUND_EXCEEDS_PAID", "This refund would exceed what's left of the payment.", 409);
+      }
+      await tx.update(refunds).set({ status: "PENDING", failureReason: null }).where(eq(refunds.id, current.id));
+      await recordAudit(tx, adminOf(c), {
+        action: "refund.retried",
+        entityType: "refund",
+        entityId: current.id,
+        before: { status: "FAILED" },
+        after: { status: "PENDING" },
+      });
+    });
     kickRefundProcessor();
     return c.json({ ok: true });
   });

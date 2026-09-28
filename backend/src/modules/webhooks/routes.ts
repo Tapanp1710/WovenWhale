@@ -2,6 +2,8 @@ import { Hono } from "hono";
 import type { AppEnv } from "../../app-env";
 import { env } from "../../config/env";
 import { providers } from "../../integrations";
+import { IgnoredWebhookEvent } from "../../integrations/payments/types";
+import { safeEqual } from "../../lib/crypto";
 import { HttpError } from "../../lib/http";
 import { logger } from "../../lib/logger";
 import { applyDeliveryReceipt, recordInboundMessage } from "../notifications/service";
@@ -17,7 +19,13 @@ export const webhookRoutes = new Hono<AppEnv>()
   .post("/payments/:provider", async (c) => {
     if (c.req.param("provider") !== providers.payments.name) throw new HttpError(404, "NOT_FOUND", "Unknown provider.");
     const raw = await c.req.text();
-    const event = await providers.payments.parseWebhook(raw, c.req.raw.headers);
+    let event;
+    try {
+      event = await providers.payments.parseWebhook(raw, c.req.raw.headers);
+    } catch (error) {
+      if (!(error instanceof IgnoredWebhookEvent)) throw error;
+      return c.json({ received: true, ignored: error.event });
+    }
     const { duplicate } = await handleVerifiedPaymentEvent(event);
     return c.json({ received: true, duplicate });
   })
@@ -31,7 +39,7 @@ export const webhookRoutes = new Hono<AppEnv>()
   .get("/whatsapp", (c) => {
     const mode = c.req.query("hub.mode");
     const token = c.req.query("hub.verify_token");
-    if (mode === "subscribe" && env.WHATSAPP_WEBHOOK_VERIFY_TOKEN && token === env.WHATSAPP_WEBHOOK_VERIFY_TOKEN) {
+    if (mode === "subscribe" && env.WHATSAPP_WEBHOOK_VERIFY_TOKEN && token && safeEqual(token, env.WHATSAPP_WEBHOOK_VERIFY_TOKEN)) {
       return c.text(c.req.query("hub.challenge") ?? "");
     }
     throw new HttpError(403, "FORBIDDEN", "Verification failed.");

@@ -1,4 +1,4 @@
-import { and, eq, inArray, sql } from "drizzle-orm";
+import { and, eq, inArray, isNull, or, sql } from "drizzle-orm";
 import { env } from "../../config/env";
 import type { NotificationTopic, OrderStatus, PaymentStatus, RefundStatus } from "../../contracts/enums";
 import { formatINR } from "../../contracts/money";
@@ -48,11 +48,22 @@ export async function paidAmount(tx: Tx, order: OrderRow): Promise<number> {
   return Number(row?.total ?? 0);
 }
 
+/**
+ * Refunds against the order's real payment. Refunds of duplicate or late captures
+ * return money that `paidAmount` never counted, so they are excluded here too.
+ */
 export async function refundedAmount(tx: Tx, orderId: string, statuses: RefundStatus[] = ["PENDING", "PROCESSING", "PROCESSED"]) {
   const [row] = await tx
     .select({ total: sql<number>`coalesce(sum(${refunds.amountPaise}), 0)::int` })
     .from(refunds)
-    .where(and(eq(refunds.orderId, orderId), inArray(refunds.status, statuses)));
+    .leftJoin(payments, eq(payments.id, refunds.paymentId))
+    .where(
+      and(
+        eq(refunds.orderId, orderId),
+        inArray(refunds.status, statuses),
+        or(isNull(refunds.paymentId), eq(payments.isDuplicate, false)),
+      ),
+    );
   return Number(row?.total ?? 0);
 }
 

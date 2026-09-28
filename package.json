@@ -26,7 +26,8 @@
     "test": "npm run test -w backend",
     "test:e2e": "npm run test:e2e -w frontend",
     "format": "prettier --write \"backend/**/*.ts\" \"frontend/**/*.{ts,tsx,css}\"",
-    "format:check": "prettier --check \"backend/**/*.ts\" \"frontend/**/*.{ts,tsx,css}\""
+    "format:check": "prettier --check \"backend/**/*.ts\" \"frontend/**/*.{ts,tsx,css}\"",
+    "db:verify": "npm run db:verify -w backend"
   },
   "devDependencies": {
     "prettier": "^3.9.9"

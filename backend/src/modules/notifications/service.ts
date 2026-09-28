@@ -63,6 +63,12 @@ export async function dispatchPendingNotifications(limit = 50) {
       skipped++;
       continue;
     }
+    // Never record a message as sent when no real transport exists.
+    if (providers.whatsapp.name === "log") {
+      await markSkipped(n.id, "No WhatsApp provider configured (WHATSAPP_PROVIDER=log)");
+      skipped++;
+      continue;
+    }
     const template = templateByTopic.get(n.topic);
     if (!template?.isApproved || !template.isActive) {
       await markSkipped(n.id, "Template not approved/active");

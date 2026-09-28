@@ -662,6 +662,8 @@ export interface WhatsAppConversationDTO {
   customerName: string | null;
   lastMessageAt: string | null;
   messageCount: number;
+  /** Free-form replies are allowed until this time (24h after the customer's last message). */
+  serviceWindowExpiresAt: string | null;
 }
 
 export interface WhatsAppTemplateDTO {

@@ -8,6 +8,7 @@ import { errorMessage } from "@/lib/api/errors";
 import { formatDateTime, formatPhone } from "@/lib/format";
 import { humanize } from "../labels";
 import styles from "./Conversations.module.css";
+import { ReplyBox } from "./ReplyBox";
 
 interface Message {
   id: string;
@@ -19,11 +20,13 @@ interface Message {
   createdAt: string;
 }
 
-/** Conversation list with a read-only message pane. */
+/** Conversation list with a message pane and, inside the service window, a reply box. */
 export function Conversations({ conversations }: { conversations: WhatsAppConversationDTO[] }) {
   const [selected, setSelected] = useState<string | null>(conversations[0]?.id ?? null);
   const [messages, setMessages] = useState<Message[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [reloadKey, setReloadKey] = useState(0);
+  const current = conversations.find((c) => c.id === selected);
 
   useEffect(() => {
     if (!selected) return;
@@ -34,7 +37,7 @@ export function Conversations({ conversations }: { conversations: WhatsAppConver
       .then(setMessages)
       .catch((e: unknown) => (e as Error).name !== "AbortError" && setError(errorMessage(e)));
     return () => ctrl.abort();
-  }, [selected]);
+  }, [selected, reloadKey]);
 
   if (!conversations.length) return <p className={styles.none}>No conversations yet. Messages appear here once WhatsApp is connected.</p>;
 
@@ -76,6 +79,7 @@ export function Conversations({ conversations }: { conversations: WhatsAppConver
             ))}
           </ol>
         )}
+        {current && messages && <ReplyBox conversation={current} onSent={() => setReloadKey((k) => k + 1)} />}
       </div>
     </div>
   );
