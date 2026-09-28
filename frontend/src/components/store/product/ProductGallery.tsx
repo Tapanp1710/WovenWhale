@@ -103,7 +103,7 @@ export const ProductGallery = forwardRef<HTMLDivElement, { images: ImageDTO[]; n
             onClick={() => setViewer(true)}
             aria-label={`Open image ${i + 1} of ${images.length} full screen`}
           >
-            <Image src={img.url} alt={img.alt} fill sizes="100vw" preload={i === 0} className={styles.image} />
+            <Image src={img.url} alt={img.alt} fill sizes="(min-width: 1024px) 50vw, 100vw" preload={i === 0} className={styles.image} />
           </button>
         ))}
       </div>

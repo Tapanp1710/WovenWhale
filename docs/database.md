@@ -63,6 +63,7 @@ Migration `0001_enable_rls` enables RLS on every table without policies and revo
 | `0003_variant_nulls_not_distinct` | Variant uniqueness treats a missing colour as one value |
 | `0004_admin_mfa` | Admin TOTP 2FA columns, recovery codes, Supabase grant hardening |
 | `0005_whatsapp_reply_permission` | `whatsapp.reply` permission for existing roles (data migration) |
+| `0006_cod_review_reminder` | `orders.cod_review_reminded_until` (COD "remind me later"); inventory managers no longer edit the catalogue (`products.manage` removed from that role) |
 
 ```bash
 # change files in backend/src/db/schema, then:

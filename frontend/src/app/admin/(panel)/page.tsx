@@ -1,5 +1,6 @@
 import type { DashboardDTO } from "@wovenwhale/backend/contracts";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CodQueue } from "@/components/admin/dashboard/CodQueue";
 import { DashboardCharts } from "@/components/admin/dashboard/DashboardCharts";
 import { KpiStrip } from "@/components/admin/dashboard/KpiStrip";
@@ -12,7 +13,7 @@ import { PageHeader } from "@/components/admin/ui/PageHeader";
 import { Panel } from "@/components/admin/ui/Panel";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { sessionApi } from "@/lib/api/server";
-import { formatDate, formatINR } from "@/lib/format";
+import { formatDate, formatDateTime, formatINR } from "@/lib/format";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = { title: "Dashboard" };
@@ -72,6 +73,30 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
         ]}
       />
 
+      {can(admin, "products.view") && (
+        <KpiStrip
+          label="Catalogue and stock"
+          columns={4}
+          items={[
+            { label: "Products", value: count(data.inventory.totalProducts), sub: "active and drafts", href: "/admin/products" },
+            { label: "Active products", value: count(data.inventory.activeProducts), href: "/admin/products?status=ACTIVE" },
+            {
+              label: "Low stock",
+              value: count(data.inventory.lowStockProducts),
+              sub: "a size is low or sold out",
+              href: "/admin/products?stock=LOW_STOCK",
+              attention: data.inventory.lowStockProducts > 0,
+            },
+            {
+              label: "Out of stock",
+              value: count(data.inventory.outOfStockProducts),
+              href: "/admin/products?stock=OUT_OF_STOCK",
+              attention: data.inventory.outOfStockProducts > 0,
+            },
+          ]}
+        />
+      )}
+
       <DashboardCharts data={data} />
 
       <Panel
@@ -90,6 +115,26 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
           <p className={styles.empty}>Every variant is above its threshold.</p>
         )}
       </Panel>
+
+      {can(admin, "inventory.view") && (
+        <Panel title="Recent restocks" description="The latest units received, from the stock ledger.">
+          {data.inventory.recentRestocks.length ? (
+            <ul className={styles.restocks}>
+              {data.inventory.recentRestocks.map((r, i) => (
+                <li key={i}>
+                  <Link href={`/admin/products/${r.productId}`}>{r.productName}</Link> <span className={styles.muted}>size {r.size}</span>
+                  <strong className={styles.plus}>+{r.quantity}</strong>
+                  <span className={styles.muted}>
+                    {r.actor ?? "System"} · {formatDateTime(r.createdAt)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className={styles.empty}>No restocks recorded yet.</p>
+          )}
+        </Panel>
+      )}
     </div>
   );
 }

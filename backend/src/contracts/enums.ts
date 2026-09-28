@@ -67,6 +67,14 @@ export const INVENTORY_TXN_TYPES = [
 ] as const;
 export type InventoryTxnType = (typeof INVENTORY_TXN_TYPES)[number];
 
+/** Derived from is_active and deleted_at: DRAFT = hidden, ARCHIVED = retired but kept for order history. */
+export const PRODUCT_STATUSES = ["ACTIVE", "DRAFT", "ARCHIVED"] as const;
+export type ProductStatus = (typeof PRODUCT_STATUSES)[number];
+
+/** OUT: nothing sellable; LOW: some size at/below its threshold or sold out; IN: healthy. */
+export const STOCK_STATES = ["IN_STOCK", "LOW_STOCK", "OUT_OF_STOCK"] as const;
+export type StockState = (typeof STOCK_STATES)[number];
+
 export const COUPON_TYPES = ["PERCENTAGE", "FIXED_AMOUNT"] as const;
 export type CouponType = (typeof COUPON_TYPES)[number];
 

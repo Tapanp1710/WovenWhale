@@ -60,3 +60,7 @@
 .error {
   color: var(--danger-600);
 }
+
+.picker {
+  margin-bottom: var(--space-4);
+}

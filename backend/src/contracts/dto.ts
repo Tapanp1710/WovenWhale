@@ -12,12 +12,14 @@ import type {
   PaymentMethod,
   PaymentStatus,
   Permission,
+  ProductStatus,
   RecoveryStatus,
   RefundMethod,
   RefundStatus,
   ReturnStatus,
   ReturnType,
   ShipmentStatus,
+  StockState,
 } from "./enums";
 
 export interface ApiErrorBody {
@@ -406,6 +408,22 @@ export interface DashboardDTO {
   funnel: { stage: string; count: number }[];
   codPending: AdminOrderRowDTO[];
   lowStock: LowStockRowDTO[];
+  inventory: InventorySummaryDTO;
+}
+
+export interface InventorySummaryDTO {
+  totalProducts: number;
+  activeProducts: number;
+  lowStockProducts: number;
+  outOfStockProducts: number;
+  recentRestocks: {
+    productId: string;
+    productName: string;
+    size: string;
+    quantity: number;
+    actor: string | null;
+    createdAt: string;
+  }[];
 }
 
 export interface AnalyticsDTO {
@@ -444,6 +462,8 @@ export interface AdminOrderRowDTO {
   riskFlags: string[];
   items: { productName: string; size: string; quantity: number }[];
   shippingAddress?: Omit<AddressDTO, "id" | "isDefault">;
+  /** COD review snoozed until this time ("remind me later"), or null. */
+  codReviewRemindedUntil: string | null;
 }
 
 export interface AdminOrderDetailDTO extends OrderDetailDTO {
@@ -510,6 +530,11 @@ export interface AdminProductRowDTO {
   isNewArrival: boolean;
   totalStock: number;
   variantCount: number;
+  /** Active sizes at or below their low-stock threshold (but not zero), and sizes with nothing available. */
+  lowVariants: number;
+  outVariants: number;
+  status: ProductStatus;
+  stockState: StockState;
   categories: string[];
   updatedAt: string;
 }
@@ -534,6 +559,10 @@ export interface AdminProductDetailDTO {
   isBestSeller: boolean;
   isNewArrival: boolean;
   isActive: boolean;
+  status: ProductStatus;
+  archivedAt: string | null;
+  /** True only when nothing references the product (no orders, no stock movements): safe to delete permanently. */
+  deletable: boolean;
   seoTitle: string | null;
   seoDescription: string | null;
   images: (ImageDTO & { provider: string; sortOrder: number })[];
@@ -544,6 +573,7 @@ export interface AdminProductDetailDTO {
     pricePaiseOverride: number | null;
     mrpPaiseOverride: number | null;
     sortOrder: number;
+    lowStockThreshold: number;
   })[];
 }
 

@@ -90,6 +90,10 @@ describe("inventory movements (RULE 8)", () => {
     const r = planMovement(level, { kind: "RETURN_RECEIVED", quantity: 2 });
     expect(r.ok && r.value.after.onHand).toBe(12);
   });
+  it("refuses adjustments that would make stock negative", () => {
+    const r = planMovement(level, { kind: "ADJUST", delta: -(level.onHand + 1), type: "MANUAL_ADJUSTMENT" });
+    expect(!r.ok && [r.code, r.message]).toEqual(["INSUFFICIENT_STOCK", "Insufficient stock."]);
+  });
   it("refuses manual adjustments below reserved units", () => {
     const r = planMovement(level, { kind: "ADJUST", delta: -8, type: "MANUAL_ADJUSTMENT" });
     expect(!r.ok && r.code).toBe("BELOW_RESERVED");

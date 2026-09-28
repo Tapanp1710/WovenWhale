@@ -5,6 +5,8 @@
  * DEMO (clearly fake): stock levels, merchandising flags, customers, orders,
  * coupons, checkout sessions and analytics events.
  */
+// No deferred background work: this script closes the database when it finishes.
+process.env.DISABLE_BACKGROUND_KICKS = "true";
 import { sqlClient } from "../src/db/client";
 import { bootstrapReferenceData, ensureSuperAdmin } from "../src/modules/admin/rbac";
 import { seedCatalog } from "./catalog";

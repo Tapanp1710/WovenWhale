@@ -1,0 +1,62 @@
+.wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.trigger {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--slate-700);
+}
+
+.trigger:hover,
+.trigger[aria-expanded="true"] {
+  border-color: var(--border-strong);
+  color: var(--indigo-900);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 20;
+  display: grid;
+  min-width: 180px;
+  padding: var(--space-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  box-shadow: var(--shadow-float);
+}
+
+.item {
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: calc(var(--radius-control) - 2px);
+  background: none;
+  color: var(--text);
+  font-size: var(--text-sm);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.item:hover,
+.item:focus-visible {
+  background: var(--indigo-50);
+  color: var(--indigo-900);
+}
+
+.danger {
+  color: var(--danger-600);
+}
+
+.danger:hover,
+.danger:focus-visible {
+  background: var(--danger-50);
+  color: var(--danger-600);
+}

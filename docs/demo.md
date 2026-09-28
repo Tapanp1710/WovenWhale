@@ -24,7 +24,7 @@ All share the password **`Demo-Only-2026!`** (`DEMO_ADMIN_PASSWORD`). On a demo 
 | `owner@wovenwhale.local` | Super admin | Everything, including admin accounts, roles and 2FA resets |
 | `admin@wovenwhale.local` | Admin | Everything except admin accounts |
 | `orders@wovenwhale.local` | Order manager | Orders, COD approval, shipping, cancellations, returns |
-| `inventory@wovenwhale.local` | Inventory manager | Products and stock |
+| `inventory@wovenwhale.local` | Inventory manager | Restock, adjust stock and view stock history (not product details or prices) |
 | `support@wovenwhale.local` | Customer support | Read orders and customers, handle returns, reply on WhatsApp. **Cannot approve COD** |
 
 Locally (`npm run db:seed`) the same accounts exist without 2FA (it's optional in development); the owner's password is `SEED_SUPER_ADMIN_PASSWORD` (`ChangeMe!2026` by default).
@@ -47,9 +47,15 @@ The `/admin` URL is also reachable by typing `7391` on any storefront page. That
 
 **COD**
 1. Check out with **Cash on delivery** → the order is **Awaiting confirmation** (`PENDING_COD_APPROVAL`).
-2. Sign in as `orders@…` → **COD approvals** → Approve → the order is **Confirmed**.
+2. Sign in as `orders@…` → **COD approvals** (or Orders → COD pending approval) → **Approve** right in the list → the order is **Confirmed**. **Remind later** hides it from the queue for 24 hours without changing its status.
 3. Open the order → Processing → Packed → **Ship** (courier, AWB and an `https://` tracking link) → Delivered.
 4. Reject instead to end at **Rejected**, with no refund because nothing was paid.
+
+**Products and stock (admin)**
+1. **Products** → **Add product** → fill in name, SKU, prices and a category → **Create product** (it starts as a Draft) → **Add size** with opening stock → add photos → **Publish**.
+2. In the list: **Restock** a product (pick the size, quantity and reason; the new level is shown before you confirm), **⋮ → Adjust stock** (decrease for damaged items), **⋮ → Stock history** (every movement with before → after, reason and who did it).
+3. **⋮ → Archive** takes it out of the store while past orders stay intact; filter **Archived** → **⋮ → Restore**.
+4. Filter by **Low stock** / **Out of stock**, or click those numbers on the dashboard.
 
 **Return and refund (admin)**
 1. **Returns** → the request → Approve → Mark as received (choose whether it goes back into stock) → Refund (to the original payment; the amount is capped at what's refundable) → Complete.

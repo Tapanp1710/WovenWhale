@@ -171,6 +171,8 @@ export async function recordInboundMessage(from: string, body: string, providerM
 let dispatchTimer: NodeJS.Timeout | null = null;
 /** Debounced post-commit trigger so customers get messages promptly without blocking requests. */
 export function kickNotificationDispatch() {
+  // Scripts (seed) finish before a deferred run could; the API processes pending work itself.
+  if (process.env.DISABLE_BACKGROUND_KICKS === "true") return;
   if (dispatchTimer) return;
   dispatchTimer = setTimeout(() => {
     dispatchTimer = null;

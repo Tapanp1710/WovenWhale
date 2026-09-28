@@ -46,7 +46,8 @@ function defaults(p: AdminProductDetailDTO | null): ProductUpsertInput {
     isFeatured: p?.isFeatured ?? false,
     isBestSeller: p?.isBestSeller ?? false,
     isNewArrival: p?.isNewArrival ?? true,
-    isActive: p?.isActive ?? true,
+    // New products start as drafts: they go live once sizes, stock and photos are in place.
+    isActive: p?.isActive ?? false,
     seoTitle: p?.seoTitle ?? "",
     seoDescription: p?.seoDescription ?? "",
   };
@@ -59,6 +60,7 @@ function defaults(p: AdminProductDetailDTO | null): ProductUpsertInput {
 export function ProductForm({ product, categories }: { product: AdminProductDetailDTO | null; categories: AdminCategoryDTO[] }) {
   const router = useRouter();
   const canManage = useCan("products.manage");
+  const archived = product?.status === "ARCHIVED";
   const { run } = useAction();
   const form = useForm<ProductUpsertInput, unknown, ProductUpsertInput>({
     resolver: zodResolver(productUpsertSchema, undefined, { raw: true }),
@@ -89,7 +91,7 @@ export function ProductForm({ product, categories }: { product: AdminProductDeta
 
   return (
     <form onSubmit={submit} noValidate className={styles.form}>
-      <fieldset disabled={!canManage} className={styles.fieldset}>
+      <fieldset disabled={!canManage || archived} className={styles.fieldset}>
         <div className={styles.layout}>
           <div className={styles.main}>
             <Panel title="Basics">
@@ -200,9 +202,19 @@ export function ProductForm({ product, categories }: { product: AdminProductDeta
               </div>
             </Panel>
 
-            <Panel title="Merchandising">
+            <Panel title="Status">
+              <SelectField
+                label="Visibility"
+                hint="Draft keeps the product hidden while you add sizes, stock and photos."
+                {...register("isActive", { setValueAs: (v: unknown) => v === true || v === "true" })}
+              >
+                <option value="false">Draft (hidden from the store)</option>
+                <option value="true">Active (visible in the store)</option>
+              </SelectField>
+            </Panel>
+
+            <Panel title="Storefront placement">
               <div className={styles.checks}>
-                <Checkbox label="Active (visible in the store)" {...register("isActive")} />
                 <Checkbox label="Featured on the home page" {...register("isFeatured")} />
                 <Checkbox label="Best seller" {...register("isBestSeller")} />
                 <Checkbox label="New arrival" {...register("isNewArrival")} />
@@ -239,7 +251,7 @@ export function ProductForm({ product, categories }: { product: AdminProductDeta
         </div>
       </fieldset>
 
-      {canManage && (
+      {canManage && !archived && (
         <div className={styles.saveBar}>
           <p className={styles.note}>{formState.isDirty ? "You have unsaved changes." : product ? "All changes saved." : "New product"}</p>
           <Button type="submit" loading={formState.isSubmitting}>

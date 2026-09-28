@@ -12,6 +12,7 @@ export function ConfirmDialog({
   title,
   description,
   confirmLabel,
+  cancelLabel = "Keep it",
   onConfirm,
 }: {
   open: boolean;
@@ -19,6 +20,7 @@ export function ConfirmDialog({
   title: string;
   description: string;
   confirmLabel: string;
+  cancelLabel?: string;
   onConfirm: () => Promise<unknown>;
 }) {
   const [busy, setBusy] = useState(false);
@@ -31,7 +33,7 @@ export function ConfirmDialog({
       footer={
         <div className={styles.footer}>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Keep it
+            {cancelLabel}
           </Button>
           <Button
             variant="danger"

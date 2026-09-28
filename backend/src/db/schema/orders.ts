@@ -65,6 +65,8 @@ export const orders = pgTable(
     placedAt: timestamp("placed_at", { withTimezone: true }).notNull().defaultNow(),
     /** Server-computed: placed_at + cancellation window. Customers cannot cancel after this. */
     cancelDeadlineAt: timestamp("cancel_deadline_at", { withTimezone: true }).notNull(),
+    /** COD "remind me later": out of the approval queue until this time; status is unchanged. */
+    codReviewRemindedUntil: timestamp("cod_review_reminded_until", { withTimezone: true }),
     confirmedAt: timestamp("confirmed_at", { withTimezone: true }),
     deliveredAt: timestamp("delivered_at", { withTimezone: true }),
     /** Server-computed on delivery: delivered_at + return window. */

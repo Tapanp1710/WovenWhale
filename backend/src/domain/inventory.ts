@@ -86,6 +86,7 @@ export function planMovement(level: StockLevel, m: StockMovement): Result<Planne
     case "ADJUST":
       type = m.type;
       onHandDelta = qty;
+      if (level.onHand + qty < 0) return fail("INSUFFICIENT_STOCK", "Insufficient stock.");
       if (level.onHand + qty < level.reserved) {
         return fail("BELOW_RESERVED", "Stock cannot go below units reserved for open orders.");
       }

@@ -7,26 +7,32 @@ import { useAction, useCan } from "../AdminContext";
 import { Switch } from "../ui/Switch";
 import styles from "./ProductFlags.module.css";
 
+/**
+ * Storefront placement switches. Visibility itself is the product's Status
+ * (Active / Draft / Archived), not a switch here.
+ */
 export const FLAGS = [
-  ["isActive", "Active"],
-  ["isFeatured", "Featured"],
-  ["isBestSeller", "Best seller"],
-  ["isNewArrival", "New arrival"],
+  ["isFeatured", "Featured", "Shown in the Featured section of the homepage and first in “Featured” sorting."],
+  ["isBestSeller", "Best seller", "Adds the Best seller badge and ranks higher in the Best sellers section and search."],
+  ["isNewArrival", "New", "Adds the New badge and places it in the New arrivals section of the homepage."],
 ] as const;
 type Flag = (typeof FLAGS)[number][0];
 
-/** Column header aligned with the switches below it. */
+/** Column header aligned with the switches below it; each label explains itself on hover and to screen readers. */
 export function ProductFlagsHeader() {
   return (
     <span className={`${styles.flags} ${styles.header}`}>
-      {FLAGS.map(([flag, label]) => (
-        <span key={flag}>{label}</span>
+      {FLAGS.map(([flag, label, help]) => (
+        <span key={flag} title={help}>
+          {label}
+          <span className="visually-hidden">: {help}</span>
+        </span>
       ))}
     </span>
   );
 }
 
-/** Inline merchandising toggles; optimistic, reverted if the API refuses. */
+/** Inline placement toggles; optimistic, reverted if the API refuses. */
 export function ProductFlags({ product }: { product: AdminProductRowDTO }) {
   const canManage = useCan("products.manage");
   const { run } = useAction();
@@ -47,13 +53,13 @@ export function ProductFlags({ product }: { product: AdminProductRowDTO }) {
 
   return (
     <div className={styles.flags}>
-      {FLAGS.map(([flag, label]) => (
+      {FLAGS.map(([flag, label, help]) => (
         <Switch
           key={flag}
           checked={flags[flag]}
           label={`${label}: ${product.name}`}
-          title={label}
-          disabled={!canManage || busy !== null}
+          title={help}
+          disabled={!canManage || busy !== null || product.status === "ARCHIVED"}
           onClick={() => toggle(flag, label)}
         />
       ))}

@@ -6,10 +6,12 @@ import {
   PAYMENT_METHODS,
   PAYMENT_STATUSES,
   PERMISSIONS,
+  PRODUCT_STATUSES,
   RECOVERY_STATUSES,
   REFUND_METHODS,
   RETURN_STATUSES,
   RETURN_TYPES,
+  STOCK_STATES,
 } from "./enums";
 import { cleanText, emailSchema, requiredText, uuidSchema } from "./validation";
 
@@ -127,6 +129,21 @@ export const productUpsertSchema = z
   .refine((p) => p.mrp >= p.price, { path: ["mrp"], message: "MRP must be at least the selling price" });
 export type ProductUpsertInput = z.input<typeof productUpsertSchema>;
 
+export const ADMIN_PRODUCT_SORTS = ["updated", "name", "price-asc", "price-desc", "stock-asc", "stock-desc"] as const;
+
+export const adminProductQuerySchema = z.object({
+  q: cleanText(80).optional(),
+  category: uuidSchema.optional(),
+  /** Omitted: active and draft products (archived ones only when asked for). */
+  status: z.enum(PRODUCT_STATUSES).optional(),
+  stock: z.enum(STOCK_STATES).optional(),
+  sort: z.enum(ADMIN_PRODUCT_SORTS).default("updated"),
+  page: z.coerce.number().int().min(1).default(1),
+  pageSize: z.coerce.number().int().min(1).max(100).default(25),
+});
+
+export const productRestoreSchema = z.object({ to: z.enum(["ACTIVE", "DRAFT"]).default("DRAFT") });
+
 /** Quick merchandising toggles from the product list. */
 export const productFlagsSchema = z
   .object({ isActive: z.boolean(), isFeatured: z.boolean(), isBestSeller: z.boolean(), isNewArrival: z.boolean() })
@@ -192,6 +209,8 @@ export const orderStatusUpdateSchema = z.object({
 
 export const codDecisionSchema = z.object({ note: cleanText(500).optional() });
 export const codRejectSchema = z.object({ reason: requiredText("Reason", 500, 3) });
+/** "Remind me later" on a COD order: hide it from the approval queue for a while. */
+export const codRemindSchema = z.object({ hours: z.coerce.number().int().min(1).max(168).default(24) });
 export const adminCancelSchema = z.object({ reason: requiredText("Reason", 500, 3) });
 export const orderNoteSchema = z.object({ body: requiredText("Note", 2000, 2) });
 

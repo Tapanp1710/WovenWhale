@@ -6,9 +6,10 @@ import { ProductDangerZone } from "@/components/admin/products/ProductDangerZone
 import { ProductForm } from "@/components/admin/products/ProductForm";
 import { VariantsEditor } from "@/components/admin/products/VariantsEditor";
 import { adminWith } from "@/components/admin/server";
-import { Badge } from "@/components/admin/ui/Badge";
+import { Notice } from "@/components/admin/ui/Notice";
 import { NoAccess } from "@/components/admin/ui/NoAccess";
 import { PageHeader } from "@/components/admin/ui/PageHeader";
+import { ProductStatusBadge } from "@/components/admin/ui/StatusBadges";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { sessionApi, sessionApiOrNull } from "@/lib/api/server";
 import styles from "../products.module.css";
@@ -29,16 +30,21 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
       <PageHeader
         back={{ href: "/admin/products", label: "Products" }}
         title={product.name}
-        meta={product.isActive ? <Badge tone="success">Live</Badge> : <Badge>Hidden</Badge>}
+        meta={<ProductStatusBadge status={product.status} />}
         description={product.sku}
         actions={
-          product.isActive && (
+          product.status === "ACTIVE" && (
             <ButtonLink href={`/product/${product.slug}`} target="_blank" size="sm" variant="secondary">
               View in store
             </ButtonLink>
           )
         }
       />
+      {product.status === "ARCHIVED" && (
+        <Notice title="This product is archived">
+          It isn&apos;t in the store and can&apos;t be edited. Restore it at the bottom of this page to make changes.
+        </Notice>
+      )}
       <ProductForm key={product.id} product={product} categories={categories} />
       <VariantsEditor product={product} />
       <ImagesEditor product={product} />

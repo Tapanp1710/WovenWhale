@@ -1,4 +1,4 @@
-import type { OrderStatus, PaymentStatus, RefundStatus, ReturnStatus } from "@wovenwhale/backend/contracts";
+import type { OrderStatus, PaymentStatus, ProductStatus, RefundStatus, ReturnStatus, StockState } from "@wovenwhale/backend/contracts";
 import { RETURN_STATUS_LABELS } from "@wovenwhale/backend/contracts";
 import {
   humanize,
@@ -25,4 +25,25 @@ export const ReturnStatusBadge = ({ status }: { status: ReturnStatus }) => (
 
 export const RefundStatusBadge = ({ status }: { status: RefundStatus }) => (
   <Badge tone={REFUND_STATUS_TONE[status]}>{humanize(status)}</Badge>
+);
+
+const PRODUCT_STATUS: Record<ProductStatus, { label: string; tone: "success" | "neutral" | "warning" }> = {
+  ACTIVE: { label: "Active", tone: "success" },
+  DRAFT: { label: "Draft", tone: "neutral" },
+  ARCHIVED: { label: "Archived", tone: "warning" },
+};
+
+export const ProductStatusBadge = ({ status }: { status: ProductStatus }) => (
+  <Badge tone={PRODUCT_STATUS[status].tone}>{PRODUCT_STATUS[status].label}</Badge>
+);
+
+export const STOCK_STATE_LABELS: Record<StockState, string> = {
+  IN_STOCK: "In stock",
+  LOW_STOCK: "Low stock",
+  OUT_OF_STOCK: "Out of stock",
+};
+
+/** Text plus colour, so the state never relies on colour alone. */
+export const StockStateBadge = ({ state }: { state: StockState }) => (
+  <Badge tone={state === "OUT_OF_STOCK" ? "danger" : state === "LOW_STOCK" ? "warning" : "success"}>{STOCK_STATE_LABELS[state]}</Badge>
 );

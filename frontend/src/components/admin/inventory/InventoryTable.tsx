@@ -98,7 +98,13 @@ export function InventoryTable({ rows }: { rows: InventoryRowDTO[] }) {
         </tbody>
       </Table>
       {adjusting && <AdjustDialog row={adjusting} onClose={() => setAdjusting(null)} />}
-      {history && <LedgerDrawer row={history} onClose={() => setHistory(null)} />}
+      {history && (
+        <LedgerDrawer
+          title={history.productName}
+          sizes={[{ variantId: history.variantId, label: `${history.productName}, size ${history.size} (${history.sku})` }]}
+          onClose={() => setHistory(null)}
+        />
+      )}
     </>
   );
 }

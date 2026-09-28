@@ -26,6 +26,7 @@ export function ReasonDialog({
   danger,
   multiline = true,
   optional,
+  cancelLabel = "Keep as is",
   onConfirm,
 }: {
   open: boolean;
@@ -39,6 +40,7 @@ export function ReasonDialog({
   danger?: boolean;
   multiline?: boolean;
   optional?: boolean;
+  cancelLabel?: string;
   onConfirm: (values: Values) => Promise<unknown>;
 }) {
   const form = useForm<Values>({ resolver: zodResolver(schema), defaultValues: { [name]: "" } });
@@ -67,7 +69,7 @@ export function ReasonDialog({
       footer={
         <div className={styles.footer}>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Keep as is
+            {cancelLabel}
           </Button>
           <Button type="submit" form={`reason-${name}`} variant={danger ? "danger" : "primary"} loading={form.formState.isSubmitting}>
             {confirmLabel}

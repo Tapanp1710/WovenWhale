@@ -1,4 +1,4 @@
-import { and, asc, desc, eq, gte, ilike, inArray, lte, or, sql, type SQL } from "drizzle-orm";
+import { and, asc, desc, eq, gte, ilike, inArray, isNull, lte, or, sql, type SQL } from "drizzle-orm";
 import { Hono } from "hono";
 import type { AdminContext, AppEnv } from "../../app-env";
 import {
@@ -6,6 +6,7 @@ import {
   adminOrderQuerySchema,
   codDecisionSchema,
   codRejectSchema,
+  codRemindSchema,
   orderNoteSchema,
   orderStatusUpdateSchema,
   refundProcessSchema,
@@ -62,9 +63,17 @@ export async function adminOrderRows(where: SQL | undefined, order: SQL[], limit
       riskFlags: o.riskFlags,
       items: mine.map(({ productName, size, quantity }) => ({ productName, size, quantity })),
       shippingAddress: o.shippingAddress as AdminOrderRowDTO["shippingAddress"],
+      codReviewRemindedUntil: o.codReviewRemindedUntil?.toISOString() ?? null,
     };
   });
 }
+
+/** COD orders that need a decision now: pending approval and not snoozed with "remind me later". */
+export const codActionable = () =>
+  and(
+    eq(orders.status, "PENDING_COD_APPROVAL"),
+    or(isNull(orders.codReviewRemindedUntil), lte(orders.codReviewRemindedUntil, sql`now()`)),
+  )!;
 
 export const auditDTO = (a: typeof auditLogs.$inferSelect): AuditLogDTO => ({
   id: a.id,
@@ -188,8 +197,34 @@ export const adminOrderRoutes = new Hono<AppEnv>()
     });
   })
   .get("/cod-pending", requirePermission("orders.view"), async (c) =>
-    c.json(await adminOrderRows(eq(orders.status, "PENDING_COD_APPROVAL"), [asc(orders.placedAt)], 100, 0)),
+    c.json(await adminOrderRows(codActionable(), [asc(orders.placedAt)], 100, 0)),
   )
+  /**
+   * "Remind me later": takes a COD order out of the approval queue for a while
+   * without touching its status; it comes back on its own when the time passes.
+   */
+  .post("/:id/remind-cod", requirePermission("orders.approve_cod"), async (c) => {
+    const { hours } = await readJson(c, codRemindSchema);
+    const admin = adminOf(c);
+    const id = c.req.param("id");
+    const until = new Date(Date.now() + hours * 60 * 60 * 1000);
+    await db.transaction(async (tx) => {
+      const [before] = await tx.select().from(orders).where(eq(orders.id, id)).for("update");
+      if (!before) throw notFound("Order");
+      if (before.status !== "PENDING_COD_APPROVAL") {
+        throw new DomainError("NOT_PENDING_COD", "Only COD orders waiting for approval can be snoozed.", 409);
+      }
+      await tx.update(orders).set({ codReviewRemindedUntil: until }).where(eq(orders.id, id));
+      await recordAudit(tx, admin, {
+        action: "order.cod_reminder_set",
+        entityType: "order",
+        entityId: id,
+        before: { codReviewRemindedUntil: before.codReviewRemindedUntil?.toISOString() ?? null },
+        after: { codReviewRemindedUntil: until.toISOString(), hours },
+      });
+    });
+    return c.json({ ok: true, remindedUntil: until.toISOString() });
+  })
   .get("/:id", requirePermission("orders.view"), async (c) => c.json(await adminDetail(adminOf(c), await loadOrder(c.req.param("id")))))
   .post("/:id/approve-cod", requirePermission("orders.approve_cod"), async (c) => {
     const { note } = await readJson(c, codDecisionSchema);

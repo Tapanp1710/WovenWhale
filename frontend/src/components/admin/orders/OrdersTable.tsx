@@ -2,11 +2,14 @@ import type { AdminOrderRowDTO } from "@wovenwhale/backend/contracts";
 import Link from "next/link";
 import { formatDateTime, formatINR, formatPhone } from "@/lib/format";
 import { OrderStatusBadge, PaymentStatusBadge } from "../ui/StatusBadges";
+import { CodActions } from "./CodActions";
 import { cell, Table } from "../ui/Table";
 
 export function OrdersTable({ rows }: { rows: AdminOrderRowDTO[] }) {
+  // Inline COD decisions only when there is something to decide.
+  const showActions = rows.some((o) => o.status === "PENDING_COD_APPROVAL");
   return (
-    <Table label="Orders" minWidth={960}>
+    <Table label="Orders" minWidth={showActions ? 1200 : 960}>
       <thead>
         <tr>
           <th scope="col">Order</th>
@@ -21,11 +24,16 @@ export function OrdersTable({ rows }: { rows: AdminOrderRowDTO[] }) {
           </th>
           <th scope="col">Payment</th>
           <th scope="col">Status</th>
+          {showActions && (
+            <th scope="col" className={cell.actions}>
+              Actions
+            </th>
+          )}
         </tr>
       </thead>
       <tbody>
         {rows.map((o) => (
-          <tr key={o.id}>
+          <tr key={o.id} data-order={o.orderNumber}>
             <td>
               <Link href={`/admin/orders/${o.id}`} className={cell.link}>
                 {o.orderNumber}
@@ -49,6 +57,11 @@ export function OrdersTable({ rows }: { rows: AdminOrderRowDTO[] }) {
             <td>
               <OrderStatusBadge status={o.status} />
             </td>
+            {showActions && (
+              <td className={cell.actions}>
+                <CodActions order={o} />
+              </td>
+            )}
           </tr>
         ))}
       </tbody>

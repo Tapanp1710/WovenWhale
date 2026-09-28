@@ -1,6 +1,6 @@
 .flags {
   display: grid;
-  grid-template-columns: repeat(4, 64px);
+  grid-template-columns: repeat(3, 64px);
   justify-items: center;
 }
 

@@ -6,3 +6,18 @@
 .page > header {
   margin-bottom: var(--space-1);
 }
+
+.legend {
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--slate-100);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.stock {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}

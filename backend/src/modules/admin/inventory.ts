@@ -6,6 +6,7 @@ import type { InventoryRowDTO, InventoryTxnDTO, LowStockRowDTO } from "../../con
 import { db } from "../../db/client";
 import { ref } from "../../db/sql";
 import { adminUsers, inventory, inventoryTransactions, orders, productImages, productVariants, products } from "../../db/schema";
+import { DomainError } from "../../domain/errors";
 import { recordAudit } from "../../lib/audit";
 import { notFound, readJson, readQuery } from "../../lib/http";
 import { resolveImageUrl } from "../../integrations/storage";
@@ -147,12 +148,17 @@ export const adminInventoryRoutes = new Hono<AppEnv>()
           ? { kind: "STOCK_IN", quantity: input.quantity }
           : { kind: "ADJUST", delta: input.quantity, type: input.type },
         { adminUserId: admin.id, note: input.note },
-      );
+      ).catch((error: unknown) => {
+        if (error instanceof DomainError && error.code === "INSUFFICIENT_STOCK") {
+          throw new DomainError("INSUFFICIENT_STOCK", "Insufficient stock.", 409);
+        }
+        throw error;
+      });
       if (input.lowStockThreshold !== undefined) {
         await tx.update(inventory).set({ lowStockThreshold: input.lowStockThreshold }).where(eq(inventory.variantId, variantId));
       }
       await recordAudit(tx, admin, {
-        action: "inventory.adjusted",
+        action: input.type === "STOCK_IN" ? "inventory.restocked" : "inventory.adjusted",
         entityType: "variant",
         entityId: variantId,
         before: { onHand: before?.onHand ?? 0, reserved: before?.reserved ?? 0, lowStockThreshold: before?.lowStockThreshold ?? 3 },
@@ -161,6 +167,7 @@ export const adminInventoryRoutes = new Hono<AppEnv>()
           lowStockThreshold: input.lowStockThreshold ?? before?.lowStockThreshold ?? 3,
           type: input.type,
           note: input.note,
+          productId: variant.productId,
         },
       });
       return after;

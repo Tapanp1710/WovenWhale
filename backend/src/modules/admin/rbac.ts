@@ -23,7 +23,7 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<AdminRole, readonly Permission[]> 
     "whatsapp.view",
     "whatsapp.reply",
   ],
-  INVENTORY_MANAGER: ["dashboard.view", "products.view", "products.manage", "inventory.view", "inventory.manage", "orders.view"],
+  INVENTORY_MANAGER: ["dashboard.view", "products.view", "inventory.view", "inventory.manage", "orders.view"],
   SUPPORT: [
     "dashboard.view",
     "orders.view",
@@ -41,7 +41,7 @@ const ROLE_INFO: Record<AdminRole, { name: string; description: string }> = {
   SUPER_ADMIN: { name: "Super admin", description: "Full access including admin accounts and roles." },
   ADMIN: { name: "Admin", description: "Runs the store: catalog, orders, refunds, settings." },
   ORDER_MANAGER: { name: "Order manager", description: "Order processing, COD approvals, cancellations and returns." },
-  INVENTORY_MANAGER: { name: "Inventory manager", description: "Catalog and stock management." },
+  INVENTORY_MANAGER: { name: "Inventory manager", description: "Stock levels: restocking, adjustments and stock history." },
   SUPPORT: { name: "Customer support", description: "Read access to orders and customers; handles returns." },
 };
 

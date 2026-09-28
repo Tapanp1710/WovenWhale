@@ -12,3 +12,33 @@
   color: var(--text-muted);
   font-size: var(--text-sm);
 }
+
+.restocks {
+  display: grid;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.restocks li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--slate-100);
+}
+
+.restocks a {
+  font-weight: 600;
+  color: var(--indigo-800);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.plus {
+  margin-left: auto;
+  color: var(--success-600);
+  font-variant-numeric: tabular-nums;
+}

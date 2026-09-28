@@ -5,15 +5,26 @@ import {
   categoryUpsertSchema,
   imageMetaSchema,
   imageReorderSchema,
+  adminProductQuerySchema,
   listQuerySchema,
   productFlagsSchema,
+  productRestoreSchema,
   productUpsertSchema,
   variantUpsertSchema,
 } from "../../contracts/admin";
 import type { AdminCategoryDTO, AdminProductDetailDTO, AdminProductRowDTO } from "../../contracts/dto";
-import { db } from "../../db/client";
+import { db, type DbOrTx } from "../../db/client";
 import { ref } from "../../db/sql";
-import { categories, inventory, productCategories, productImages, productVariants, products } from "../../db/schema";
+import {
+  categories,
+  inventory,
+  inventoryTransactions,
+  orderItems,
+  productCategories,
+  productImages,
+  productVariants,
+  products,
+} from "../../db/schema";
 import { DomainError } from "../../domain/errors";
 import { providers } from "../../integrations";
 import { resolveImageUrl } from "../../integrations/storage";
@@ -22,6 +33,7 @@ import { randomToken } from "../../lib/crypto";
 import { toWebp } from "../../lib/images";
 import { HttpError, notFound, readJson, readQuery } from "../../lib/http";
 import { adminOf, requirePermission } from "../auth/middleware";
+import { productStatus, productStockExpressions, statusFilter, stockState } from "./product-stock";
 import { sizeRank, toImageDTO } from "../catalog/cards";
 import { applyMovement } from "../inventory/service";
 import { getStoreSettings } from "../settings/service";
@@ -52,14 +64,23 @@ function uniqueMessage(constraint: string) {
   return new DomainError("DUPLICATE", "A record with these details already exists.", 409);
 }
 
-async function productDetail(id: string): Promise<AdminProductDetailDTO> {
-  const [p] = await db
-    .select()
+/** Safe to delete permanently: never ordered and no stock movements recorded. */
+async function isDeletable(conn: DbOrTx, productId: string) {
+  const [row] = await conn
+    .select({
+      used: sql<boolean>`exists (select 1 from ${orderItems} oi where oi.product_id = ${productId})
+        or exists (select 1 from ${inventoryTransactions} t join ${productVariants} v on v.id = t.variant_id where v.product_id = ${productId})`,
+    })
     .from(products)
-    .where(and(eq(products.id, id), isNull(products.deletedAt)));
+    .where(eq(products.id, productId));
+  return row ? !row.used : false;
+}
+
+async function productDetail(id: string): Promise<AdminProductDetailDTO> {
+  const [p] = await db.select().from(products).where(eq(products.id, id));
   if (!p) throw notFound("Product");
   const settings = await getStoreSettings();
-  const [images, variants, cats] = await Promise.all([
+  const [images, variants, cats, deletable] = await Promise.all([
     db.select().from(productImages).where(eq(productImages.productId, id)).orderBy(asc(productImages.sortOrder)),
     db
       .select({ v: productVariants, onHand: inventory.onHand, reserved: inventory.reserved, threshold: inventory.lowStockThreshold })
@@ -67,6 +88,7 @@ async function productDetail(id: string): Promise<AdminProductDetailDTO> {
       .leftJoin(inventory, eq(inventory.variantId, productVariants.id))
       .where(eq(productVariants.productId, id)),
     db.select({ id: productCategories.categoryId }).from(productCategories).where(eq(productCategories.productId, id)),
+    isDeletable(db, id),
   ]);
   return {
     id: p.id,
@@ -88,6 +110,9 @@ async function productDetail(id: string): Promise<AdminProductDetailDTO> {
     isBestSeller: p.isBestSeller,
     isNewArrival: p.isNewArrival,
     isActive: p.isActive,
+    status: productStatus(p),
+    archivedAt: p.deletedAt?.toISOString() ?? null,
+    deletable,
     seoTitle: p.seoTitle,
     seoDescription: p.seoDescription,
     images: images.map((img) => ({ ...toImageDTO(img, p.name), provider: img.provider, sortOrder: img.sortOrder })),
@@ -110,6 +135,7 @@ async function productDetail(id: string): Promise<AdminProductDetailDTO> {
           onHand: onHand ?? 0,
           reserved: reserved ?? 0,
           sortOrder: v.sortOrder,
+          lowStockThreshold: threshold ?? settings.lowStockThreshold,
         };
       })
       .sort((a, b) => sizeRank(a.size) - sizeRank(b.size)),
@@ -119,19 +145,37 @@ async function productDetail(id: string): Promise<AdminProductDetailDTO> {
 export const adminCatalogRoutes = new Hono<AppEnv>()
   /* ─────────────────────────────── Products ─────────────────────────────── */
   .get("/products", requirePermission("products.view"), async (c) => {
-    const q = readQuery(c, listQuerySchema);
-    const conds: SQL[] = [isNull(products.deletedAt)];
+    const q = readQuery(c, adminProductQuerySchema);
+    const settings = await getStoreSettings();
+    const stock = productStockExpressions(settings.lowStockThreshold);
+    const conds: SQL[] = [q.status ? statusFilter[q.status] : isNull(products.deletedAt)];
     if (q.q) {
       const like = `%${q.q.replace(/[\\%_]/g, "\\$&")}%`;
       conds.push(or(ilike(products.name, like), ilike(products.sku, like), ilike(products.slug, like))!);
     }
+    if (q.category) {
+      conds.push(
+        sql`exists (select 1 from ${productCategories} pc where pc.product_id = ${ref(products.id)} and pc.category_id = ${q.category})`,
+      );
+    }
+    if (q.stock) conds.push(stock.stockFilter[q.stock]);
     const where = and(...conds);
+    const order = {
+      updated: [desc(products.updatedAt)],
+      name: [asc(products.name)],
+      "price-asc": [asc(products.pricePaise)],
+      "price-desc": [desc(products.pricePaise)],
+      "stock-asc": [asc(stock.total), asc(products.name)],
+      "stock-desc": [desc(stock.total), asc(products.name)],
+    }[q.sort];
     const [rows, [{ total } = { total: 0 }]] = await Promise.all([
       db
         .select({
           p: products,
-          totalStock: sql<number>`coalesce((select sum(i.on_hand - i.reserved) from ${productVariants} v join ${inventory} i on i.variant_id = v.id where v.product_id = ${ref(products.id)} and v.is_active), 0)::int`,
-          variantCount: sql<number>`(select count(*) from ${productVariants} v where v.product_id = ${ref(products.id)} and v.is_active)::int`,
+          totalStock: stock.total,
+          variantCount: stock.variants,
+          lowVariants: stock.low,
+          outVariants: stock.out,
           imageProvider: sql<
             string | null
           >`(select provider from ${productImages} pi where pi.product_id = ${ref(products.id)} order by sort_order limit 1)`,
@@ -144,7 +188,7 @@ export const adminCatalogRoutes = new Hono<AppEnv>()
         })
         .from(products)
         .where(where)
-        .orderBy(desc(products.updatedAt))
+        .orderBy(...order)
         .limit(q.pageSize)
         .offset((q.page - 1) * q.pageSize),
       db
@@ -167,6 +211,10 @@ export const adminCatalogRoutes = new Hono<AppEnv>()
       isNewArrival: r.p.isNewArrival,
       totalStock: Number(r.totalStock),
       variantCount: Number(r.variantCount),
+      lowVariants: Number(r.lowVariants),
+      outVariants: Number(r.outVariants),
+      status: productStatus(r.p),
+      stockState: stockState(Number(r.totalStock), Number(r.lowVariants), Number(r.outVariants)),
       categories: r.categories ?? [],
       updatedAt: r.p.updatedAt.toISOString(),
     }));
@@ -207,12 +255,9 @@ export const adminCatalogRoutes = new Hono<AppEnv>()
     const { categoryIds, mrp, price, ...fields } = input;
     try {
       await db.transaction(async (tx) => {
-        const [before] = await tx
-          .select()
-          .from(products)
-          .where(and(eq(products.id, id), isNull(products.deletedAt)))
-          .for("update");
+        const [before] = await tx.select().from(products).where(eq(products.id, id)).for("update");
         if (!before) throw notFound("Product");
+        if (before.deletedAt) throw new DomainError("PRODUCT_ARCHIVED", "Restore this product before editing it.", 409);
         const [after] = await tx
           .update(products)
           .set({ ...fields, mrpPaise: mrp, pricePaise: price, primaryCategoryId: input.primaryCategoryId ?? categoryIds[0] })
@@ -248,20 +293,85 @@ export const adminCatalogRoutes = new Hono<AppEnv>()
     });
     return c.json(await productDetail(id));
   })
-  /** Soft delete: order history keeps referencing the product; slug and SKU stay reserved. */
+  /** Archive: hidden from the store, kept for order history; slug and SKU stay reserved. */
+  .post("/products/:id/archive", requirePermission("products.manage"), async (c) => {
+    const admin = adminOf(c);
+    const id = c.req.param("id");
+    await db.transaction(async (tx) => {
+      const [before] = await tx.select().from(products).where(eq(products.id, id)).for("update");
+      if (!before) throw notFound("Product");
+      if (before.deletedAt) throw new DomainError("ALREADY_ARCHIVED", "This product is already archived.", 409);
+      await tx.update(products).set({ isActive: false, deletedAt: new Date() }).where(eq(products.id, id));
+      await recordAudit(tx, admin, {
+        action: "product.archived",
+        entityType: "product",
+        entityId: id,
+        before: { status: productStatus(before) },
+        after: { status: "ARCHIVED" },
+      });
+    });
+    return c.json(await productDetail(id));
+  })
+  /** Restore an archived product as a draft, or straight to active when it's complete enough to sell. */
+  .post("/products/:id/restore", requirePermission("products.manage"), async (c) => {
+    const { to } = await readJson(c, productRestoreSchema);
+    const admin = adminOf(c);
+    const id = c.req.param("id");
+    await db.transaction(async (tx) => {
+      const [before] = await tx.select().from(products).where(eq(products.id, id)).for("update");
+      if (!before) throw notFound("Product");
+      if (!before.deletedAt) throw new DomainError("NOT_ARCHIVED", "Only archived products can be restored.", 409);
+      if (to === "ACTIVE") {
+        const [readiness] = await tx
+          .select({
+            variants: sql<number>`(select count(*) from ${productVariants} v where v.product_id = ${id} and v.is_active)::int`,
+            images: sql<number>`(select count(*) from ${productImages} pi where pi.product_id = ${id})::int`,
+          })
+          .from(products)
+          .where(eq(products.id, id));
+        if (!Number(readiness?.variants) || !Number(readiness?.images) || before.pricePaise <= 0) {
+          throw new DomainError(
+            "NOT_READY_TO_SELL",
+            "This product needs a price, at least one active size and an image before it can go live. Restore it as a draft and complete it first.",
+            409,
+          );
+        }
+      }
+      await tx
+        .update(products)
+        .set({ deletedAt: null, isActive: to === "ACTIVE" })
+        .where(eq(products.id, id));
+      await recordAudit(tx, admin, {
+        action: "product.restored",
+        entityType: "product",
+        entityId: id,
+        before: { status: "ARCHIVED" },
+        after: { status: to },
+      });
+    });
+    return c.json(await productDetail(id));
+  })
+  /**
+   * Permanent delete, only for an archived product nothing refers to: no
+   * order lines and no stock movements (the ledger is append-only). Anything
+   * else stays archived.
+   */
   .delete("/products/:id", requirePermission("products.manage"), async (c) => {
     const admin = adminOf(c);
     const id = c.req.param("id");
     await db.transaction(async (tx) => {
-      const [before] = await tx.select().from(products).where(eq(products.id, id));
+      const [before] = await tx.select().from(products).where(eq(products.id, id)).for("update");
       if (!before) throw notFound("Product");
-      await tx.update(products).set({ isActive: false, deletedAt: new Date() }).where(eq(products.id, id));
+      if (!before.deletedAt) throw new DomainError("ARCHIVE_FIRST", "Archive the product before deleting it.", 409);
+      if (!(await isDeletable(tx, id))) {
+        throw new DomainError("PRODUCT_IN_USE", "This product has orders or stock history, so it can only be archived.", 409);
+      }
+      await tx.delete(products).where(eq(products.id, id));
       await recordAudit(tx, admin, {
         action: "product.deleted",
         entityType: "product",
         entityId: id,
-        before: { isActive: before.isActive },
-        after: { isActive: false, deleted: true },
+        before: { name: before.name, sku: before.sku, slug: before.slug },
       });
     });
     return c.json({ ok: true });
@@ -336,7 +446,7 @@ export const adminCatalogRoutes = new Hono<AppEnv>()
           .returning();
         const priceChanged = before.pricePaise !== after!.pricePaise || before.mrpPaise !== after!.mrpPaise;
         await recordAudit(tx, admin, {
-          action: priceChanged ? "variant.price_changed" : "variant.updated",
+          action: before.isActive && !after!.isActive ? "variant.archived" : priceChanged ? "variant.price_changed" : "variant.updated",
           entityType: "product",
           entityId: before.productId,
           before,

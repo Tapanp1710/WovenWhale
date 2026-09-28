@@ -155,7 +155,8 @@ npm run start -w frontend    # next start
   BOOTSTRAP_ADMIN_EMAIL=owner@wovenwhale.com BOOTSTRAP_ADMIN_PASSWORD='a-strong-password' npm run db:bootstrap -w backend
   ```
 
-- Roles: `SUPER_ADMIN`, `ADMIN`, `ORDER_MANAGER`, `INVENTORY_MANAGER`, `SUPPORT`. Permissions per role are editable in the dashboard; every admin change is written to the audit log.
+- Roles: `SUPER_ADMIN`, `ADMIN`, `ORDER_MANAGER`, `INVENTORY_MANAGER`, `SUPPORT`. By default admins manage the catalogue and stock, inventory managers restock and adjust stock only, order managers handle orders and COD approvals, and support is read-only for products and stock. Permissions per role are editable in the dashboard; every admin change is written to the audit log.
+- **Products** have a status: **Active** (in the store), **Draft** (hidden while being prepared) or **Archived** (retired, kept for past orders; restorable). Stock is per size and every restock or adjustment goes through the inventory ledger. A product can be deleted permanently only if it was never ordered and never stocked.
 - Typing the `ADMIN_PORTAL_TRIGGER` digits anywhere on the storefront (outside form fields) opens `/admin/login`. This is only a navigation shortcut; it ships in the page bundle and grants nothing.
 
 ## Integrations

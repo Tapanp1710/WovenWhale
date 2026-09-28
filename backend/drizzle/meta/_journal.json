@@ -43,6 +43,13 @@
       "when": 1790566760157,
       "tag": "0005_whatsapp_reply_permission",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1790601370667,
+      "tag": "0006_cod_review_reminder",
+      "breakpoints": true
     }
   ]
 }

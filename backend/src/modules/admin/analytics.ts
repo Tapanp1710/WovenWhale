@@ -1,18 +1,21 @@
-import { and, asc, count, eq, gte, lt, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, gte, isNull, lt, sql } from "drizzle-orm";
 import { Hono } from "hono";
 import type { AppEnv } from "../../app-env";
 import { rangeQuerySchema } from "../../contracts/admin";
-import type { AnalyticsDTO, DashboardDTO, KpiDTO } from "../../contracts/dto";
+import type { AnalyticsDTO, DashboardDTO, InventorySummaryDTO, KpiDTO } from "../../contracts/dto";
 import type { OrderStatus, PaymentStatus } from "../../contracts/enums";
 import { db } from "../../db/client";
 import {
+  adminUsers,
   categories,
   checkoutSessions,
   customerEvents,
   customerProfiles,
+  inventoryTransactions,
   orderItems,
   orders,
   products,
+  productVariants,
   refunds,
   returns,
   users,
@@ -20,7 +23,9 @@ import {
 import { readQuery } from "../../lib/http";
 import { requirePermission } from "../auth/middleware";
 import { lowStockRows } from "./inventory";
-import { adminOrderRows } from "./orders";
+import { getStoreSettings } from "../settings/service";
+import { adminOrderRows, codActionable } from "./orders";
+import { productStockExpressions, statusFilter } from "./product-stock";
 
 const TZ = "Asia/Kolkata";
 const DAY = 24 * 60 * 60 * 1000;
@@ -82,7 +87,7 @@ async function kpis(r: { from: Date; to: Date }): Promise<KpiDTO> {
       .where(
         and(eq(checkoutSessions.status, "ABANDONED"), gte(checkoutSessions.abandonedAt, r.from), lt(checkoutSessions.abandonedAt, r.to)),
       ),
-    db.select({ n: count() }).from(orders).where(eq(orders.status, "PENDING_COD_APPROVAL")),
+    db.select({ n: count() }).from(orders).where(codActionable()),
     db
       .select({ sum: sql<number>`coalesce(sum(${refunds.amountPaise}), 0)::bigint`, n: count() })
       .from(refunds)
@@ -201,7 +206,7 @@ async function topProducts(r: { from: Date; to: Date }, limit = 10) {
 }
 
 export async function buildDashboard(r: { from: Date; to: Date }): Promise<DashboardDTO> {
-  const [k, series, cats, top, statusRows, paymentRows, acquisition, funnel, codPending, lowStock] = await Promise.all([
+  const [k, series, cats, top, statusRows, paymentRows, acquisition, funnel, codPending, lowStock, inventorySummary] = await Promise.all([
     kpis(r),
     dailySeries(r),
     categoryPerformance(r),
@@ -220,8 +225,9 @@ export async function buildDashboard(r: { from: Date; to: Date }): Promise<Dashb
       .groupBy(sql`1`)
       .orderBy(sql`2 desc`),
     funnelStages(r),
-    adminOrderRows(eq(orders.status, "PENDING_COD_APPROVAL"), [asc(orders.placedAt)], 10, 0),
+    adminOrderRows(codActionable(), [asc(orders.placedAt)], 10, 0),
     lowStockRows(8),
+    inventorySnapshot(),
   ]);
   return {
     range: { from: r.from.toISOString(), to: r.to.toISOString() },
@@ -235,6 +241,48 @@ export async function buildDashboard(r: { from: Date; to: Date }): Promise<Dashb
     funnel,
     codPending,
     lowStock,
+    inventory: inventorySummary,
+  };
+}
+
+/** Catalogue health for the dashboard, using the same stock definitions as the products list. */
+async function inventorySnapshot(): Promise<InventorySummaryDTO> {
+  const settings = await getStoreSettings();
+  const stock = productStockExpressions(settings.lowStockThreshold);
+  const live = isNull(products.deletedAt);
+  const [[row], restocks] = await Promise.all([
+    db
+      .select({
+        total: count(),
+        active: sql<number>`count(*) filter (where ${statusFilter.ACTIVE})::int`,
+        low: sql<number>`count(*) filter (where ${stock.stockFilter.LOW_STOCK})::int`,
+        out: sql<number>`count(*) filter (where ${stock.stockFilter.OUT_OF_STOCK})::int`,
+      })
+      .from(products)
+      .where(live),
+    db
+      .select({
+        productId: products.id,
+        productName: products.name,
+        size: productVariants.size,
+        quantity: inventoryTransactions.onHandDelta,
+        actor: adminUsers.fullName,
+        createdAt: inventoryTransactions.createdAt,
+      })
+      .from(inventoryTransactions)
+      .innerJoin(productVariants, eq(productVariants.id, inventoryTransactions.variantId))
+      .innerJoin(products, eq(products.id, productVariants.productId))
+      .innerJoin(adminUsers, eq(adminUsers.id, inventoryTransactions.adminUserId))
+      .where(eq(inventoryTransactions.type, "STOCK_IN"))
+      .orderBy(desc(inventoryTransactions.createdAt))
+      .limit(5),
+  ]);
+  return {
+    totalProducts: Number(row?.total ?? 0),
+    activeProducts: Number(row?.active ?? 0),
+    lowStockProducts: Number(row?.low ?? 0),
+    outOfStockProducts: Number(row?.out ?? 0),
+    recentRestocks: restocks.map((r) => ({ ...r, createdAt: r.createdAt.toISOString() })),
   };
 }
 

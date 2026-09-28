@@ -283,6 +283,8 @@ export async function processPendingRefunds(limit = 20) {
 
 let refundTimer: NodeJS.Timeout | null = null;
 export function kickRefundProcessor() {
+  // Scripts (seed) finish before a deferred run could; the API processes pending work itself.
+  if (process.env.DISABLE_BACKGROUND_KICKS === "true") return;
   if (refundTimer) return;
   refundTimer = setTimeout(() => {
     refundTimer = null;
