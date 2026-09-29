@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import type { AppEnv } from "../../app-env";
 import { env } from "../../config/env";
+import type { AdminSessionDTO } from "../../contracts/dto";
 import { adminLoginSchema, mfaVerifySchema, totpCodeSchema } from "../../contracts/admin";
 import { profileUpdateSchema, sendOtpSchema, verifyOtpSchema } from "../../contracts/storefront";
 import { COOKIE, clearCookie, readCookie, writeCookie } from "../../lib/cookies";
@@ -10,7 +11,7 @@ import { mergeGuestCart } from "../cart/service";
 import { recordEvent } from "../events/service";
 import { adminOf, adminSessionOf, customerOf, requireAdmin, requireAdminSession, requireCustomer } from "./middleware";
 import { beginSetup, disableMfa, enableMfa, mfaStatus, regenerateRecoveryCodes, verifySecondFactor } from "./mfa";
-import { adminLogin, getAdminSession, getCustomer, sendOtp, updateProfile, verifyOtpAndSignIn } from "./service";
+import { adminLogin, getCustomer, sendOtp, updateProfile, verifyOtpAndSignIn } from "./service";
 import { revokeSession } from "./sessions";
 
 export const customerAuthRoutes = new Hono<AppEnv>()
@@ -62,7 +63,21 @@ export const adminAuthRoutes = new Hono<AppEnv>()
     clearCookie(c, COOKIE.adminSession);
     return c.json({ ok: true });
   })
-  .get("/me", requireAdmin, async (c) => c.json({ admin: await getAdminSession(c.get("admin")!.id) }))
+  // Answered from what requireAdmin already loaded: no extra database round trips.
+  .get("/me", requireAdmin, (c) => {
+    const admin = adminOf(c);
+    return c.json({
+      admin: {
+        id: admin.id,
+        email: admin.email,
+        fullName: admin.fullName,
+        role: admin.role,
+        permissions: [...admin.permissions],
+        mfaEnabled: adminSessionOf(c).mfaEnabled,
+        mfaRequired: env.ADMIN_MFA_REQUIRED,
+      } satisfies AdminSessionDTO,
+    });
+  })
   /* ── Two-factor authentication ── */
   .get("/2fa/status", requireAdminSession, async (c) => {
     const session = adminSessionOf(c);

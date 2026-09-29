@@ -1,28 +1,34 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import type { Context, MiddlewareHandler } from "hono";
 import type { AppEnv } from "../../app-env";
 import { env } from "../../config/env";
 import type { AdminRole, Permission } from "../../contracts/enums";
 import { db } from "../../db/client";
-import { adminUsers, permissions, rolePermissions, roles, users } from "../../db/schema";
+import { adminUsers, permissions, rolePermissions, roles, sessions, users } from "../../db/schema";
 import { COOKIE, readCookie } from "../../lib/cookies";
 import { HttpError } from "../../lib/http";
-import { findSession } from "./sessions";
+import { liveSession, touchSession } from "./sessions";
 
 /** Resolves the customer session (if any) for every request. Never throws. */
 export const loadCustomer: MiddlewareHandler<AppEnv> = async (c, next) => {
   c.set("customer", null);
   const token = readCookie(c, COOKIE.customerSession);
   if (token) {
-    const session = await findSession(token, "CUSTOMER");
-    if (session?.userId) {
-      const [user] = await db
-        .select({ id: users.id, phone: users.phone, isBlocked: users.isBlocked, deletedAt: users.deletedAt })
-        .from(users)
-        .where(eq(users.id, session.userId));
-      if (user && !user.isBlocked && !user.deletedAt) {
-        c.set("customer", { id: user.id, phone: user.phone, sessionId: session.id });
-      }
+    const [row] = await db
+      .select({
+        id: sessions.id,
+        lastSeenAt: sessions.lastSeenAt,
+        userId: users.id,
+        phone: users.phone,
+        isBlocked: users.isBlocked,
+        deletedAt: users.deletedAt,
+      })
+      .from(sessions)
+      .innerJoin(users, eq(users.id, sessions.userId))
+      .where(liveSession(token, "CUSTOMER"));
+    if (row) {
+      await touchSession(row);
+      if (!row.isBlocked && !row.deletedAt) c.set("customer", { id: row.userId, phone: row.phone, sessionId: row.id });
     }
   }
   await next();
@@ -39,33 +45,38 @@ export function customerOf(c: Context<AppEnv>) {
   return customer;
 }
 
-async function loadPermissions(roleId: string): Promise<Set<Permission>> {
-  const rows = await db
-    .select({ key: permissions.key })
-    .from(rolePermissions)
-    .innerJoin(permissions, eq(permissions.id, rolePermissions.permissionId))
-    .where(eq(rolePermissions.roleId, roleId));
-  return new Set(rows.map((r) => r.key as Permission));
-}
-
+/**
+ * Session, admin, role and permissions in ONE query: the API can sit a long
+ * way from the database, so every extra round trip is felt on every page.
+ */
 async function resolveAdminSession(c: Context<AppEnv>) {
   const token = readCookie(c, COOKIE.adminSession);
-  const session = token ? await findSession(token, "ADMIN") : null;
-  if (!session?.adminUserId) throw new HttpError(401, "ADMIN_AUTH_REQUIRED", "Please sign in to the admin.");
-  const [admin] = await db
-    .select({
-      id: adminUsers.id,
-      email: adminUsers.email,
-      fullName: adminUsers.fullName,
-      isActive: adminUsers.isActive,
-      roleId: adminUsers.roleId,
-      roleKey: roles.key,
-      totpEnabledAt: adminUsers.totpEnabledAt,
-    })
-    .from(adminUsers)
-    .innerJoin(roles, eq(roles.id, adminUsers.roleId))
-    .where(eq(adminUsers.id, session.adminUserId));
-  if (!admin?.isActive) throw new HttpError(401, "ADMIN_AUTH_REQUIRED", "Please sign in to the admin.");
+  const [row] = token
+    ? await db
+        .select({
+          sessionId: sessions.id,
+          lastSeenAt: sessions.lastSeenAt,
+          mfaVerified: sessions.mfaVerified,
+          id: adminUsers.id,
+          email: adminUsers.email,
+          fullName: adminUsers.fullName,
+          isActive: adminUsers.isActive,
+          roleKey: roles.key,
+          totpEnabledAt: adminUsers.totpEnabledAt,
+          permissions: sql<Permission[]>`(select coalesce(json_agg(${permissions.key}), '[]'::json) from ${rolePermissions}
+            inner join ${permissions} on ${permissions.id} = ${rolePermissions.permissionId}
+            where ${rolePermissions.roleId} = ${adminUsers.roleId})`,
+        })
+        .from(sessions)
+        .innerJoin(adminUsers, eq(adminUsers.id, sessions.adminUserId))
+        .innerJoin(roles, eq(roles.id, adminUsers.roleId))
+        .where(liveSession(token, "ADMIN"))
+    : [];
+  if (!row) throw new HttpError(401, "ADMIN_AUTH_REQUIRED", "Please sign in to the admin.");
+  await touchSession({ id: row.sessionId, lastSeenAt: row.lastSeenAt });
+  const session = { id: row.sessionId, mfaVerified: row.mfaVerified };
+  const admin = row;
+  if (!admin.isActive) throw new HttpError(401, "ADMIN_AUTH_REQUIRED", "Please sign in to the admin.");
   c.set("adminSession", {
     id: admin.id,
     email: admin.email,
@@ -102,7 +113,7 @@ export const requireAdmin: MiddlewareHandler<AppEnv> = async (c, next) => {
     email: admin.email,
     fullName: admin.fullName,
     role: admin.roleKey as AdminRole,
-    permissions: await loadPermissions(admin.roleId),
+    permissions: new Set(admin.permissions),
     sessionId: session.id,
   });
   await next();

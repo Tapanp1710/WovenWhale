@@ -1,9 +1,8 @@
 import { and, desc, eq, gt, isNull, lt, sql } from "drizzle-orm";
 import { env } from "../../config/env";
-import type { AdminSessionDTO, CustomerDTO } from "../../contracts/dto";
-import type { AdminRole, Permission } from "../../contracts/enums";
+import type { CustomerDTO } from "../../contracts/dto";
 import { db } from "../../db/client";
-import { adminUsers, customerProfiles, otpChallenges, permissions, rolePermissions, roles, users } from "../../db/schema";
+import { adminUsers, customerProfiles, otpChallenges, users } from "../../db/schema";
 import { DomainError } from "../../domain/errors";
 import { adminLoginStep, MFA_PENDING_SESSION_MS } from "../../domain/mfa";
 import { providers } from "../../integrations";
@@ -209,32 +208,3 @@ export async function adminLogin(email: string, password: string, userAgent: str
   return { token, step, ttlSeconds: ttlMs / 1000 };
 }
 
-export async function getAdminSession(adminId: string): Promise<AdminSessionDTO> {
-  const [row] = await db
-    .select({
-      id: adminUsers.id,
-      email: adminUsers.email,
-      fullName: adminUsers.fullName,
-      role: roles.key,
-      roleId: roles.id,
-      totpEnabledAt: adminUsers.totpEnabledAt,
-    })
-    .from(adminUsers)
-    .innerJoin(roles, eq(roles.id, adminUsers.roleId))
-    .where(eq(adminUsers.id, adminId));
-  if (!row) throw new DomainError("NOT_FOUND", "Admin not found.", 404);
-  const perms = await db
-    .select({ key: permissions.key })
-    .from(rolePermissions)
-    .innerJoin(permissions, eq(permissions.id, rolePermissions.permissionId))
-    .where(eq(rolePermissions.roleId, row.roleId));
-  return {
-    id: row.id,
-    email: row.email,
-    fullName: row.fullName,
-    role: row.role as AdminRole,
-    permissions: perms.map((p) => p.key as Permission),
-    mfaEnabled: row.totpEnabledAt !== null,
-    mfaRequired: env.ADMIN_MFA_REQUIRED,
-  };
-}

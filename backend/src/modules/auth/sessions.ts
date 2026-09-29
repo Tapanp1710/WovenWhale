@@ -32,16 +32,15 @@ export async function createSession(input: {
 
 const TOUCH_INTERVAL_MS = 5 * 60 * 1000;
 
-export async function findSession(token: string, subject: Subject) {
-  const [row] = await db
-    .select()
-    .from(sessions)
-    .where(and(eq(sessions.tokenHash, sha256(token)), eq(sessions.subject, subject), gt(sessions.expiresAt, new Date())));
-  if (!row) return null;
+/** WHERE clause for a live session with this token; join it to load the principal in the same query. */
+export const liveSession = (token: string, subject: Subject) =>
+  and(eq(sessions.tokenHash, sha256(token)), eq(sessions.subject, subject), gt(sessions.expiresAt, new Date()));
+
+/** Records activity at most every few minutes, so most requests cost no write. */
+export async function touchSession(row: { id: string; lastSeenAt: Date }) {
   if (Date.now() - row.lastSeenAt.getTime() > TOUCH_INTERVAL_MS) {
     await db.update(sessions).set({ lastSeenAt: new Date() }).where(eq(sessions.id, row.id));
   }
-  return row;
 }
 
 export async function revokeSession(token: string) {
