@@ -67,7 +67,7 @@ export default async function ReturnsPage({ searchParams }: { searchParams: Sear
         </FilterForm>
         {data.items.length ? (
           <>
-            <Table label="Returns" minWidth={showActions ? 1300 : 900}>
+            <Table label="Returns" minWidth={showActions ? 960 : 900}>
               <thead>
                 <tr>
                   <th scope="col">Return</th>

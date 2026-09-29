@@ -21,14 +21,17 @@ export function ReturnActions({ ret, inline = false }: { ret: AdminReturnRowDTO;
   const canRefund = useCan("refunds.approve");
   const { run } = useAction();
   const [open, setOpen] = useState<Open>(null);
-  const has = (s: AdminReturnRowDTO["allowedTransitions"][number]) => ret.allowedTransitions.includes(s);
+  // In a table row only the decision buttons show, small; the rest live on the return page.
+  const size = inline ? "sm" : "md";
+  const has = (s: AdminReturnRowDTO["allowedTransitions"][number]) =>
+    ret.allowedTransitions.includes(s) && (!inline || s === "APPROVED" || s === "REJECTED");
   const close = (o: boolean) => !o && setOpen(null);
   const transition = (to: string, success: string) => (v: Record<string, string | undefined>) =>
     run(() => api(`/admin/returns/${ret.id}/transition`, { method: "POST", body: { ...v, to } }), success);
 
   const buttons = [
     canManage && has("APPROVED") && (
-      <Button key="a" onClick={() => setOpen("approve")}>
+      <Button key="a" size={size} onClick={() => setOpen("approve")}>
         Approve
       </Button>
     ),
@@ -53,7 +56,7 @@ export function ReturnActions({ ret, inline = false }: { ret: AdminReturnRowDTO;
       </Button>
     ),
     canManage && has("REJECTED") && (
-      <Button key="x" variant="ghost" className={styles.reject} onClick={() => setOpen("reject")}>
+      <Button key="x" size={size} variant="ghost" className={styles.reject} onClick={() => setOpen("reject")}>
         Decline
       </Button>
     ),

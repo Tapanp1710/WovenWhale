@@ -290,6 +290,7 @@ test("new return requests are approved or declined straight from the Returns lis
   await page.goto("/admin/returns?status=REQUESTED");
   const actions = (n: string) => page.getByRole("group", { name: `Actions for return ${n}` });
 
+  await expect(actions(keep).getByRole("button", { name: "Ask for information" })).toHaveCount(0); // lives on the return page
   await actions(keep).getByRole("button", { name: "Approve" }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Approve" }).click();
   await expect(actions(keep)).toHaveCount(0);
@@ -301,5 +302,10 @@ test("new return requests are approved or declined straight from the Returns lis
   const list = await ok<{ items: AdminReturnRowDTO[] }>(await admin.get("/api/admin/returns?pageSize=100"));
   const status = (n: string) => list.items.find((r) => r.returnNumber === n)?.status;
   expect([status(keep), status(decline)]).toEqual(["APPROVED", "REJECTED"]);
+
+  // Where the role blocks an action, the page says so instead of hiding it silently.
+  await page.goto("/admin/products");
+  await expect(page.getByText("You can look, but not change products or stock")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Add product" })).toHaveCount(0);
   await Promise.all([admin.dispose(), support.dispose(), staff.close()]);
 });

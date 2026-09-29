@@ -2,12 +2,13 @@ import type { AdminCategoryDTO, AdminProductRowDTO, Paginated } from "@wovenwhal
 import { Package, Plus } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { can } from "@/components/admin/labels";
+import { can, ROLE_LABELS } from "@/components/admin/labels";
 import { ProductFlags, ProductFlagsHeader } from "@/components/admin/products/ProductFlags";
 import { ProductRowActions } from "@/components/admin/products/ProductRowActions";
 import { adminWith, readParams, toQuery, type SearchParams } from "@/components/admin/server";
 import { FilterForm } from "@/components/admin/ui/FilterForm";
 import { NoAccess } from "@/components/admin/ui/NoAccess";
+import { Notice } from "@/components/admin/ui/Notice";
 import { PageHeader } from "@/components/admin/ui/PageHeader";
 import { Pagination } from "@/components/admin/ui/Pagination";
 import { Panel } from "@/components/admin/ui/Panel";
@@ -50,6 +51,12 @@ export default async function ProductsPage({ searchParams }: { searchParams: Sea
           )
         }
       />
+      {!can(admin, "products.manage") && (
+        <Notice title={can(admin, "inventory.manage") ? "You can restock and adjust stock" : "You can look, but not change products or stock"}>
+          You're signed in as {ROLE_LABELS[admin.role]}. Adding and editing products is done by an owner or admin
+          {can(admin, "inventory.manage") ? "." : "; restocking by an owner, admin or inventory manager."}
+        </Notice>
+      )}
       <Panel flush>
         <QuickFilters
           label="Quick filters"

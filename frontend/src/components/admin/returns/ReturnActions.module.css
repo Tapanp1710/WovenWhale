@@ -21,7 +21,8 @@
 /* In a table row: just the buttons, no panel. */
 .inline {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
   gap: var(--space-2);
 }
 
