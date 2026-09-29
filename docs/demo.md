@@ -10,7 +10,7 @@ A demo deployment is the real application with `DEMO_MODE=true`: the mock paymen
 | --- | --- |
 | Storefront | https://wovenwhale-demo.vercel.app |
 | Admin | https://wovenwhale-demo.vercel.app/admin/login |
-| API (Render, free) | https://wovenwhale.onrender.com/api/health |
+| API (Render free, Singapore) | https://wovenwhale-1.onrender.com/api/health |
 | Database | Supabase project `wovenwhale-demo` (Mumbai) |
 
 The API sleeps after 15 minutes idle; open the storefront once before presenting (the first load can take about a minute).
