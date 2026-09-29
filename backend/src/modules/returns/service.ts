@@ -4,7 +4,7 @@ import type { RefundMethod, ReturnStatus } from "../../contracts/enums";
 import { formatINR } from "../../contracts/money";
 import { RETURN_STATUS_LABELS } from "../../contracts/labels";
 import type { createReturnSchema } from "../../contracts/storefront";
-import { db, type Tx } from "../../db/client";
+import { db, type DbOrTx, type Tx } from "../../db/client";
 import { inventory, orderItems, orders, payments, productVariants, refunds, returnItems, returns } from "../../db/schema";
 import { DomainError } from "../../domain/errors";
 import { capRefund, evaluateReturnEligibility, evaluateReturnTransition, refundForLine } from "../../domain/returns";
@@ -139,7 +139,8 @@ export const withdrawReturn = (userId: string, returnNumber: string) => customer
 /* ─────────────────────────────────── Admin ───────────────────────────────── */
 
 /** Refund owed for a request: what the customer paid for exactly those units. */
-export async function refundableForReturn(tx: Tx, r: ReturnRow) {
+/** Read-only: pass an open transaction when the result guards a write. */
+export async function refundableForReturn(tx: DbOrTx, r: ReturnRow) {
   const items = await tx
     .select({ ri: returnItems, line: orderItems })
     .from(returnItems)

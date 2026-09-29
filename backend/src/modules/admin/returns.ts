@@ -21,25 +21,27 @@ async function adminReturnRows(ids: string[]): Promise<AdminReturnRowDTO[]> {
     .innerJoin(orders, eq(orders.id, returns.orderId))
     .where(inArray(returns.id, ids));
   const summaries = await returnSummaries({ orderIds: [...new Set(rows.map((r) => r.r.orderId))] });
-  const out: AdminReturnRowDTO[] = [];
-  for (const id of ids) {
-    const row = rows.find((r) => r.r.id === id);
-    const summary = summaries.find((s) => s.id === id);
-    if (!row || !summary) continue;
-    const refundable = await db.transaction((tx) => refundableForReturn(tx, row.r));
-    out.push({
-      ...summary,
-      orderId: row.r.orderId,
-      customerName: row.name,
-      customerPhone: row.phone,
-      adminNote: row.r.adminNote,
-      refundablePaise: refundable,
-      refunds: (await orderRefunds(row.r.orderId)).filter((f) => f.returnNumber === row.r.returnNumber),
-      paymentMethod: row.paymentMethod,
-      allowedTransitions: RETURN_STATUSES.filter((to) => evaluateReturnTransition(row.r, to, "ADMIN").ok),
-    });
-  }
-  return out;
+  // Rows are built in parallel: sequential per-row queries made a page of returns take seconds.
+  const built = await Promise.all(
+    ids.map(async (id): Promise<AdminReturnRowDTO | null> => {
+      const row = rows.find((r) => r.r.id === id);
+      const summary = summaries.find((s) => s.id === id);
+      if (!row || !summary) return null;
+      const [refundable, refunds] = await Promise.all([refundableForReturn(db, row.r), orderRefunds(row.r.orderId)]);
+      return {
+        ...summary,
+        orderId: row.r.orderId,
+        customerName: row.name,
+        customerPhone: row.phone,
+        adminNote: row.r.adminNote,
+        refundablePaise: refundable,
+        refunds: refunds.filter((f) => f.returnNumber === row.r.returnNumber),
+        paymentMethod: row.paymentMethod,
+        allowedTransitions: RETURN_STATUSES.filter((to) => evaluateReturnTransition(row.r, to, "ADMIN").ok),
+      };
+    }),
+  );
+  return built.filter((r) => r !== null);
 }
 
 export const adminReturnRoutes = new Hono<AppEnv>()
