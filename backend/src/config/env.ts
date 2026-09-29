@@ -43,7 +43,8 @@ const schema = z
     WHATSAPP_PROVIDER: z.enum(["log", "meta"]).default("log"),
     SHIPPING_PROVIDER: z.enum(["manual", "shiprocket", "delhivery"]).default("manual"),
     EMAIL_PROVIDER: z.enum(["console", "resend", "ses"]).default("console"),
-    STORAGE_PROVIDER: z.enum(["local", "supabase"]).default("local"),
+    /** local: disk (development). database: Postgres, durable anywhere. supabase: Supabase Storage. */
+    STORAGE_PROVIDER: z.enum(["local", "database", "supabase"]).default("local"),
 
     OTP_DEV_FIXED_CODE: z
       .string()

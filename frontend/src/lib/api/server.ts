@@ -8,8 +8,8 @@ const BACKEND = process.env.BACKEND_URL ?? "http://localhost:4000";
  * Public, cacheable reads (catalog). No cookies are sent, so responses can be
  * shared between visitors and revalidated on an interval.
  */
-export async function publicApi<T>(path: string, revalidate = 60): Promise<T> {
-  const res = await fetch(`${BACKEND}/api${path}`, { next: { revalidate, tags: ["catalog"] } });
+export async function publicApi<T>(path: string, revalidate = 60, tags = ["catalog"]): Promise<T> {
+  const res = await fetch(`${BACKEND}/api${path}`, { next: { revalidate, tags } });
   if (!res.ok) throw await toApiError(res);
   return (await res.json()) as T;
 }

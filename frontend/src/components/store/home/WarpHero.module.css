@@ -36,7 +36,7 @@
 
 .warp {
   display: grid;
-  grid-template-columns: repeat(var(--strips, 4), 1fr);
+  grid-template-columns: repeat(var(--strips-sm, 4), 1fr);
   gap: 6px;
   height: min(64vh, 560px);
   overflow: hidden;
@@ -73,11 +73,14 @@
     padding-top: var(--space-7);
   }
   .warp {
-    --strips: 6;
+    grid-template-columns: repeat(var(--strips-lg, 6), 1fr);
     height: min(78vh, 720px);
   }
   .strip:nth-child(n + 5) {
     display: block;
+  }
+  .solo {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -95,4 +98,19 @@
 .link:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: -3px;
+}
+
+/* Set in the website editor. */
+.center .copy {
+  justify-items: center;
+  text-align: center;
+}
+
+.center .title,
+.center .lede {
+  margin-inline: auto;
+}
+
+.center .actions {
+  justify-content: center;
 }

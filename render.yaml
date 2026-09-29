@@ -36,7 +36,7 @@ services:
       - key: WHATSAPP_SEND_ENABLED
         value: "false"
       - key: STORAGE_PROVIDER
-        value: local
+        value: database
       - key: DATABASE_POOL_MAX
         value: "5"
       - key: DATABASE_URL

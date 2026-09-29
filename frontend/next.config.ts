@@ -39,7 +39,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "wovenwhale.com", pathname: "/wp-content/uploads/**" },
       ...(supabaseHost ? [{ protocol: "https" as const, hostname: supabaseHost, pathname: "/storage/v1/object/public/**" }] : []),
     ],
-    localPatterns: [{ pathname: "/api/uploads/**" }, { pathname: "/brand/**" }, { pathname: "/catalog/**" }],
+    localPatterns: [{ pathname: "/api/uploads/**" }, { pathname: "/api/files/**" }, { pathname: "/brand/**" }, { pathname: "/catalog/**" }],
   },
   // The browser talks to the commerce API through the storefront origin, so
   // session cookies stay first-party and SameSite protections apply.
@@ -57,6 +57,8 @@ const nextConfig: NextConfig = {
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
         ],
       },
+      // The website editor shows the draft preview in a frame on the same origin (later rules win).
+      { source: "/preview", headers: [{ key: "X-Frame-Options", value: "SAMEORIGIN" }] },
     ];
   },
 };

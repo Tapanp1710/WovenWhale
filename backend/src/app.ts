@@ -22,6 +22,7 @@ import { loadCustomer } from "./modules/auth/middleware";
 import { cartRoutes } from "./modules/cart/routes";
 import { catalogRoutes } from "./modules/catalog/routes";
 import { checkoutRoutes } from "./modules/checkout/routes";
+import { contentRoutes, fileRoutes } from "./modules/content/routes";
 import { engagementRoutes } from "./modules/events/routes";
 import { orderRoutes, trackRoutes } from "./modules/orders/routes";
 import { devRoutes } from "./modules/payments/dev-routes";
@@ -46,7 +47,7 @@ export function createApp() {
     maxSize: 9 * 1024 * 1024,
     onError: (c) => c.json(errorBody("PAYLOAD_TOO_LARGE", "Images must be 8 MB or smaller."), 413),
   });
-  app.use("/api/*", (c, next) => (c.req.method === "POST" && c.req.path.endsWith("/images") ? uploadLimit : tooLarge)(c, next));
+  app.use("/api/*", (c, next) => (c.req.method === "POST" && (c.req.path.endsWith("/images") || c.req.path === "/api/admin/media") ? uploadLimit : tooLarge)(c, next));
   app.use("/api/*", originGuard, visitorId, loadCustomer);
   app.use("/api/*", async (c, next) => {
     await next();
@@ -60,6 +61,8 @@ export function createApp() {
   });
 
   app.route("/api/catalog", catalogRoutes);
+  app.route("/api/content", contentRoutes);
+  app.route("/api/files", fileRoutes);
   app.route("/api/auth", customerAuthRoutes);
   app.route("/api/account/addresses", addressRoutes);
   app.route("/api/wishlist", wishlistRoutes);

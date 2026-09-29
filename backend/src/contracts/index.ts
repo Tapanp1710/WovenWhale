@@ -7,5 +7,6 @@ export * from "./money";
 export * from "./validation";
 export * from "./storefront";
 export * from "./admin";
+export * from "./content";
 export type * from "./dto";
 export * from "./labels";

@@ -72,6 +72,15 @@ The `/admin` URL is also reachable by typing `7391` on any storefront page. That
 1. **Returns** → the request → Approve → Mark as received (choose whether it goes back into stock) → Refund (to the original payment; the amount is capped at what's refundable) → Complete.
 2. The order keeps its **Delivered** status; its payment status becomes **Refunded / Partially refunded**.
 
+**Website editor (admin)**
+1. Sign in as `owner@…` or `admin@…` → **Storefront → Website editor**. The preview is the real homepage, drawn by the storefront's own components; switch it between Desktop, Tablet and Mobile.
+2. Drag a section (or use its arrows) to reorder, click one (in the list or the preview) to edit it, **Hide** it, **Duplicate** it, or **Add section** (hero, banner, products, collections, text, gallery…). Undo and Redo cover every step.
+3. In the **Hero**: change the heading, then **Photo strips → Add image** → upload a photo (or pick one from the media library).
+4. **Save draft** → **Preview** opens the draft in a new tab. Customers still see the published homepage.
+5. **Publish** → confirm → refresh the homepage: the changes are live, with no deploy.
+6. **Versions** → pick an earlier version → **Restore** (it goes into the draft) → **Publish** to roll back.
+7. **Media library** lists every uploaded image; images in use can't be deleted. Support, order and inventory managers get **403** from the editor's API.
+
 **Security**
 1. Sign in as `support@…` → open a COD order → there is no Approve button, and a direct API call returns **403 Forbidden**.
 2. Sign in as `orders@…` → approve it.

@@ -1,0 +1,12 @@
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  padding: var(--space-2) var(--gutter);
+  background: var(--haldi-100);
+  border-bottom: 1px solid var(--haldi-500);
+  color: var(--indigo-900);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-align: center;
+}

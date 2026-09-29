@@ -25,6 +25,7 @@ PostgreSQL 15+ (Supabase in production, Docker locally). Schema is defined in Ty
 | Payments | `payments`, `payment_events` |
 | Shipping | `shipments`, `shipment_events` |
 | After-sales | `returns`, `return_items`, `refunds` |
+| Website editor | `pages` (draft and published sections as validated JSON), `page_versions` (every publish), `media_assets` (the media library), `stored_files` (image bytes when `STORAGE_PROVIDER` is `database`) |
 | Engagement | `customer_events`, `notifications`, `whatsapp_conversations`, `whatsapp_messages`, `whatsapp_templates`, `newsletter_subscribers`, `support_requests` |
 
 ## Integrity guarantees in the schema

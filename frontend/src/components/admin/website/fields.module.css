@@ -1,0 +1,151 @@
+.group {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+  margin: 0;
+  padding: var(--space-4) 0 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+.legend {
+  padding: 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--indigo-900);
+}
+
+.hint,
+.muted {
+  font-size: var(--text-xs);
+  color: var(--slate-700);
+}
+
+.pair {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.thumb {
+  width: 64px;
+  height: 80px;
+  flex: none;
+  object-fit: cover;
+  border-radius: var(--radius-control);
+  background: var(--slate-100);
+}
+
+.imageRow {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.imageBody {
+  display: grid;
+  flex: 1;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+}
+
+.textItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  font-size: var(--text-sm);
+}
+
+.grip {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  flex: none;
+  border: 0;
+  background: none;
+  color: var(--slate-700);
+  cursor: grab;
+  touch-action: none;
+}
+
+.tools {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.tool {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--slate-700);
+}
+
+.tool:disabled {
+  opacity: 0.35;
+}
+
+.tool:hover:not(:disabled) {
+  border-color: var(--indigo-600);
+  color: var(--indigo-800);
+}
+
+.danger:hover:not(:disabled) {
+  border-color: var(--danger-600);
+  color: var(--danger-600);
+}
+
+.results {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+}
+
+.result {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2);
+  border: 0;
+  background: none;
+  font-size: var(--text-sm);
+  text-align: left;
+}
+
+.result:hover,
+.result:focus-visible {
+  background: var(--indigo-50);
+}

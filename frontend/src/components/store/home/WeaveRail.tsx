@@ -5,7 +5,8 @@ import styles from "./WeaveRail.module.css";
 
 /** Collections as tall tiles; scroll-snaps on touch screens, lays out as a grid on desktop. */
 export function WeaveRail({ categories }: { categories: HomeFeedDTO["categories"] }) {
-  const tiles = categories.filter((c) => c.coverImageUrl && c.slug !== "new-arrivals").slice(0, 8);
+  // Which collections, and how many, is chosen in the website editor.
+  const tiles = categories.filter((c) => c.coverImageUrl);
   return (
     <ul className={styles.rail}>
       {tiles.map((c) => (

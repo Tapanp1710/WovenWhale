@@ -354,7 +354,8 @@ export async function searchSuggestions(q: string): Promise<SearchSuggestion> {
 }
 
 export async function homeFeed(): Promise<HomeFeedDTO> {
-  const pick = (cond: SQL, order: SQL[], limit = 8) =>
+  // 12: the most a homepage product section can show.
+  const pick = (cond: SQL, order: SQL[], limit = 12) =>
     db
       .select({ id: products.id })
       .from(products)
@@ -366,7 +367,7 @@ export async function homeFeed(): Promise<HomeFeedDTO> {
 
   const [featuredIds, newIds, bestIds, cats] = await Promise.all([
     pick(and(eq(products.isFeatured, true), inStockExpr)!, [desc(products.createdAt)]),
-    pick(and(eq(products.isNewArrival, true), inStockExpr)!, [desc(products.createdAt)], 10),
+    pick(and(eq(products.isNewArrival, true), inStockExpr)!, [desc(products.createdAt)]),
     pick(inStockExpr, [desc(products.isBestSeller), sql`coalesce(${unitsSold.units}, 0) desc`, desc(products.createdAt)]),
     listCategories(),
   ]);

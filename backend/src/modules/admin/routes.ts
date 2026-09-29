@@ -18,6 +18,7 @@ import {
 import { adminInventoryRoutes } from "./inventory";
 import { adminOrderRoutes, adminRefundRoutes } from "./orders";
 import { adminReturnRoutes } from "./returns";
+import { adminContentRoutes, adminMediaRoutes } from "../content/routes";
 
 /** Every admin route requires an authenticated admin session; each handler then checks its permission. */
 export const adminRoutes = new Hono<AppEnv>()
@@ -37,6 +38,8 @@ export const adminRoutes = new Hono<AppEnv>()
   .route("/roles", adminRoleRoutes)
   .route("/settings", adminSettingsRoutes)
   .route("/whatsapp", adminWhatsAppRoutes)
+  .route("/content", adminContentRoutes)
+  .route("/media", adminMediaRoutes)
   /**
    * Deployment check: shows which client address rate limits will use and the
    * forwarding headers that reached the API, to set CLIENT_IP_HEADER /

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Sheet } from "@/components/ui/Sheet";
 import styles from "./ReasonDialog.module.css";
 
-/** Yes/no confirmation for destructive actions without a reason field. */
+/** Yes/no confirmation without a reason field (destructive unless told otherwise). */
 export function ConfirmDialog({
   open,
   onOpenChange,
@@ -13,6 +13,7 @@ export function ConfirmDialog({
   description,
   confirmLabel,
   cancelLabel = "Keep it",
+  confirmVariant = "danger",
   onConfirm,
 }: {
   open: boolean;
@@ -21,6 +22,8 @@ export function ConfirmDialog({
   description: string;
   confirmLabel: string;
   cancelLabel?: string;
+  /** Destructive by default; "primary" for a confirmation that isn't (e.g. publishing). */
+  confirmVariant?: "danger" | "primary";
   onConfirm: () => Promise<unknown>;
 }) {
   const [busy, setBusy] = useState(false);
@@ -36,7 +39,7 @@ export function ConfirmDialog({
             {cancelLabel}
           </Button>
           <Button
-            variant="danger"
+            variant={confirmVariant}
             loading={busy}
             onClick={async () => {
               setBusy(true);

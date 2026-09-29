@@ -6,7 +6,9 @@ import {
   FolderTree,
   Gauge,
   HandCoins,
+  Images,
   KeyRound,
+  LayoutTemplate,
   MessageCircle,
   Package,
   ReceiptText,
@@ -56,6 +58,13 @@ export const NAV: { label: string; items: NavItem[] }[] = [
       { href: "/admin/categories", label: "Categories", icon: FolderTree, perms: ["products.view"] },
       { href: "/admin/inventory", label: "Inventory", icon: Boxes, perms: ["inventory.view"] },
       { href: "/admin/coupons", label: "Coupons", icon: Tags, perms: ["coupons.view", "coupons.manage"] },
+    ],
+  },
+  {
+    label: "Storefront",
+    items: [
+      { href: "/admin/website", label: "Website editor", icon: LayoutTemplate, perms: ["content.manage"] },
+      { href: "/admin/media", label: "Media library", icon: Images, perms: ["content.manage"] },
     ],
   },
   {

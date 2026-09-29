@@ -111,6 +111,7 @@ export const PERMISSION_LABELS: Record<Permission, string> = {
   "settings.manage": "Manage store settings",
   "audit.view": "View audit log",
   "admins.manage": "Manage admins and roles",
+  "content.manage": "Edit and publish the website",
 };
 
 export const percent = (ratio: number, digits = 1) => `${(ratio * 100).toFixed(digits)}%`;
