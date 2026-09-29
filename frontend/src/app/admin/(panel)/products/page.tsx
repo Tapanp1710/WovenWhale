@@ -105,7 +105,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Sea
               Status controls visibility: <strong>Active</strong> is in the store, <strong>Draft</strong> is hidden while you prepare it,{" "}
               <strong>Archived</strong> is retired but kept for past orders. The storefront switches only change placement.
             </p>
-            <Table label="Products" minWidth={1040}>
+            <Table label="Products" minWidth={940}>
               <thead>
                 <tr>
                   <th scope="col">Product</th>
