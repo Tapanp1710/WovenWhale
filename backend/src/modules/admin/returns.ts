@@ -12,7 +12,7 @@ import { adminOf, requirePermission } from "../auth/middleware";
 import { orderRefunds, returnSummaries } from "../orders/queries";
 import { adminTransitionReturn, approveReturnRefund, refundableForReturn } from "../returns/service";
 
-async function adminReturnRows(ids: string[]): Promise<AdminReturnRowDTO[]> {
+export async function adminReturnRows(ids: string[]): Promise<AdminReturnRowDTO[]> {
   if (ids.length === 0) return [];
   const rows = await db
     .select({ r: returns, name: users.fullName, phone: users.phone, paymentMethod: orders.paymentMethod })

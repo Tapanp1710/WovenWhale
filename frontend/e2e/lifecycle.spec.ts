@@ -293,10 +293,13 @@ test("new return requests are approved or declined straight from the Returns lis
   await expect(actions(keep).getByRole("button", { name: "Ask for information" })).toHaveCount(0); // lives on the return page
   await actions(keep).getByRole("button", { name: "Approve" }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Approve" }).click();
+  // An open dialog hides the page from the accessibility tree: wait for it to close before checking the rows.
+  await expect(page.getByRole("dialog")).toHaveCount(0);
   await expect(actions(keep)).toHaveCount(0);
 
   await actions(decline).getByRole("button", { name: "Decline" }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Decline request" }).click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
   await expect(actions(decline)).toHaveCount(0);
 
   const list = await ok<{ items: AdminReturnRowDTO[] }>(await admin.get("/api/admin/returns?pageSize=100"));

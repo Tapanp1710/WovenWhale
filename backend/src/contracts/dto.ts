@@ -409,6 +409,28 @@ export interface DashboardDTO {
   codPending: AdminOrderRowDTO[];
   lowStock: LowStockRowDTO[];
   inventory: InventorySummaryDTO;
+  /** Work waiting on a person; each list is empty when the admin's role can't act on it. */
+  attention: AttentionDTO;
+}
+
+export interface FailedRefundDTO {
+  id: string;
+  orderId: string;
+  orderNumber: string;
+  amountPaise: number;
+  failureReason: string | null;
+  createdAt: string;
+}
+
+export interface AttentionDTO {
+  /** Return requests waiting for approve / decline. */
+  returnsToDecide: AdminReturnRowDTO[];
+  returnsToDecideTotal: number;
+  /** Items back in the warehouse, waiting for their refund. */
+  refundsDue: AdminReturnRowDTO[];
+  refundsDueTotal: number;
+  failedRefunds: FailedRefundDTO[];
+  failedRefundsTotal: number;
 }
 
 export interface InventorySummaryDTO {

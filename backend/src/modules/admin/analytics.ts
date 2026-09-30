@@ -2,8 +2,8 @@ import { and, asc, count, desc, eq, gte, isNull, lt, sql } from "drizzle-orm";
 import { Hono } from "hono";
 import type { AppEnv } from "../../app-env";
 import { rangeQuerySchema } from "../../contracts/admin";
-import type { AnalyticsDTO, DashboardDTO, InventorySummaryDTO, KpiDTO } from "../../contracts/dto";
-import type { OrderStatus, PaymentStatus } from "../../contracts/enums";
+import type { AnalyticsDTO, AttentionDTO, DashboardDTO, InventorySummaryDTO, KpiDTO } from "../../contracts/dto";
+import type { OrderStatus, PaymentStatus, Permission } from "../../contracts/enums";
 import { db } from "../../db/client";
 import {
   adminUsers,
@@ -21,7 +21,8 @@ import {
   users,
 } from "../../db/schema";
 import { readQuery } from "../../lib/http";
-import { requirePermission } from "../auth/middleware";
+import { adminOf, requirePermission } from "../auth/middleware";
+import { adminReturnRows } from "./returns";
 import { lowStockRows } from "./inventory";
 import { getStoreSettings } from "../settings/service";
 import { adminOrderRows, codActionable } from "./orders";
@@ -205,8 +206,52 @@ async function topProducts(r: { from: Date; to: Date }, limit = 10) {
   }));
 }
 
-export async function buildDashboard(r: { from: Date; to: Date }): Promise<DashboardDTO> {
-  const [k, series, cats, top, statusRows, paymentRows, acquisition, funnel, codPending, lowStock, inventorySummary] = await Promise.all([
+/** Oldest first: what has waited longest is handled first. */
+async function attentionQueues(can: (p: Permission) => boolean): Promise<AttentionDTO> {
+  const seeReturns = can("returns.view");
+  const seeRefunds = seeReturns || can("refunds.approve");
+  const waiting = (status: "REQUESTED" | "RECEIVED") =>
+    Promise.all([
+      db.select({ id: returns.id }).from(returns).where(eq(returns.status, status)).orderBy(asc(returns.createdAt)).limit(5),
+      db.select({ n: count() }).from(returns).where(eq(returns.status, status)),
+    ]).then(async ([rows, [total]]) => ({ rows: await adminReturnRows(rows.map((x) => x.id)), total: Number(total?.n ?? 0) }));
+  const none = { rows: [], total: 0 };
+  const [decide, due, failed] = await Promise.all([
+    seeReturns ? waiting("REQUESTED") : none,
+    seeRefunds ? waiting("RECEIVED") : none,
+    seeRefunds
+      ? Promise.all([
+          db
+            .select({
+              id: refunds.id,
+              orderId: refunds.orderId,
+              orderNumber: orders.orderNumber,
+              amountPaise: refunds.amountPaise,
+              failureReason: refunds.failureReason,
+              createdAt: refunds.createdAt,
+            })
+            .from(refunds)
+            .innerJoin(orders, eq(orders.id, refunds.orderId))
+            .where(eq(refunds.status, "FAILED"))
+            .orderBy(asc(refunds.createdAt))
+            .limit(5),
+          db.select({ n: count() }).from(refunds).where(eq(refunds.status, "FAILED")),
+        ])
+      : Promise.resolve([[], [{ n: 0 }]] as const),
+  ]);
+  const [failedRows, [failedTotal]] = failed;
+  return {
+    returnsToDecide: decide.rows,
+    returnsToDecideTotal: decide.total,
+    refundsDue: due.rows,
+    refundsDueTotal: due.total,
+    failedRefunds: failedRows.map((f) => ({ ...f, createdAt: f.createdAt.toISOString() })),
+    failedRefundsTotal: Number(failedTotal?.n ?? 0),
+  };
+}
+
+export async function buildDashboard(r: { from: Date; to: Date }, can: (p: Permission) => boolean): Promise<DashboardDTO> {
+  const [k, series, cats, top, statusRows, paymentRows, acquisition, funnel, codPending, lowStock, inventorySummary, attention] = await Promise.all([
     kpis(r),
     dailySeries(r),
     categoryPerformance(r),
@@ -225,9 +270,10 @@ export async function buildDashboard(r: { from: Date; to: Date }): Promise<Dashb
       .groupBy(sql`1`)
       .orderBy(sql`2 desc`),
     funnelStages(r),
-    adminOrderRows(codActionable(), [asc(orders.placedAt)], 10, 0),
-    lowStockRows(8),
+    can("orders.view") ? adminOrderRows(codActionable(), [asc(orders.placedAt)], 10, 0) : [],
+    can("inventory.view") || can("products.view") ? lowStockRows(10) : [],
     inventorySnapshot(),
+    attentionQueues(can),
   ]);
   return {
     range: { from: r.from.toISOString(), to: r.to.toISOString() },
@@ -242,6 +288,7 @@ export async function buildDashboard(r: { from: Date; to: Date }): Promise<Dashb
     codPending,
     lowStock,
     inventory: inventorySummary,
+    attention,
   };
 }
 
@@ -380,7 +427,7 @@ export async function buildAnalytics(r: { from: Date; to: Date }): Promise<Analy
 }
 
 export const adminDashboardRoutes = new Hono<AppEnv>().get("/", requirePermission("dashboard.view"), async (c) =>
-  c.json(await buildDashboard(resolveRange(readQuery(c, rangeQuerySchema)))),
+  c.json(await buildDashboard(resolveRange(readQuery(c, rangeQuerySchema)), (p) => adminOf(c).permissions.has(p))),
 );
 
 export const adminAnalyticsRoutes = new Hono<AppEnv>().get("/", requirePermission("analytics.view"), async (c) =>

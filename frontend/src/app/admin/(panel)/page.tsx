@@ -1,17 +1,15 @@
 import type { DashboardDTO } from "@wovenwhale/backend/contracts";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CodQueue } from "@/components/admin/dashboard/CodQueue";
+import { AttentionBoard } from "@/components/admin/dashboard/AttentionBoard";
 import { DashboardCharts } from "@/components/admin/dashboard/DashboardCharts";
 import { KpiStrip } from "@/components/admin/dashboard/KpiStrip";
-import { LowStockTable } from "@/components/admin/dashboard/LowStockTable";
 import { parseRange, RangePicker, rangeQuery } from "@/components/admin/dashboard/RangePicker";
 import { can, count, percent } from "@/components/admin/labels";
 import { adminWith, readParams, type SearchParams } from "@/components/admin/server";
 import { NoAccess } from "@/components/admin/ui/NoAccess";
 import { PageHeader } from "@/components/admin/ui/PageHeader";
 import { Panel } from "@/components/admin/ui/Panel";
-import { ButtonLink } from "@/components/ui/ButtonLink";
 import { sessionApi } from "@/lib/api/server";
 import { formatDate, formatDateTime, formatINR } from "@/lib/format";
 import styles from "./page.module.css";
@@ -33,24 +31,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
         actions={<RangePicker basePath="/admin" current={range} />}
       />
 
-      {can(admin, "orders.view") && (
-        <Panel
-          id="cod"
-          tone={data.codPending.length ? "attention" : undefined}
-          flush
-          title={`COD pending approval (${k.codPendingApproval})`}
-          description="Call the customer to confirm, then approve or reject. Oldest orders first."
-          actions={
-            k.codPendingApproval > data.codPending.length ? (
-              <ButtonLink href="/admin/cod" size="sm" variant="secondary">
-                See all {k.codPendingApproval}
-              </ButtonLink>
-            ) : undefined
-          }
-        >
-          <CodQueue rows={data.codPending} />
-        </Panel>
-      )}
+      <AttentionBoard data={data} admin={admin} />
+
 
       <KpiStrip
         label="Key numbers for the selected range"
@@ -98,23 +80,6 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
       )}
 
       <DashboardCharts data={data} />
-
-      <Panel
-        flush
-        title="Low stock"
-        description="Variants at or below their reorder threshold."
-        actions={
-          <ButtonLink href="/admin/inventory?lowStock=true" size="sm" variant="ghost">
-            Open inventory
-          </ButtonLink>
-        }
-      >
-        {data.lowStock.length ? (
-          <LowStockTable rows={data.lowStock} />
-        ) : (
-          <p className={styles.empty}>Every variant is above its threshold.</p>
-        )}
-      </Panel>
 
       {can(admin, "inventory.view") && (
         <Panel title="Recent restocks" description="The latest units received, from the stock ledger.">

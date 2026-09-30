@@ -117,3 +117,37 @@ test.describe("COD approvals: inline actions", () => {
     await Promise.all([owner.dispose(), support.dispose(), manager.dispose(), order.api.dispose()]);
   });
 });
+
+test.describe("dashboard: needs your attention", () => {
+  test("COD, returns, refunds and low stock sit side by side; a COD order can be approved from its column", async ({ browser }) => {
+    const owner = await adminApi();
+    const a = await codOrder(); // at least one COD order is waiting
+    const ctx = await browser.newContext({ storageState: await owner.storageState(), baseURL: BASE_URL, viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    await page.goto("/admin");
+    const board = page.getByRole("region", { name: "Needs your attention" });
+    const titles = ["COD approvals", "Returns to decide", "Refunds due", "Low stock"];
+    for (const t of titles) await expect(board.getByRole("heading", { name: t })).toBeVisible();
+    const tops = await Promise.all(titles.map(async (t) => Math.round((await board.getByRole("heading", { name: t }).boundingBox())!.y)));
+    expect(new Set(tops).size, "columns share one row on a desktop screen").toBe(1);
+    await page.screenshot({ path: "test-results/dashboard-attention.png" });
+
+    // The column lists the oldest orders first: approve the one at the top.
+    const cod = board.getByRole("region", { name: "COD approvals" });
+    const oldest = (await cod.getByRole("listitem").first().getByRole("link").first().textContent())!.trim();
+    await cod.getByRole("button", { name: `Approve COD order ${oldest}` }).click();
+    await expect(cod.getByRole("link", { name: oldest, exact: true })).toHaveCount(0);
+    const [row] = (await (await owner.get(`/api/admin/orders?q=${oldest}`)).json()).items as AdminOrderRowDTO[];
+    expect(row!.status).toBe("CONFIRMED");
+
+    // Support handles returns but not COD, refunds approval or stock: the board only shows what it can act on.
+    const support = await adminAs("support@wovenwhale.local");
+    const supportCtx = await browser.newContext({ storageState: await support.storageState(), baseURL: BASE_URL });
+    const supportPage = await supportCtx.newPage();
+    await supportPage.goto("/admin");
+    const supportBoard = supportPage.getByRole("region", { name: "Needs your attention" });
+    await expect(supportBoard.getByRole("heading", { name: "Returns to decide" })).toBeVisible();
+    await expect(supportBoard.getByRole("button", { name: /^Approve COD order/ })).toHaveCount(0);
+    await Promise.all([owner.dispose(), support.dispose(), a.api.dispose(), ctx.close(), supportCtx.close()]);
+  });
+});
