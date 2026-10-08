@@ -1,4 +1,4 @@
-# WovenWhale Commerce
+# WovenWhale Commerce.
 
 The direct-to-consumer commerce platform for **WovenWhale**, a handwoven menswear brand. It covers the customer storefront, the admin dashboard, and a commerce API with a Postgres database (Supabase in production).
 
